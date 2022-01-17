@@ -1,6 +1,6 @@
-import 'package:chore_manager_mobile/data/chore_manager_web/login_adapter.dart';
-import 'package:chore_manager_mobile/data/chore_manager_web/login_request.dart';
-import 'package:chore_manager_mobile/data/chore_manager_web/login_response.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/login/login_adapter.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/login/login_request.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/login/login_response.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
