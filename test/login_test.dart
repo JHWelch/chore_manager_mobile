@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:chore_manager_mobile/chore_manager.dart';
 import 'package:chore_manager_mobile/config/globals.dart';
+import 'package:chore_manager_mobile/modules/auth/auth_controller.dart';
 import 'package:chore_manager_mobile/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -58,19 +59,20 @@ void main() {
     });
 
     group('enter correct credentials', () {
-      testWidgets('can log in.', (tester) async {
-        await tester.pumpWidget(WidgetWrapper(LoginPage()));
-        await tester.pumpAndSettle();
-
-        await _fillFields(tester);
-
+      setUp(() {
         mockPost(
           'token',
           http.Response(mockTokenString, 200),
           _authJson(),
           expectedAuthHeaders(),
         );
+      });
 
+      testWidgets('makes login request', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(LoginPage()));
+        await tester.pumpAndSettle();
+
+        await _fillFields(tester);
         await _tapLogin(tester);
 
         verify(
@@ -80,6 +82,17 @@ void main() {
             body: _authJson(),
           ),
         );
+      });
+
+      testWidgets('user is logged in', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(LoginPage()));
+        await tester.pumpAndSettle();
+
+        await _fillFields(tester);
+        await _tapLogin(tester);
+
+        final AuthController auth = Get.find();
+        expect(auth.isLoggedIn, true);
       });
     });
   });

@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:chore_manager_mobile/config/config.dart';
 import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/login_request.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/login_response.dart';
 import 'package:http/http.dart' as http;
 
 class LoginAdapter {
-  Future<void> logIn(LoginRequest loginRequest) async {
+  Future<LoginResponse> logIn(LoginRequest loginRequest) async {
     final http.Response response = await Globals.client.post(
       Uri.parse('${apiUrl}token'),
       headers: <String, String>{
@@ -19,5 +20,7 @@ class LoginAdapter {
         'device_name': 'Flutter App'
       }),
     );
+
+    return LoginResponse.fromHttpResponse(response);
   }
 }
