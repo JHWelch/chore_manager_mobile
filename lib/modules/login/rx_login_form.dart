@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 class RxLoginForm {
   RxString email = ''.obs;
   RxString password = ''.obs;
+  Rx<String?> error = Rx<String?>(null);
 
   LoginRequest get toRequest => LoginRequest(
         email: email(),

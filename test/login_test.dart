@@ -18,6 +18,7 @@ import 'mocks/mocks.dart';
 void main() {
   setUp(() async {
     givenNotLoggedIn();
+    Get.testMode = true;
   });
 
   tearDown(() async {
@@ -105,6 +106,70 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.byType(HomePage), findsOneWidget);
+      });
+    });
+
+    group('enter incorrect credentials', () {
+      setUp(() {
+        mockPost(
+          'token',
+          http.Response(
+            '''
+            {
+              "message": "The given data was invalid.",
+              "errors": {
+                "email": [
+                  "The provided credentials are incorrect."
+                ]
+              }
+            }
+          ''',
+            422,
+          ),
+          _authJson(),
+          expectedAuthHeaders(),
+        );
+      });
+
+      testWidgets('makes login request', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(LoginPage()));
+        await tester.pumpAndSettle();
+
+        await _fillFields(tester);
+        await _tapLogin(tester);
+
+        verify(
+          () => Globals.client.post(
+            expectedPath('token'),
+            headers: expectedAuthHeaders(),
+            body: _authJson(),
+          ),
+        );
+      });
+
+      testWidgets('user not logged in', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(LoginPage()));
+        await tester.pumpAndSettle();
+
+        await _fillFields(tester);
+        await _tapLogin(tester);
+
+        final AuthController auth = Get.find();
+        expect(auth.isLoggedIn, false);
+      });
+
+      testWidgets('user shown error', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(LoginPage()));
+        await tester.pumpAndSettle();
+
+        await _fillFields(tester);
+        await _tapLogin(tester);
+        await tester.pumpAndSettle();
+
+        expect(
+          (find.byKey(const Key('error')).evaluate().first.widget as Text).data,
+          'The provided credentials are incorrect',
+        );
       });
     });
   });
