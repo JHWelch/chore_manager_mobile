@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:chore_manager_mobile/chore_manager.dart';
 import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/modules/auth/auth_controller.dart';
+import 'package:chore_manager_mobile/pages/home_page.dart';
 import 'package:chore_manager_mobile/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -93,6 +94,17 @@ void main() {
 
         final AuthController auth = Get.find();
         expect(auth.isLoggedIn, true);
+      });
+
+      testWidgets('user redirected to home screen', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(LoginPage()));
+        await tester.pumpAndSettle();
+
+        await _fillFields(tester);
+        await _tapLogin(tester);
+        await tester.pumpAndSettle();
+
+        expect(find.byType(HomePage), findsOneWidget);
       });
     });
   });

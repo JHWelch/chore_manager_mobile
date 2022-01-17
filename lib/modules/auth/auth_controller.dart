@@ -1,3 +1,4 @@
+import 'package:chore_manager_mobile/config/routes.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/login/login_adapter.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/login/login_request.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/login/login_response.dart';
@@ -15,6 +16,7 @@ class AuthController extends GetxController {
 
     if (response.isSuccess) {
       authToken(response.authToken);
+      await Get.toNamed(Routes.home);
     }
   }
 }

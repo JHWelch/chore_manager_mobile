@@ -6,5 +6,6 @@ class Routes {
   static const String notFound = '/404';
 
   // Pages
+  static const String home = '/home';
   static const String login = '/login';
 }
