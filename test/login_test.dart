@@ -49,7 +49,7 @@ void main() {
   }
 
   Future<void> _tapLogin(WidgetTester tester) async {
-    await tester.tap(find.widgetWithText(TextButton, 'Log In'));
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Log In'));
   }
 
   group('Unauthenticated users', () {
