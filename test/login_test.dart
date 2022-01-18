@@ -170,6 +170,7 @@ void main() {
           find.text('The provided credentials are incorrect.'),
           findsOneWidget,
         );
+        expect(find.byType(HomePage), findsNothing);
       });
     });
 
@@ -234,6 +235,7 @@ void main() {
           find.text('The password field is required.'),
           findsOneWidget,
         );
+        expect(find.byType(HomePage), findsNothing);
       });
     });
   });
