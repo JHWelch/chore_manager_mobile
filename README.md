@@ -1,16 +1,28 @@
 # chore_manager_mobile
 
-A new Flutter project.
+A Companion to the [ChoreManager](https://github.com/JHWelch/ChoreManager) Web App
 
-## Getting Started
+## Setup
+```sh
+flutter pub get
+```
 
-This project is a starting point for a Flutter application.
+## Linter
+```sh
+dart analyze .
+```
 
-A few resources to get you started if this is your first Flutter project:
+## Tests
+Generate mocks if needed.
+```sh
+flutter test
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Coverage (Mac)
+Generate mocks if needed.
+```sh
+brew install lcov
+flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html
+open coverage/html/index.html
+```
