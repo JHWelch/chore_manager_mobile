@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:chore_manager_mobile/chore_manager.dart';
+import 'package:chore_manager_mobile/components/form_widgets/validators/validators.dart';
 import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/modules/auth/auth_controller.dart';
 import 'package:chore_manager_mobile/pages/home_page.dart';
@@ -169,6 +170,23 @@ void main() {
         expect(
           (find.byKey(const Key('error')).evaluate().first.widget as Text).data,
           'The provided credentials are incorrect',
+        );
+      });
+    });
+
+    group('do not enter email', () {
+      testWidgets('show email required error', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(LoginPage()));
+        await tester.pumpAndSettle();
+
+        await _fillFields(tester, email: '');
+        await _tapLogin(tester);
+
+        await tester.pumpAndSettle();
+
+        expect(
+          find.text(const RequiredValidator().failMessage),
+          findsOneWidget,
         );
       });
     });

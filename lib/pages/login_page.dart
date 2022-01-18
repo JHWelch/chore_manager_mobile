@@ -16,20 +16,23 @@ class LoginPage extends StatelessWidget {
         title: const Text('Login'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('Log in to ChoreManager'),
-            Obx(
-              () => Text(
-                controller.loginForm.error() ?? '',
-                key: const Key('error'),
+        child: Form(
+          key: controller.formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text('Log in to ChoreManager'),
+              Obx(
+                () => Text(
+                  controller.loginForm.error() ?? '',
+                  key: const Key('error'),
+                ),
               ),
-            ),
-            EmailField(),
-            PasswordField(),
-            _LoginButton(logIn: controller.logIn),
-          ],
+              EmailField(),
+              PasswordField(),
+              _LoginButton(logIn: controller.logIn),
+            ],
+          ),
         ),
       ),
     );
