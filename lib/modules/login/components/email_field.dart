@@ -22,6 +22,5 @@ class EmailField extends StatelessWidget with HasValidation {
   @override
   List<Validator> get validators => [
         ApiValidator(field: 'email', errors: controller.loginForm.errors),
-        const RequiredValidator(),
       ];
 }

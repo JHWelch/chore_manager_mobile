@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:chore_manager_mobile/chore_manager.dart';
-import 'package:chore_manager_mobile/components/form_widgets/validators/validators.dart';
 import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/modules/auth/auth_controller.dart';
 import 'package:chore_manager_mobile/pages/home_page.dart';
@@ -110,7 +109,7 @@ void main() {
       });
     });
 
-    group('enter incorrect credentials', () {
+    group('email has api errors', () {
       setUp(() {
         mockPost(
           'token',
@@ -174,17 +173,65 @@ void main() {
       });
     });
 
-    group('do not enter email', () {
-      testWidgets('show email required error', (tester) async {
+    group('password has api errors', () {
+      setUp(() {
+        mockPost(
+          'token',
+          http.Response(
+            '''
+            {
+              "message": "The given data was invalid.",
+              "errors": {
+                "password": [
+                  "The password field is required."
+                ]
+              }
+            }
+          ''',
+            422,
+          ),
+          _authJson(password: ''),
+          expectedAuthHeaders(),
+        );
+      });
+
+      testWidgets('makes login request', (tester) async {
         await tester.pumpWidget(WidgetWrapper(LoginPage()));
         await tester.pumpAndSettle();
 
-        await _fillFields(tester, email: '');
+        await _fillFields(tester, password: '');
+        await _tapLogin(tester);
+
+        verify(
+          () => Globals.client.post(
+            expectedPath('token'),
+            headers: expectedAuthHeaders(),
+            body: _authJson(password: ''),
+          ),
+        );
+      });
+
+      testWidgets('user not logged in', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(LoginPage()));
+        await tester.pumpAndSettle();
+
+        await _fillFields(tester, password: '');
+        await _tapLogin(tester);
+
+        final AuthController auth = Get.find();
+        expect(auth.isLoggedIn, false);
+      });
+
+      testWidgets('user shown error', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(LoginPage()));
+        await tester.pumpAndSettle();
+
+        await _fillFields(tester, password: '');
         await _tapLogin(tester);
         await tester.pump(const Duration(milliseconds: 100));
 
         expect(
-          find.text(const RequiredValidator().failMessage),
+          find.text('The password field is required.'),
           findsOneWidget,
         );
       });
