@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:chore_manager_mobile/chore_manager.dart';
 import 'package:chore_manager_mobile/config/globals.dart';
+import 'package:chore_manager_mobile/data/common/api_error.dart';
+import 'package:chore_manager_mobile/data/common/api_errors.dart';
 import 'package:chore_manager_mobile/modules/auth/auth_controller.dart';
 import 'package:chore_manager_mobile/pages/home_page.dart';
 import 'package:chore_manager_mobile/pages/login_page.dart';
@@ -114,16 +116,11 @@ void main() {
         mockPost(
           'token',
           http.Response(
-            '''
-            {
-              "message": "The given data was invalid.",
-              "errors": {
-                "email": [
-                  "The provided credentials are incorrect."
-                ]
-              }
-            }
-          ''',
+            ApiErrors(message: 'The given data was invalid.', errors: [
+              const ApiError(field: 'email', messages: [
+                'The provided credentials are incorrect.',
+              ])
+            ]).toJsonString(),
             422,
           ),
           _authJson(),
@@ -179,16 +176,11 @@ void main() {
         mockPost(
           'token',
           http.Response(
-            '''
-            {
-              "message": "The given data was invalid.",
-              "errors": {
-                "password": [
-                  "The password field is required."
-                ]
-              }
-            }
-          ''',
+            ApiErrors(message: 'The given data was invalid.', errors: [
+              const ApiError(field: 'password', messages: [
+                'The password field is required.',
+              ]),
+            ]).toJsonString(),
             422,
           ),
           _authJson(password: ''),
