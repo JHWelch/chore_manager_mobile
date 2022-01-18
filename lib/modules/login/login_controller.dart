@@ -21,7 +21,7 @@ class LoginController extends GetxController {
 
       if (response.isSuccess) {
         auth.authToken(response.authToken);
-        await Get.toNamed(Routes.home);
+        await Get.offAllNamed(Routes.home);
       } else {
         loginForm.errors(response.errors);
       }
