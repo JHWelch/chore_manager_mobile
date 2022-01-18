@@ -165,11 +165,11 @@ void main() {
 
         await _fillFields(tester);
         await _tapLogin(tester);
-        await tester.pumpAndSettle();
+        await tester.pump(const Duration(milliseconds: 100));
 
         expect(
-          (find.byKey(const Key('error')).evaluate().first.widget as Text).data,
-          'The provided credentials are incorrect',
+          find.text('The provided credentials are incorrect.'),
+          findsOneWidget,
         );
       });
     });
@@ -181,8 +181,7 @@ void main() {
 
         await _fillFields(tester, email: '');
         await _tapLogin(tester);
-
-        await tester.pumpAndSettle();
+        await tester.pump(const Duration(milliseconds: 100));
 
         expect(
           find.text(const RequiredValidator().failMessage),

@@ -16,9 +16,20 @@ class ApiErrors {
   List<ApiError> _parseErrors(json) {
     return (json['errors'] as Map<String, dynamic>)
         .entries
-        .map<ApiError>((e) => ApiError(field: e.key, messages: e.value))
+        .map<ApiError>(
+          (e) => ApiError(
+            field: e.key,
+            messages: List<String>.from(e.value),
+          ),
+        )
         .toList();
   }
+
+  bool hasErrorForField(String field) =>
+      errors.any((error) => error.field == field);
+
+  List<String> getErrorsForField(String field) =>
+      errors.firstWhere((error) => error.field == field).messages;
 
   @override
   String toString() {

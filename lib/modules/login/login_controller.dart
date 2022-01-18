@@ -14,18 +14,21 @@ class LoginController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   Future<void> logIn() async {
-    loginForm.error(null);
-    if (_isValid) {
+    loginForm.resetErrors();
+
+    if (_validate()) {
       final LoginResponse response = await adapter.logIn(loginForm.toRequest);
 
       if (response.isSuccess) {
         auth.authToken(response.authToken);
         await Get.toNamed(Routes.home);
       } else {
-        loginForm.error(response.firstError);
+        loginForm.errors(response.errors);
       }
     }
+
+    _validate();
   }
 
-  bool get _isValid => formKey.currentState!.validate();
+  bool _validate() => formKey.currentState!.validate();
 }

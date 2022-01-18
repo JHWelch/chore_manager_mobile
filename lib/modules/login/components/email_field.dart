@@ -1,3 +1,4 @@
+import 'package:chore_manager_mobile/components/form_widgets/validators/api_validator.dart';
 import 'package:chore_manager_mobile/components/form_widgets/validators/validators.dart';
 import 'package:chore_manager_mobile/modules/login/login_controller.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class EmailField extends StatelessWidget with HasValidation {
 
   @override
   List<Validator> get validators => [
+        ApiValidator(field: 'email', errors: controller.loginForm.errors),
         const RequiredValidator(),
       ];
 }

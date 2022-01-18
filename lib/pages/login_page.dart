@@ -22,12 +22,6 @@ class LoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               const Text('Log in to ChoreManager'),
-              Obx(
-                () => Text(
-                  controller.loginForm.error() ?? '',
-                  key: const Key('error'),
-                ),
-              ),
               EmailField(),
               PasswordField(),
               _LoginButton(logIn: controller.logIn),
