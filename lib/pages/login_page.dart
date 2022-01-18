@@ -12,23 +12,34 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
       body: Center(
-        child: Form(
-          key: controller.formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text('Log in to ChoreManager'),
-              EmailField(),
-              PasswordField(),
-              _LoginButton(logIn: controller.logIn),
-            ],
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _Title(),
+                EmailField(),
+                PasswordField(),
+                _LoginButton(logIn: controller.logIn),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _Title extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'Log in to ChoreManager',
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.headline4,
     );
   }
 }
@@ -40,7 +51,7 @@ class _LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return ElevatedButton(
       onPressed: logIn,
       child: const Text('Log In'),
     );

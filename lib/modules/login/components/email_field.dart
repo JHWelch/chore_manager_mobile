@@ -1,3 +1,4 @@
+import 'package:chore_manager_mobile/components/form_widgets/cm_text_input_field.dart';
 import 'package:chore_manager_mobile/components/form_widgets/validators/api_validator.dart';
 import 'package:chore_manager_mobile/components/form_widgets/validators/validators.dart';
 import 'package:chore_manager_mobile/modules/login/login_controller.dart';
@@ -11,11 +12,11 @@ class EmailField extends StatelessWidget with HasValidation {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return CMTextInputField(
       key: const Key('email_field'),
       onChanged: controller.loginForm.email,
-      decoration: const InputDecoration(hintText: 'Email'),
       validator: validate,
+      labelText: 'Email',
     );
   }
 

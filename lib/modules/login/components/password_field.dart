@@ -1,3 +1,4 @@
+import 'package:chore_manager_mobile/components/form_widgets/cm_text_input_field.dart';
 import 'package:chore_manager_mobile/components/form_widgets/validators/validators.dart';
 import 'package:chore_manager_mobile/modules/login/login_controller.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +11,10 @@ class PasswordField extends StatelessWidget with HasValidation {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return CMTextInputField(
       key: const Key('password_field'),
       onChanged: controller.loginForm.password,
-      decoration: const InputDecoration(
-        hintText: 'Password',
-      ),
+      labelText: 'Password',
       obscureText: true,
       enableSuggestions: false,
       autocorrect: false,
