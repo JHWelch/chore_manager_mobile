@@ -13,9 +13,9 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 
-import 'helpers/widget_wrapper.dart';
-import 'mocks/http_mocks.dart';
-import 'mocks/mocks.dart';
+import '../helpers/widget_wrapper.dart';
+import '../mocks/http_mocks.dart';
+import '../mocks/mocks.dart';
 
 void main() {
   setUp(() async {
