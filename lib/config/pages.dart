@@ -16,7 +16,7 @@ class Pages {
     ),
     GetPage(
       name: Routes.home,
-      page: () => const HomePage(),
+      page: () => HomePage(),
     ),
   ];
 }
