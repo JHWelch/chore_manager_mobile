@@ -21,6 +21,9 @@ void main() {
     }
     ''';
 
+  final RegExp spacesOutsideQuotes =
+      RegExp(r'\s(?=(?:[^"`]*(["`])[^"`]*\1)*[^"`]*$)');
+
   test('Can create chore from JSON', () {
     final chore = Chore.fromJson(jsonDecode(_json));
     expect(chore.id, 1);
@@ -35,5 +38,24 @@ void main() {
     expect(chore.updatedAt, DateTime.utc(2022, 01, 12, 03, 37, 05));
     expect(chore.nextDueDate, DateTime(2022, 2, 23));
     expect(chore.dueDateUpdatedAt, DateTime.utc(2022, 1, 19, 16, 33, 5));
+  });
+
+  test('Can get JSON from chore', () {
+    final chore = Chore(
+      id: 1,
+      userId: 1,
+      title: 'Do the dishes',
+      description: 'This is the description.',
+      teamId: 1,
+      frequencyId: 2,
+      frequencyInterval: 1,
+      frequencyDayOf: 3,
+      createdAt: DateTime.utc(2022, 01, 12, 03, 37, 05),
+      updatedAt: DateTime.utc(2022, 01, 12, 03, 37, 05),
+      nextDueDate: DateTime(2022, 2, 23),
+      dueDateUpdatedAt: DateTime.utc(2022, 1, 19, 16, 33, 5),
+    );
+
+    expect(chore.toJsonString(), _json.replaceAll(spacesOutsideQuotes, ''));
   });
 }

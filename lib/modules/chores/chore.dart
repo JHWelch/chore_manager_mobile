@@ -1,4 +1,7 @@
-class Chore {
+import 'package:chore_manager_mobile/data/concerns/jsonable.dart';
+import 'package:chore_manager_mobile/extensions/date_time_formatting.dart';
+
+class Chore with Jsonable {
   int id;
   int userId;
   String title;
@@ -43,4 +46,20 @@ class Chore {
 
   static DateTime? _parseOptionalDateTime(String? dt) =>
       dt != null ? DateTime.parse(dt) : null;
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'user_id': userId,
+        'title': title,
+        'description': description,
+        'team_id': teamId,
+        'frequency_id': frequencyId,
+        'frequency_interval': frequencyInterval,
+        'frequency_day_of': frequencyDayOf,
+        'created_at': createdAt,
+        'updated_at': updatedAt,
+        'next_due_date': nextDueDate?.toDateString(),
+        'due_date_updated_at': dueDateUpdatedAt,
+      };
 }
