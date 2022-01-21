@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 class LoginController extends GetxController {
   RxLoginForm loginForm = RxLoginForm();
-  AuthController auth = Get.put(AuthController());
+  AuthController auth = Get.find();
   final LoginAdapter adapter = LoginAdapter();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();

@@ -14,12 +14,13 @@ import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 
 import '../helpers/widget_wrapper.dart';
+import '../mocks/data_mocks/chore_mocks.dart';
 import '../mocks/http_mocks.dart';
 import '../mocks/mocks.dart';
 
 void main() {
   setUp(() async {
-    givenNotLoggedIn();
+    await givenNotLoggedIn();
     Get.testMode = true;
   });
 
@@ -100,6 +101,8 @@ void main() {
       });
 
       testWidgets('user redirected to home screen', (tester) async {
+        mockChoreIndex();
+
         await tester.pumpWidget(WidgetWrapper(LoginPage()));
         await tester.pumpAndSettle();
 

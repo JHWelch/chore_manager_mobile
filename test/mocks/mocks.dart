@@ -8,9 +8,10 @@ import 'package:mocktail/mocktail.dart';
 
 import 'http_mocks.dart';
 
-void givenNotLoggedIn() {
+Future<void> givenNotLoggedIn() async {
   mockGlobals();
   mockUserToken(null);
+  await mockPermanentControllers();
 }
 
 Future<void> givenLoggedIn() async {

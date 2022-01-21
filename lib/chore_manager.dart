@@ -1,3 +1,4 @@
+import 'package:chore_manager_mobile/bindings/initial_binding.dart';
 import 'package:chore_manager_mobile/config/pages.dart';
 import 'package:chore_manager_mobile/config/routes.dart';
 import 'package:chore_manager_mobile/config/themes.dart';
@@ -16,6 +17,7 @@ class ChoreManager extends GetMaterialApp {
       initialRoute: Routes.initial,
       unknownRoute: Pages.notFound,
       debugShowCheckedModeBanner: false,
+      initialBinding: InitialBinding(),
     );
   }
 }
