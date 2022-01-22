@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 class ChoresController extends GetxController {
   final AuthController auth = Get.find();
   final RxList<Chore> chores = RxList<Chore>();
+  final RxBool isLoading = false.obs;
   late final ChoresAdapter adapter;
 
   @override
@@ -13,9 +14,17 @@ class ChoresController extends GetxController {
     super.onInit();
 
     adapter = ChoresAdapter(auth.authToken());
-    chores(await adapter.index());
+    await refreshChores();
   }
 
   List<Chore> withDueDate() =>
       chores().where((chore) => chore.nextDueDate != null).toList();
+
+  Future<void> refreshChores() async {
+    isLoading(true);
+
+    chores(await adapter.index());
+
+    isLoading(false);
+  }
 }

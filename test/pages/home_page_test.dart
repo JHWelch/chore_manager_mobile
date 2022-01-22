@@ -1,4 +1,5 @@
 import 'package:chore_manager_mobile/pages/home_page.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../factories/chore_factory.dart';
@@ -29,6 +30,21 @@ void main() {
 
       for (final chore in chores) {
         expect(find.text(chore.title), findsNothing);
+      }
+    });
+
+    testWidgets('user can refresh to see new chores', (tester) async {
+      mockChoreIndex();
+      await tester.pumpWidget(WidgetWrapper(HomePage()));
+
+      final chores = ChoreFactory().listOf(3);
+      mockChoreIndex(chores: chores);
+
+      await tester.tap(find.byIcon(Icons.refresh));
+      await tester.pumpAndSettle();
+
+      for (final chore in chores) {
+        expect(find.text(chore.title), findsOneWidget);
       }
     });
   });
