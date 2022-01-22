@@ -1,5 +1,5 @@
-import 'package:chore_manager_mobile/data/common/api_errors.dart';
-import 'package:chore_manager_mobile/data/common/reponse_type.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/common/api_errors.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/common/reponse_type.dart';
 import 'package:http/http.dart' as http;
 
 class LoginResponse {

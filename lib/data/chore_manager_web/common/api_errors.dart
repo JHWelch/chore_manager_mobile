@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:chore_manager_mobile/data/common/api_error.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/common/api_error.dart';
 import 'package:chore_manager_mobile/data/concerns/jsonable.dart';
 import 'package:http/http.dart' as http;
 

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:chore_manager_mobile/data/common/network_adapter.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/common/network_adapter.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 
 class ChoresAdapter {

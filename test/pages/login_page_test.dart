@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:chore_manager_mobile/chore_manager.dart';
 import 'package:chore_manager_mobile/config/globals.dart';
-import 'package:chore_manager_mobile/data/common/api_error.dart';
-import 'package:chore_manager_mobile/data/common/api_errors.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/common/api_error.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/common/api_errors.dart';
 import 'package:chore_manager_mobile/modules/auth/auth_controller.dart';
 import 'package:chore_manager_mobile/pages/home_page.dart';
 import 'package:chore_manager_mobile/pages/login_page.dart';
