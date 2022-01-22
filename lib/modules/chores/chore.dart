@@ -57,9 +57,9 @@ class Chore with Jsonable {
         'frequency_id': frequencyId,
         'frequency_interval': frequencyInterval,
         'frequency_day_of': frequencyDayOf,
-        'created_at': createdAt,
-        'updated_at': updatedAt,
+        'created_at': createdAt.toFullIso8601String(),
+        'updated_at': updatedAt.toFullIso8601String(),
         'next_due_date': nextDueDate?.toDateString(),
-        'due_date_updated_at': dueDateUpdatedAt,
+        'due_date_updated_at': dueDateUpdatedAt?.toFullIso8601String(),
       };
 }

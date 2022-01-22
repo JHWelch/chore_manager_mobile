@@ -15,4 +15,7 @@ class ChoresController extends GetxController {
     adapter = ChoresAdapter(auth.authToken());
     chores(await adapter.index());
   }
+
+  List<Chore> withDueDate() =>
+      chores().where((chore) => chore.nextDueDate != null).toList();
 }

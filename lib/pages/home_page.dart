@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
       body: Obx(
         () => ListView.builder(
           itemBuilder: _listItem,
-          itemCount: controller.chores().length,
+          itemCount: controller.withDueDate().length,
         ),
       ),
     );
@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
 
   Widget _listItem(BuildContext context, int index) {
     return ListTile(
-      title: Text(controller.chores()[index].title),
+      title: Text(controller.withDueDate()[index].title),
     );
   }
 }
