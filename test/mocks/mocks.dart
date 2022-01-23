@@ -17,15 +17,15 @@ Future<void> givenNotLoggedIn() async {
 Future<void> givenLoggedIn() async {
   mockGlobals();
   mockUserToken(mockTokenString);
-  await mockPermanentControllers();
+  await mockPermanentControllers(initialToken: mockTokenString);
 }
 
-Future<void> mockPermanentControllers() async {
-  final AuthController auth = Get.put(AuthController(), permanent: true);
-  await auth.setup();
+Future<void> mockPermanentControllers({String? initialToken}) async {
+  Get.put(AuthController(initialToken: initialToken), permanent: true);
 }
 
 void mockGlobals() {
+  Get.testMode = true;
   Globals.client = MockClient();
   Globals.storage = MockFlutterSecureStorage();
 }

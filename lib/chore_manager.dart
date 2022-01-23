@@ -6,18 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChoreManager extends GetMaterialApp {
-  const ChoreManager({Key? key}) : super(key: key);
+  final String? token;
+  const ChoreManager({this.token, Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'ChoreManager',
-      theme: Themes.primary,
-      getPages: Pages.routes,
-      initialRoute: Routes.initial,
-      unknownRoute: Pages.notFound,
-      debugShowCheckedModeBanner: false,
-      initialBinding: InitialBinding(),
-    );
-  }
+  Widget build(BuildContext context) => GetMaterialApp(
+        title: 'ChoreManager',
+        theme: Themes.primary,
+        getPages: Pages.routes,
+        initialRoute: token != null ? Routes.home : Routes.login,
+        unknownRoute: Pages.notFound,
+        debugShowCheckedModeBanner: false,
+        initialBinding: InitialBinding(token: token),
+      );
 }

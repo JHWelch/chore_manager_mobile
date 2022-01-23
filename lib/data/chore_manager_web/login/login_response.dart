@@ -19,5 +19,5 @@ class LoginResponse {
 
   bool get isSuccess => responseType == ResponseType.success;
 
-  String? get firstError => errors?.errors.first.messages.first;
+  String? get firstError => errors?.errors?.first.messages.first;
 }

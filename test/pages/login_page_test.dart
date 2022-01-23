@@ -17,11 +17,12 @@ import '../helpers/widget_wrapper.dart';
 import '../mocks/data_mocks/chore_mocks.dart';
 import '../mocks/http_mocks.dart';
 import '../mocks/mocks.dart';
+import '../mocks/secure_storage_mocks.dart';
 
 void main() {
   setUp(() async {
     await givenNotLoggedIn();
-    Get.testMode = true;
+    mockAuthTokenWrite(mockTokenString);
   });
 
   tearDown(() async {
@@ -119,11 +120,15 @@ void main() {
         mockPost(
           'token',
           http.Response(
-            ApiErrors(message: 'The given data was invalid.', errors: [
-              const ApiError(field: 'email', messages: [
-                'The provided credentials are incorrect.',
-              ])
-            ]).toJsonString(),
+            ApiErrors(
+              statusCode: 422,
+              message: 'The given data was invalid.',
+              errors: [
+                const ApiError(field: 'email', messages: [
+                  'The provided credentials are incorrect.',
+                ])
+              ],
+            ).toJsonString(),
             422,
           ),
           _authJson(),
@@ -179,11 +184,15 @@ void main() {
         mockPost(
           'token',
           http.Response(
-            ApiErrors(message: 'The given data was invalid.', errors: [
-              const ApiError(field: 'password', messages: [
-                'The password field is required.',
-              ]),
-            ]).toJsonString(),
+            ApiErrors(
+              statusCode: 422,
+              message: 'The given data was invalid.',
+              errors: [
+                const ApiError(field: 'password', messages: [
+                  'The password field is required.',
+                ]),
+              ],
+            ).toJsonString(),
             422,
           ),
           _authJson(password: ''),
