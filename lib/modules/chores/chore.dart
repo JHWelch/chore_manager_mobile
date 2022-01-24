@@ -1,5 +1,6 @@
 import 'package:chore_manager_mobile/data/concerns/jsonable.dart';
 import 'package:chore_manager_mobile/extensions/date_time_formatting.dart';
+import 'package:intl/intl.dart';
 
 class Chore with Jsonable {
   int id;
@@ -62,4 +63,24 @@ class Chore with Jsonable {
         'next_due_date': nextDueDate?.toDateString(),
         'due_date_updated_at': dueDateUpdatedAt?.toFullIso8601String(),
       };
+
+  String get friendlyDueDate {
+    if (this.nextDueDate == null) return '-';
+    final DateTime nextDueDate = this.nextDueDate!.toStartOfDay();
+
+    final timeDiffInDays =
+        nextDueDate.difference(DateTime.now().toStartOfDay()).inDays;
+
+    if (timeDiffInDays == 0) {
+      return 'today';
+    } else if (timeDiffInDays == 1) {
+      return 'tomorrow';
+    } else if (timeDiffInDays == -1) {
+      return 'yeseterday';
+    } else if (timeDiffInDays < 7) {
+      return DateFormat(DateFormat.WEEKDAY).format(nextDueDate);
+    }
+
+    return DateFormat(DateFormat.YEAR_NUM_MONTH_DAY).format(nextDueDate);
+  }
 }

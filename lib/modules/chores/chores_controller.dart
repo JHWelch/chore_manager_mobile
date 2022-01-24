@@ -23,8 +23,27 @@ class ChoresController extends GetxController {
   Future<void> refreshChores() async {
     isLoading(true);
 
-    chores(await adapter.index());
+    final List<Chore> newChores = await adapter.index();
+
+    newChores.sort(_choresByDueDate);
+
+    chores(newChores);
 
     isLoading(false);
+  }
+
+  int _choresByDueDate(Chore choreA, Chore choreB) {
+    if (choreA.nextDueDate == null) {
+      if (choreB.nextDueDate == null) {
+        return 0;
+      }
+      return 1;
+    }
+
+    if (choreB.nextDueDate == null) {
+      return -1;
+    }
+
+    return choreA.nextDueDate!.difference(choreB.nextDueDate!).inDays;
   }
 }

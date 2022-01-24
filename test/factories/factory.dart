@@ -19,4 +19,9 @@ abstract class Factory<T> {
 
     return this;
   }
+
+  dynamic getProperty(String propertyName, dynamic defaultValue) =>
+      properties.containsKey(propertyName)
+          ? properties[propertyName]
+          : defaultValue;
 }

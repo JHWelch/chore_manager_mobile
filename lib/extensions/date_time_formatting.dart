@@ -1,4 +1,6 @@
 extension DateTimeFormatting on DateTime {
+  DateTime toStartOfDay() => DateTime(year, month, day);
+
   String toDateString() {
     final String y =
         (year >= -9999 && year <= 9999) ? _fourDigits(year) : _sixDigits(year);

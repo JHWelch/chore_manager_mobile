@@ -1,4 +1,3 @@
-import 'package:chore_manager_mobile/config/routes.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/login/login_adapter.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/login/login_response.dart';
 import 'package:chore_manager_mobile/modules/auth/auth_controller.dart';
