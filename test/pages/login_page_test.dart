@@ -66,9 +66,21 @@ void main() {
 
     group('enter correct credentials', () {
       setUp(() {
+        final json = jsonEncode({
+          'token': mockTokenString,
+          'user': {
+            'id': 1,
+            'name': 'John Smith',
+            'email': 'jsmith@example.com',
+            'profile_photo_path':
+                'https://randomuser.me/api/portraits/men/81.jpg',
+            'current_team_id': 1,
+          }
+        });
+
         mockPost(
           'token',
-          http.Response(mockTokenString, 200),
+          http.Response(json, 200),
           _authJson(),
           expectedAuthHeaders(),
         );

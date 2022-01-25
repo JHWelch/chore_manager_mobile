@@ -1,10 +1,13 @@
 import 'package:chore_manager_mobile/config/routes.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/login/login_response.dart';
 import 'package:chore_manager_mobile/data/secure_storage/secure_storage.dart';
+import 'package:chore_manager_mobile/modules/login/auth_user.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
   static const String tokenKey = 'CM_AUTH_TOKEN';
   final RxString authToken = ''.obs;
+  final Rx<AuthUser?> user = Rx<AuthUser?>(null);
 
   AuthController({String? initialToken}) {
     authToken(initialToken ?? '');
@@ -19,9 +22,10 @@ class AuthController extends GetxController {
     ever<String>(authToken, handleAuthChanged);
   }
 
-  Future<void> finishLogin(String? token) async {
-    authToken(token);
-    await storeAuthToken(token);
+  Future<void> finishLogin(LoginResponse loginResponse) async {
+    authToken(loginResponse.authToken);
+    user(loginResponse.user);
+    await storeAuthToken(loginResponse.authToken);
   }
 
   void handleAuthChanged(String newToken) {
