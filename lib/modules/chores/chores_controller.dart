@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 class ChoresController extends GetxController {
   final AuthController auth = Get.find();
   final RxList<Chore> chores = RxList<Chore>();
+  final RxList<Chore> homePageChores = RxList<Chore>();
   final RxBool isLoading = false.obs;
   late final ChoresAdapter adapter;
 
@@ -28,6 +29,10 @@ class ChoresController extends GetxController {
     newChores.sort(_choresByDueDate);
 
     chores(newChores);
+
+    homePageChores(newChores.where((chore) {
+      return chore.hasNoDueDate && chore.nextDueUserId == auth.user()?.id;
+    }).toList());
 
     isLoading(false);
   }

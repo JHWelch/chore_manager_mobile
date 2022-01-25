@@ -13,6 +13,7 @@ class Chore with Jsonable {
   int? frequencyId;
   int? frequencyInterval;
   int? frequencyDayOf;
+  int? nextDueUserId;
   DateTime? nextDueDate;
   DateTime? dueDateUpdatedAt;
 
@@ -27,6 +28,7 @@ class Chore with Jsonable {
     this.frequencyId,
     this.frequencyInterval,
     this.frequencyDayOf,
+    this.nextDueUserId,
     this.nextDueDate,
     this.dueDateUpdatedAt,
   });
@@ -42,6 +44,7 @@ class Chore with Jsonable {
         frequencyDayOf = json['frequency_day_of'],
         createdAt = DateTime.parse(json['created_at']),
         updatedAt = DateTime.parse(json['updated_at']),
+        nextDueUserId = json['next_due_user_id'],
         nextDueDate = _parseOptionalDateTime(json['next_due_date']),
         dueDateUpdatedAt = _parseOptionalDateTime(json['due_date_updated_at']);
 
@@ -60,9 +63,13 @@ class Chore with Jsonable {
         'frequency_day_of': frequencyDayOf,
         'created_at': createdAt.toFullIso8601String(),
         'updated_at': updatedAt.toFullIso8601String(),
+        'next_due_user_id': nextDueUserId,
         'next_due_date': nextDueDate?.toDateString(),
         'due_date_updated_at': dueDateUpdatedAt?.toFullIso8601String(),
       };
+
+  @override
+  String toString() => toJsonString();
 
   String get friendlyDueDate {
     if (this.nextDueDate == null) return '-';
@@ -83,4 +90,6 @@ class Chore with Jsonable {
 
     return DateFormat(DateFormat.YEAR_NUM_MONTH_DAY).format(nextDueDate);
   }
+
+  bool get hasNoDueDate => nextDueDate != null;
 }

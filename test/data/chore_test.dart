@@ -16,6 +16,7 @@ void main() {
           "frequency_day_of": 3,
           "created_at": "2022-01-12T03:37:05.000000Z",
           "updated_at": "2022-01-12T03:37:05.000000Z",
+          "next_due_user_id": 1,
           "next_due_date": "2022-02-23",
           "due_date_updated_at": "2022-01-19T16:33:05.000000Z"
     }
@@ -36,6 +37,7 @@ void main() {
     expect(chore.frequencyDayOf, 3);
     expect(chore.createdAt, DateTime.utc(2022, 01, 12, 03, 37, 05));
     expect(chore.updatedAt, DateTime.utc(2022, 01, 12, 03, 37, 05));
+    expect(chore.nextDueUserId, 1);
     expect(chore.nextDueDate, DateTime(2022, 2, 23));
     expect(chore.dueDateUpdatedAt, DateTime.utc(2022, 1, 19, 16, 33, 5));
   });
@@ -52,6 +54,7 @@ void main() {
       frequencyDayOf: 3,
       createdAt: DateTime.utc(2022, 01, 12, 03, 37, 05),
       updatedAt: DateTime.utc(2022, 01, 12, 03, 37, 05),
+      nextDueUserId: 1,
       nextDueDate: DateTime(2022, 2, 23),
       dueDateUpdatedAt: DateTime.utc(2022, 1, 19, 16, 33, 5),
     );

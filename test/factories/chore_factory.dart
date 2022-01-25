@@ -16,6 +16,7 @@ class ChoreFactory extends Factory<Chore> {
         frequencyId: getProperty('frequencyId', random.integer(5)),
         frequencyInterval: getProperty('frequencyInterval', random.integer(5)),
         frequencyDayOf: getProperty('frequencyDayOf', 0),
+        nextDueUserId: getProperty('nextDueUserId', 1),
         nextDueDate: getProperty('nextDueDate', faker.date.dateTime()),
         dueDateUpdatedAt:
             getProperty('dueDateUpdatedAt', faker.date.dateTime()),

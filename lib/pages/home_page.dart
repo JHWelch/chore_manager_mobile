@@ -18,14 +18,14 @@ class HomePage extends StatelessWidget {
       body: Obx(
         () => ListView.builder(
           itemBuilder: _listItem,
-          itemCount: controller.withDueDate().length,
+          itemCount: controller.homePageChores().length,
         ),
       ),
     );
   }
 
   Widget _listItem(BuildContext context, int index) {
-    final Chore chore = controller.withDueDate()[index];
+    final Chore chore = controller.homePageChores()[index];
     return ListTile(
       title: Text(chore.title),
       trailing: Text(chore.friendlyDueDate),

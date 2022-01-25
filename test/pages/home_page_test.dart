@@ -83,6 +83,14 @@ void main() {
       }
     });
 
+    testWidgets('user does not see chores assigned to others', (tester) async {
+      final chore = ChoreFactory().state({'nextDueUserId': 2}).build();
+      mockChoreIndex(chores: [chore]);
+      await tester.pumpWidget(WidgetWrapper(HomePage()));
+
+      expect(find.text(chore.title), findsNothing);
+    });
+
     testWidgets('user can refresh to see new chores', (tester) async {
       mockChoreIndex();
       await tester.pumpWidget(WidgetWrapper(HomePage()));

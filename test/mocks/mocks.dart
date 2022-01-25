@@ -1,6 +1,7 @@
 import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/constants/keys.dart';
 import 'package:chore_manager_mobile/modules/auth/auth_controller.dart';
+import 'package:chore_manager_mobile/modules/login/auth_user.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -21,7 +22,17 @@ Future<void> givenLoggedIn() async {
 }
 
 Future<void> mockPermanentControllers({String? initialToken}) async {
-  Get.put(AuthController(initialToken: initialToken), permanent: true);
+  final auth = Get.put(
+    AuthController(initialToken: initialToken),
+    permanent: true,
+  );
+
+  auth.user(AuthUser(
+    id: 1,
+    name: 'John Smith',
+    email: 'jsmith@example.com',
+    currentTeamId: 1,
+  ));
 }
 
 void mockGlobals() {
