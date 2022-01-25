@@ -1,5 +1,5 @@
 import 'package:chore_manager_mobile/components/form_widgets/validators/validator.dart';
-import 'package:chore_manager_mobile/data/common/api_errors.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/common/api_errors.dart';
 
 class ApiValidator extends Validator {
   ApiErrors? Function() errors;

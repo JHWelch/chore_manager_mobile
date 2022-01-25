@@ -33,7 +33,7 @@ dart_code_metrics:
 linter:
   rules:
     - always_declare_return_types
-    - always_put_control_body_on_new_line
+    # - always_put_control_body_on_new_line
     - always_put_required_named_parameters_first
     - always_require_non_null_named_parameters
 #    - always_specify_types # impractical - type inference is better for some things
@@ -65,7 +65,7 @@ linter:
     - avoid_returning_null
     - avoid_returning_null_for_future
     - avoid_returning_null_for_void
-    - avoid_returning_this
+    # - avoid_returning_this
     - avoid_setters_without_getters
     - avoid_shadowing_type_parameters
     - avoid_single_cascade_in_expression_statements

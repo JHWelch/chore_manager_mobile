@@ -1,5 +1,5 @@
+import 'package:chore_manager_mobile/data/chore_manager_web/common/api_errors.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/login/login_request.dart';
-import 'package:chore_manager_mobile/data/common/api_errors.dart';
 import 'package:get/get.dart';
 
 class RxLoginForm {

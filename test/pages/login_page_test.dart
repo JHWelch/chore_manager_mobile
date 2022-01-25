@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:chore_manager_mobile/chore_manager.dart';
 import 'package:chore_manager_mobile/config/globals.dart';
-import 'package:chore_manager_mobile/data/common/api_error.dart';
-import 'package:chore_manager_mobile/data/common/api_errors.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/common/api_error.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/common/api_errors.dart';
 import 'package:chore_manager_mobile/modules/auth/auth_controller.dart';
 import 'package:chore_manager_mobile/pages/home_page.dart';
 import 'package:chore_manager_mobile/pages/login_page.dart';
@@ -13,14 +13,16 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 
-import 'helpers/widget_wrapper.dart';
-import 'mocks/http_mocks.dart';
-import 'mocks/mocks.dart';
+import '../helpers/widget_wrapper.dart';
+import '../mocks/data_mocks/chore_mocks.dart';
+import '../mocks/http_mocks.dart';
+import '../mocks/mocks.dart';
+import '../mocks/secure_storage_mocks.dart';
 
 void main() {
   setUp(() async {
-    givenNotLoggedIn();
-    Get.testMode = true;
+    await givenNotLoggedIn();
+    mockAuthTokenWrite(mockTokenString);
   });
 
   tearDown(() async {
@@ -100,6 +102,8 @@ void main() {
       });
 
       testWidgets('user redirected to home screen', (tester) async {
+        mockChoreIndex();
+
         await tester.pumpWidget(WidgetWrapper(LoginPage()));
         await tester.pumpAndSettle();
 
@@ -116,11 +120,15 @@ void main() {
         mockPost(
           'token',
           http.Response(
-            ApiErrors(message: 'The given data was invalid.', errors: [
-              const ApiError(field: 'email', messages: [
-                'The provided credentials are incorrect.',
-              ])
-            ]).toJsonString(),
+            ApiErrors(
+              statusCode: 422,
+              message: 'The given data was invalid.',
+              errors: [
+                const ApiError(field: 'email', messages: [
+                  'The provided credentials are incorrect.',
+                ])
+              ],
+            ).toJsonString(),
             422,
           ),
           _authJson(),
@@ -176,11 +184,15 @@ void main() {
         mockPost(
           'token',
           http.Response(
-            ApiErrors(message: 'The given data was invalid.', errors: [
-              const ApiError(field: 'password', messages: [
-                'The password field is required.',
-              ]),
-            ]).toJsonString(),
+            ApiErrors(
+              statusCode: 422,
+              message: 'The given data was invalid.',
+              errors: [
+                const ApiError(field: 'password', messages: [
+                  'The password field is required.',
+                ]),
+              ],
+            ).toJsonString(),
             422,
           ),
           _authJson(password: ''),

@@ -1,22 +1,31 @@
 import 'dart:convert';
 
-import 'package:chore_manager_mobile/data/common/api_error.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/common/api_error.dart';
 import 'package:chore_manager_mobile/data/concerns/jsonable.dart';
+import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:http/http.dart' as http;
 
 class ApiErrors with Jsonable {
+  late final int statusCode;
   late final String message;
-  late final List<ApiError> errors;
+  late final List<ApiError>? errors;
 
-  ApiErrors({required this.message, required this.errors});
+  ApiErrors({
+    required this.message,
+    required this.errors,
+    required this.statusCode,
+  });
 
   ApiErrors.fromHttpResponse(http.Response response) {
+    statusCode = response.statusCode;
     final json = jsonDecode(response.body);
     message = json['message'];
     errors = _parseErrors(json);
   }
 
-  List<ApiError> _parseErrors(json) {
+  List<ApiError>? _parseErrors(json) {
+    if (json['errors'] == null) return null;
+
     return (json['errors'] as Map<String, dynamic>)
         .entries
         .map<ApiError>(
@@ -29,10 +38,10 @@ class ApiErrors with Jsonable {
   }
 
   bool hasErrorForField(String field) =>
-      errors.any((error) => error.field == field);
+      errors?.any((error) => error.field == field) ?? false;
 
   List<String> getErrorsForField(String field) =>
-      errors.firstWhere((error) => error.field == field).messages;
+      errors?.firstWhere((error) => error.field == field).messages ?? [];
 
   @override
   String toString() {
@@ -45,10 +54,12 @@ class ApiErrors with Jsonable {
   @override
   Map<String, dynamic> toJson() => {
         'message': message,
-        'errors': errorsToJson(),
+        if (errors != null) 'errors': _errorsToJson(),
       };
 
-  Map<String, dynamic> errorsToJson() {
-    return {for (ApiError e in errors) e.field: e.messages};
+  Map<String, dynamic> _errorsToJson() {
+    return {for (ApiError e in errors!) e.field: e.messages};
   }
+
+  bool isAuthError() => statusCode == HttpStatus.unauthorized;
 }
