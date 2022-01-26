@@ -6,17 +6,17 @@ import 'package:get/get.dart';
 class Pages {
   static final notFound = GetPage(
     name: Routes.notFound,
-    page: () => LoginPage(),
+    page: LoginPage.new,
   );
 
   static final routes = [
     GetPage(
       name: Routes.login,
-      page: () => LoginPage(),
+      page: LoginPage.new,
     ),
     GetPage(
       name: Routes.home,
-      page: () => HomePage(),
+      page: HomePage.new,
     ),
   ];
 }
