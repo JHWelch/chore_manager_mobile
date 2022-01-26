@@ -2,6 +2,11 @@ import 'dart:convert';
 
 import 'package:chore_manager_mobile/config/config.dart';
 import 'package:chore_manager_mobile/config/globals.dart';
+import 'package:chore_manager_mobile/config/routes.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/common/api_errors.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/common/api_response.dart';
+import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkAdapter {
@@ -9,14 +14,28 @@ class NetworkAdapter {
 
   NetworkAdapter({this.token});
 
-  Future<http.Response> get({
+  Future<ApiResponse> get({
     required String uri,
+    required ApiResponse Function(http.Response) processSuccess,
     Map<String, String>? headers,
-  }) =>
-      Globals.client.get(
-        url(uri),
-        headers: headers ?? defaultHeaders,
-      );
+  }) async {
+    final response = await Globals.client.get(
+      url(uri),
+      headers: headers ?? defaultHeaders,
+    );
+
+    if (response.statusCode != HttpStatus.ok) {
+      final errors = ApiErrors.fromHttpResponse(response);
+
+      if (errors.isAuthError()) {
+        await Get.offAllNamed(Routes.login);
+      }
+
+      return errors;
+    }
+
+    return processSuccess(response);
+  }
 
   Future<http.Response> post({
     required String uri,

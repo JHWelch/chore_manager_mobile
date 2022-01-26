@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:chore_manager_mobile/data/chore_manager_web/common/api_error.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/common/api_response.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/common/reponse_type.dart';
 import 'package:chore_manager_mobile/data/concerns/jsonable.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:http/http.dart' as http;
 
-class ApiErrors with Jsonable {
+class ApiErrors extends ApiResponse with Jsonable {
   late final int statusCode;
   late final String message;
   late final List<ApiError>? errors;
@@ -14,9 +16,10 @@ class ApiErrors with Jsonable {
     required this.message,
     required this.errors,
     required this.statusCode,
-  });
+  }) : super(ResponseType.failure);
 
-  ApiErrors.fromHttpResponse(http.Response response) {
+  ApiErrors.fromHttpResponse(http.Response response)
+      : super.fromHttpResponse(response) {
     statusCode = response.statusCode;
     final json = jsonDecode(response.body);
     message = json['message'];
