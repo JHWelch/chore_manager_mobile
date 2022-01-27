@@ -1,22 +1,26 @@
-import 'package:chore_manager_mobile/bindings/initial_binding.dart';
 import 'package:chore_manager_mobile/config/pages.dart';
 import 'package:chore_manager_mobile/config/routes.dart';
 import 'package:chore_manager_mobile/config/themes.dart';
+import 'package:chore_manager_mobile/data/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChoreManager extends GetMaterialApp {
-  final String? token;
-  const ChoreManager({this.token, Key? key}) : super(key: key);
+  final AuthService auth = Get.find();
+
+  ChoreManager({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => GetMaterialApp(
         title: 'ChoreManager',
         theme: Themes.primary,
         getPages: Pages.routes,
-        initialRoute: token != null ? Routes.home : Routes.login,
+        initialRoute: initialRoute,
         unknownRoute: Pages.notFound,
         debugShowCheckedModeBanner: false,
-        initialBinding: InitialBinding(token: token),
       );
+
+  @override
+  String get initialRoute =>
+      auth.authToken().isNotEmpty ? Routes.home : Routes.login;
 }

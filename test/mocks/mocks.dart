@@ -12,20 +12,17 @@ import 'http_mocks.dart';
 Future<void> givenNotLoggedIn() async {
   mockGlobals();
   mockUserToken(null);
-  await mockPermanentControllers();
+  await mockServices();
 }
 
 Future<void> givenLoggedIn() async {
   mockGlobals();
   mockUserToken(mockTokenString);
-  await mockPermanentControllers(initialToken: mockTokenString);
+  await mockServices();
 }
 
-Future<void> mockPermanentControllers({String? initialToken}) async {
-  final auth = Get.put(
-    AuthService(initialToken: initialToken),
-    permanent: true,
-  );
+Future<void> mockServices({String? initialToken}) async {
+  final auth = await Get.putAsync(AuthService().init);
 
   auth.user(AuthUser(
     id: 1,

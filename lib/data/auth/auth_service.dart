@@ -9,11 +9,13 @@ class AuthService extends GetxService {
   final RxString authToken = ''.obs;
   final Rx<AuthUser?> user = Rx<AuthUser?>(null);
 
-  AuthService({String? initialToken}) {
-    authToken(initialToken ?? '');
-  }
-
   bool get isLoggedIn => authToken().isNotEmpty;
+
+  Future<AuthService> init() async {
+    authToken(await retrieveAuthToken());
+
+    return this;
+  }
 
   @override
   Future<void> onInit() async {

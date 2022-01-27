@@ -14,4 +14,5 @@ class ApiResponse {
   }
 
   bool get isSuccess => responseType == ResponseType.success;
+  bool get isFailure => responseType == ResponseType.failure;
 }

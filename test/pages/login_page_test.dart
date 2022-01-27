@@ -58,7 +58,7 @@ void main() {
 
   group('Unauthenticated users', () {
     testWidgets('can see login page.', (tester) async {
-      await tester.pumpWidget(const ChoreManager());
+      await tester.pumpWidget(ChoreManager());
       await tester.pumpAndSettle();
 
       expect(find.byType(LoginPage), findsOneWidget);
