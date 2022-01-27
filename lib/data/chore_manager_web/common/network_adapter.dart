@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:chore_manager_mobile/config/config.dart';
 import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/config/routes.dart';
+import 'package:chore_manager_mobile/data/auth/auth_service.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/common/api_errors.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/common/api_response.dart';
 import 'package:get/get.dart';
@@ -10,9 +11,7 @@ import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkAdapter {
-  String? token;
-
-  NetworkAdapter({this.token});
+  AuthService auth = Get.find();
 
   Future<ApiResponse> get({
     required String uri,
@@ -51,7 +50,7 @@ class NetworkAdapter {
   Uri url(String uri) => Uri.parse('$apiUrl$uri');
 
   Map<String, String> get defaultHeaders => {
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer ${auth.authToken}',
         ...unauthedHeaders,
       };
 

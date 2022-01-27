@@ -8,13 +8,12 @@ class ChoresController extends GetxController {
   final RxList<Chore> chores = RxList<Chore>();
   final RxList<Chore> homePageChores = RxList<Chore>();
   final RxBool isLoading = false.obs;
-  late final ChoresAdapter adapter;
+  final ChoresAdapter adapter = ChoresAdapter();
 
   @override
   Future<void> onInit() async {
     super.onInit();
 
-    adapter = ChoresAdapter(auth.authToken());
     await refreshChores();
   }
 

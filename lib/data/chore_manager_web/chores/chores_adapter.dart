@@ -6,12 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChoresAdapter {
-  String? token;
-  late final NetworkAdapter adapter;
-
-  ChoresAdapter(this.token) {
-    adapter = NetworkAdapter(token: token);
-  }
+  final NetworkAdapter adapter = NetworkAdapter();
 
   Future<List<Chore>> index() async {
     var response = await adapter.get(
