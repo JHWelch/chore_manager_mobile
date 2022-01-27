@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:chore_manager_mobile/chore_manager.dart';
 import 'package:chore_manager_mobile/config/globals.dart';
+import 'package:chore_manager_mobile/data/auth/auth_service.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/common/api_error.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/common/api_errors.dart';
-import 'package:chore_manager_mobile/modules/auth/auth_controller.dart';
 import 'package:chore_manager_mobile/pages/home_page.dart';
 import 'package:chore_manager_mobile/pages/login_page.dart';
 import 'package:flutter/material.dart';
@@ -109,7 +109,7 @@ void main() {
         await _fillFields(tester);
         await _tapLogin(tester);
 
-        final AuthController auth = Get.find();
+        final AuthService auth = Get.find();
         expect(auth.isLoggedIn, true);
       });
 
@@ -171,7 +171,7 @@ void main() {
         await _fillFields(tester);
         await _tapLogin(tester);
 
-        final AuthController auth = Get.find();
+        final AuthService auth = Get.find();
         expect(auth.isLoggedIn, false);
       });
 
@@ -235,7 +235,7 @@ void main() {
         await _fillFields(tester, password: '');
         await _tapLogin(tester);
 
-        final AuthController auth = Get.find();
+        final AuthService auth = Get.find();
         expect(auth.isLoggedIn, false);
       });
 

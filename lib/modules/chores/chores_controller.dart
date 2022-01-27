@@ -1,10 +1,10 @@
+import 'package:chore_manager_mobile/data/auth/auth_service.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/chores/chores_adapter.dart';
-import 'package:chore_manager_mobile/modules/auth/auth_controller.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:get/get.dart';
 
 class ChoresController extends GetxController {
-  final AuthController auth = Get.find();
+  final AuthService auth = Get.find();
   final RxList<Chore> chores = RxList<Chore>();
   final RxList<Chore> homePageChores = RxList<Chore>();
   final RxBool isLoading = false.obs;

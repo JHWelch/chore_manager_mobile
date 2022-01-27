@@ -9,7 +9,7 @@ void main() {
 
     // testWidgets('secure storage is called', (tester) async {
     //   await tester.pumpWidget(WidgetWrapper(LoginPage()));
-    //   await AuthController().setup();
+    //   await AuthService().setup();
 
     //   verify(() => Globals.storage.read(key: authTokenKey));
     // });

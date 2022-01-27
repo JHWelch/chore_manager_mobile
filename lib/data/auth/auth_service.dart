@@ -4,12 +4,12 @@ import 'package:chore_manager_mobile/data/secure_storage/secure_storage.dart';
 import 'package:chore_manager_mobile/modules/login/auth_user.dart';
 import 'package:get/get.dart';
 
-class AuthController extends GetxController {
+class AuthService extends GetxService {
   static const String tokenKey = 'CM_AUTH_TOKEN';
   final RxString authToken = ''.obs;
   final Rx<AuthUser?> user = Rx<AuthUser?>(null);
 
-  AuthController({String? initialToken}) {
+  AuthService({String? initialToken}) {
     authToken(initialToken ?? '');
   }
 
