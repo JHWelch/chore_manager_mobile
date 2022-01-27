@@ -4,8 +4,8 @@ import 'package:chore_manager_mobile/data/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
-  Globals.initializeHttp();
-  Globals.initializeSecureStorage();
+  Globals.initHttp();
+  Globals.initSecureStorage();
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(ChoreManager(token: await retrieveAuthToken()));

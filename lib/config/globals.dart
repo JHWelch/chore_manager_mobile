@@ -6,11 +6,11 @@ class Globals {
   static late http.Client client;
   static late FlutterSecureStorage storage;
 
-  static void initializeHttp() {
+  static void initHttp() {
     client = IOClient();
   }
 
-  static void initializeSecureStorage() {
+  static void initSecureStorage() {
     storage = const FlutterSecureStorage();
   }
 }
