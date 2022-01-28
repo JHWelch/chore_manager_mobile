@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 
+import '../data/chore_manager_web/users/user_adapter_mocks.dart';
 import 'http_mocks.dart';
 
 Future<void> givenNotLoggedIn() async {
@@ -18,6 +19,7 @@ Future<void> givenNotLoggedIn() async {
 Future<void> givenLoggedIn() async {
   mockGlobals();
   mockUserToken(mockTokenString);
+  mockAuthUserGet();
   await mockServices();
 }
 

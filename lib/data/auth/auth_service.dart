@@ -1,5 +1,6 @@
 import 'package:chore_manager_mobile/config/routes.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/login/login_response.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/users/users_adapter.dart';
 import 'package:chore_manager_mobile/data/secure_storage/secure_storage.dart';
 import 'package:chore_manager_mobile/modules/login/auth_user.dart';
 import 'package:get/get.dart';
@@ -12,7 +13,9 @@ class AuthService extends GetxService {
   bool get isLoggedIn => authToken().isNotEmpty;
 
   Future<AuthService> init() async {
-    authToken(await retrieveAuthToken());
+    authToken(await retrieveAuthToken() ?? '');
+
+    if (authToken.isNotEmpty) await fetchAuthUser();
 
     return this;
   }
@@ -37,4 +40,7 @@ class AuthService extends GetxService {
       Get.offAllNamed(Routes.login);
     }
   }
+
+  Future<void> fetchAuthUser() async =>
+      user(await UsersAdapter(token: authToken()).authUser());
 }

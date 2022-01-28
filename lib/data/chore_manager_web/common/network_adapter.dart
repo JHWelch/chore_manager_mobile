@@ -11,7 +11,16 @@ import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkAdapter {
-  AuthService auth = Get.find();
+  late String token;
+
+  NetworkAdapter({String? token}) {
+    if (token == null) {
+      final AuthService auth = Get.find();
+      this.token = auth.authToken();
+    } else {
+      this.token = token;
+    }
+  }
 
   Future<ApiResponse> get({
     required String uri,
@@ -50,7 +59,7 @@ class NetworkAdapter {
   Uri url(String uri) => Uri.parse('$apiUrl$uri');
 
   Map<String, String> get defaultHeaders => {
-        'Authorization': 'Bearer ${auth.authToken}',
+        'Authorization': 'Bearer $token',
         ...unauthedHeaders,
       };
 

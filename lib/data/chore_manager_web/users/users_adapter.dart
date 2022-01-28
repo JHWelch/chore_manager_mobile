@@ -3,7 +3,11 @@ import 'package:chore_manager_mobile/data/chore_manager_web/users/auth_user_resp
 import 'package:chore_manager_mobile/modules/login/auth_user.dart';
 
 class UsersAdapter {
-  NetworkAdapter adapter = NetworkAdapter();
+  late final NetworkAdapter adapter;
+
+  UsersAdapter({String? token}) {
+    adapter = NetworkAdapter(token: token);
+  }
 
   Future<AuthUser> authUser() async {
     final response = await adapter.get(
