@@ -4,13 +4,11 @@ import 'package:chore_manager_mobile/data/chore_manager_web/common/api_response.
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:http/http.dart' as http;
 
-class ChoresResponse extends ApiResponse {
-  late final List<Chore> chores;
+class ChoreResponse extends ApiResponse {
+  late final Chore chore;
 
-  ChoresResponse.fromHttpResponse(http.Response response)
+  ChoreResponse.fromHttpResponse(http.Response response)
       : super.fromHttpResponse(response) {
-    chores = (jsonDecode(response.body)['data'] as List)
-        .map(Chore.fromJson)
-        .toList();
+    chore = Chore.fromJson(jsonDecode(response.body)['data']);
   }
 }

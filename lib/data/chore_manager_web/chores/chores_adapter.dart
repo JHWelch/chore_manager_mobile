@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:chore_manager_mobile/data/chore_manager_web/chores/chore_response.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/chores/chores_response.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/common/api_errors.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/common/network_adapter.dart';
@@ -13,7 +12,7 @@ class ChoresAdapter {
   Future<List<Chore>> index() async {
     var response = await adapter.get(
       uri: 'chores',
-      processSuccess: ChoreIndexResponse.fromHttpResponse,
+      processSuccess: ChoresResponse.fromHttpResponse,
     );
 
     if (response.isFailure) {
@@ -28,7 +27,7 @@ class ChoresAdapter {
       ));
     }
 
-    response = response as ChoreIndexResponse;
+    response = response as ChoresResponse;
     return response.chores;
   }
 
@@ -36,8 +35,9 @@ class ChoresAdapter {
     final response = await adapter.patch(
       uri: 'chores/${chore.id}',
       body: {'completed': true},
-    );
+      processSuccess: ChoreResponse.fromHttpResponse,
+    ) as ChoreResponse;
 
-    return Chore.fromJson(jsonDecode(response.body));
+    return response.chore;
   }
 }
