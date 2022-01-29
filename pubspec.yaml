@@ -9,6 +9,7 @@ environment:
   sdk: ">=2.15.0 <3.0.0"
 
 dependencies:
+  equatable: ^2.0.5
   flutter:
     sdk: flutter
   flutter_secure_storage: ^8.0.0
