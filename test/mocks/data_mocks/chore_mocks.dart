@@ -10,3 +10,10 @@ void mockChoreIndex({List<Chore>? chores}) {
 
   mockGet('chores', http.Response(jsonEncode(json), 200));
 }
+
+void mockChoreComplete({required Chore chore}) {
+  final Map<String, dynamic> json = {'completed': true};
+
+  mockPatch('chores/${chore.id}', http.Response(chore.toJsonString(), 200),
+      jsonEncode(json));
+}

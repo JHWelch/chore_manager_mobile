@@ -56,6 +56,17 @@ class NetworkAdapter {
         body: jsonEncode(body),
       );
 
+  Future<http.Response> patch({
+    required String uri,
+    Map<String, String>? headers,
+    Map<String, dynamic>? body,
+  }) =>
+      Globals.client.patch(
+        url(uri),
+        headers: headers ?? defaultHeaders,
+        body: jsonEncode(body),
+      );
+
   Uri url(String uri) => Uri.parse('$apiUrl$uri');
 
   Map<String, String> get defaultHeaders => {
