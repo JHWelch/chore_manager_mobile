@@ -79,10 +79,10 @@ void main() {
         });
 
         mockPost(
-          'token',
-          http.Response(json, 200),
-          _authJson(),
-          expectedAuthHeaders(),
+          path: 'token',
+          body: _authJson(),
+          response: http.Response(json, 200),
+          headers: expectedAuthHeaders(),
         );
       });
 
@@ -130,8 +130,9 @@ void main() {
     group('email has api errors', () {
       setUp(() {
         mockPost(
-          'token',
-          http.Response(
+          path: 'token',
+          body: _authJson(),
+          response: http.Response(
             ApiErrors(
               statusCode: 422,
               message: 'The given data was invalid.',
@@ -143,8 +144,7 @@ void main() {
             ).toJsonString(),
             422,
           ),
-          _authJson(),
-          expectedAuthHeaders(),
+          headers: expectedAuthHeaders(),
         );
       });
 
@@ -194,8 +194,10 @@ void main() {
     group('password has api errors', () {
       setUp(() {
         mockPost(
-          'token',
-          http.Response(
+          path: 'token',
+          headers: expectedAuthHeaders(),
+          body: _authJson(password: ''),
+          response: http.Response(
             ApiErrors(
               statusCode: 422,
               message: 'The given data was invalid.',
@@ -207,8 +209,6 @@ void main() {
             ).toJsonString(),
             422,
           ),
-          _authJson(password: ''),
-          expectedAuthHeaders(),
         );
       });
 

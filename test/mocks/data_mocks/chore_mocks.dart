@@ -8,12 +8,15 @@ import '../http_mocks.dart';
 void mockChoreIndex({List<Chore>? chores}) {
   final Map<String, dynamic> json = {'data': chores ?? []};
 
-  mockGet('chores', http.Response(jsonEncode(json), 200));
+  mockGet(path: 'chores', response: http.Response(jsonEncode(json), 200));
 }
 
 void mockChoreComplete({required Chore chore}) {
   final Map<String, dynamic> json = {'completed': true};
 
-  mockPatch('chores/${chore.id}', http.Response(chore.toJsonString(), 200),
-      jsonEncode(json));
+  mockPatch(
+    path: 'chores/${chore.id}',
+    body: jsonEncode(json),
+    response: http.Response(chore.toJsonString(), 200),
+  );
 }

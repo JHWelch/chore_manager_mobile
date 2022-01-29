@@ -4,8 +4,8 @@ import 'package:http/http.dart';
 import '../../../mocks/http_mocks.dart';
 
 void mockAuthUserGet() => mockGet(
-    'auth_user',
-    Response(
+    path: 'auth_user',
+    response: Response(
       jsonEncode({
         'user': {
           'id': 1,
