@@ -33,6 +33,21 @@ void mockPost(
   ).thenAnswer((_) async => response);
 }
 
+void mockPatch(
+  String path,
+  http.Response response,
+  String body, [
+  Map<String, String>? headers,
+]) {
+  when(
+    () => Globals.client.patch(
+      expectedPath(path),
+      headers: headers ?? expectedHeaders(),
+      body: body,
+    ),
+  ).thenAnswer((_) async => response);
+}
+
 Uri expectedPath(String path) {
   return Uri.parse(apiUrl + path);
 }
