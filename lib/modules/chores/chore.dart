@@ -1,21 +1,22 @@
 import 'package:chore_manager_mobile/data/concerns/jsonable.dart';
 import 'package:chore_manager_mobile/extensions/date_time_formatting.dart';
+import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 
-class Chore with Jsonable {
-  int id;
-  int userId;
-  String title;
-  String? description;
-  DateTime createdAt;
-  DateTime updatedAt;
-  int? teamId;
-  int? frequencyId;
-  int? frequencyInterval;
-  int? frequencyDayOf;
-  int? nextDueUserId;
-  DateTime? nextDueDate;
-  DateTime? dueDateUpdatedAt;
+class Chore extends Equatable with Jsonable {
+  final int id;
+  final int userId;
+  final String title;
+  final String? description;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final int? teamId;
+  final int? frequencyId;
+  final int? frequencyInterval;
+  final int? frequencyDayOf;
+  final int? nextDueUserId;
+  final DateTime? nextDueDate;
+  final DateTime? dueDateUpdatedAt;
 
   Chore({
     required this.id,
@@ -69,7 +70,24 @@ class Chore with Jsonable {
       };
 
   @override
-  String toString() => toJsonString();
+  bool get stringify => true;
+
+  @override
+  List<Object?> get props => [
+        id,
+        userId,
+        title,
+        description,
+        createdAt,
+        updatedAt,
+        teamId,
+        frequencyId,
+        frequencyInterval,
+        frequencyDayOf,
+        nextDueUserId,
+        nextDueDate,
+        dueDateUpdatedAt,
+      ];
 
   String get friendlyDueDate {
     if (this.nextDueDate == null) return '-';
