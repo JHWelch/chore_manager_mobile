@@ -17,6 +17,6 @@ void mockChoreComplete({required Chore chore}) {
   mockPatch(
     path: 'chores/${chore.id}',
     body: jsonEncode(json),
-    response: http.Response(chore.toJsonString(), 200),
+    response: http.Response(jsonEncode({'data': chore.toJson()}), 200),
   );
 }
