@@ -70,7 +70,9 @@ class NetworkAdapter {
       final errors = ApiErrors.fromHttpResponse(response);
 
       if (errors.isAuthError()) {
-        await Get.offAllNamed(Routes.login);
+        if (Get.currentRoute.isNotEmpty) {
+          await Get.offAllNamed(Routes.login);
+        }
       }
 
       return errors;
