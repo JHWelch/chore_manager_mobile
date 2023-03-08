@@ -84,7 +84,7 @@ class Chore with Jsonable {
       return 'tomorrow';
     } else if (timeDiffInDays == -1) {
       return 'yeseterday';
-    } else if (timeDiffInDays < 7) {
+    } else if (timeDiffInDays < 6) {
       return DateFormat(DateFormat.WEEKDAY).format(nextDueDate);
     }
 
