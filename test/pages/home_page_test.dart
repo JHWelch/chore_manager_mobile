@@ -1,13 +1,18 @@
+import 'dart:convert';
+
+import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../factories/chore_factory.dart';
 import '../helpers/widget_wrapper.dart';
 import '../mocks/data_mocks/chore_mocks.dart';
+import '../mocks/http_mocks.dart';
 import '../mocks/mocks.dart';
 
 void main() {
@@ -125,6 +130,22 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(dismissible, findsNothing);
+      });
+
+      testWidgets('chore is marked complete', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(HomePage()));
+        mockChoreComplete(chore: chore);
+        mockChoreIndex(chores: [ChoreFactory().build()]);
+        final dismissible = find.byType(Dismissible);
+
+        await tester.drag(dismissible, const Offset(500, 0));
+        await tester.pumpAndSettle();
+
+        verify(() => Globals.client.patch(
+              expectedPath('chores/${chore.id}'),
+              headers: expectedHeaders(),
+              body: jsonEncode({'completed': true}),
+            ));
       });
     });
   });
