@@ -77,6 +77,8 @@ class NetworkAdapter {
 
       return errors;
     }
+
+    return null;
   }
 
   Uri url(String uri) => Uri.parse('$apiUrl$uri');
