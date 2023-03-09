@@ -1,3 +1,4 @@
+import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -104,6 +105,27 @@ void main() {
       for (final chore in chores) {
         expect(find.text(chore.title), findsOneWidget);
       }
+    });
+
+    group('tap complete on a chore', () {
+      late Chore chore;
+
+      setUp(() {
+        chore = ChoreFactory().build();
+        mockChoreIndex(chores: [chore]);
+      });
+
+      testWidgets('chore line is dismissed', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(HomePage()));
+        final dismissible = find.byType(Dismissible);
+
+        expect(dismissible, findsOneWidget);
+
+        await tester.drag(dismissible, const Offset(500, 0));
+        await tester.pumpAndSettle();
+
+        expect(dismissible, findsNothing);
+      });
     });
   });
 }

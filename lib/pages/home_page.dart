@@ -28,10 +28,12 @@ class HomePage extends StatelessWidget {
     final Chore chore = controller.homePageChores()[index];
 
     return Dismissible(
-      key: ValueKey<int>(chore.id),
+      key: UniqueKey(),
       background: _dismissibleBackground,
       secondaryBackground: _dismissibleSecondaryBackground,
-      onDismissed: (direction) {},
+      onDismissed: (direction) {
+        controller.homePageChores.removeAt(index);
+      },
       child: ListTile(
         title: Text(chore.title),
         trailing: Text(chore.friendlyDueDate),
