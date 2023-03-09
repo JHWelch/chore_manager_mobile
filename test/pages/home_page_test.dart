@@ -126,7 +126,7 @@ void main() {
 
         expect(dismissible, findsOneWidget);
 
-        await tester.drag(dismissible, const Offset(500, 0));
+        await tester.dismiss(dismissible);
         await tester.pumpAndSettle();
 
         expect(dismissible, findsNothing);
@@ -138,7 +138,7 @@ void main() {
         mockChoreIndex(chores: [ChoreFactory().build()]);
         final dismissible = find.byType(Dismissible);
 
-        await tester.drag(dismissible, const Offset(500, 0));
+        await tester.dismiss(dismissible);
         await tester.pumpAndSettle();
 
         verify(() => Globals.client.patch(
@@ -155,7 +155,7 @@ void main() {
         mockChoreIndex(chores: [newChore]);
         final dismissible = find.byType(Dismissible);
 
-        await tester.drag(dismissible, const Offset(500, 0));
+        await tester.dismiss(dismissible);
         await tester.pumpAndSettle();
 
         expect(find.text(newChore.title), findsOneWidget);
