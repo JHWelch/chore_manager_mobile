@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:chore_manager_mobile/components/spinner.dart';
 import 'package:chore_manager_mobile/config/globals.dart';
+import 'package:chore_manager_mobile/constants/strings.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/pages/home_page.dart';
 import 'package:flutter/material.dart';
@@ -99,19 +101,42 @@ void main() {
       expect(find.text(chore.title), findsNothing);
     });
 
-    testWidgets('user can refresh to see new chores', (tester) async {
-      mockChoreIndex();
-      await tester.pumpWidget(WidgetWrapper(HomePage()));
+    group('tap refresh button', () {
+      setUp(mockChoreIndex);
 
-      final chores = ChoreFactory().listOf(3);
-      mockChoreIndex(chores: chores);
-
-      await tester.tap(find.byIcon(Icons.refresh));
-      await tester.pumpAndSettle();
-
-      for (final chore in chores) {
-        expect(find.text(chore.title), findsOneWidget);
+      Future<void> clickRefreshButton(WidgetTester tester) async {
+        await tester.tap(find.byIcon(Icons.refresh));
       }
+
+      testWidgets('user can refresh to see new chores', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(HomePage()));
+
+        final chores = ChoreFactory().listOf(3);
+        mockChoreIndex(chores: chores);
+
+        await clickRefreshButton(tester);
+        await tester.pumpAndSettle();
+
+        for (final chore in chores) {
+          expect(find.text(chore.title), findsOneWidget);
+        }
+      });
+
+      testWidgets('refresh icon spins and tooltip changes', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(HomePage()));
+
+        final chores = ChoreFactory().listOf(3);
+        mockChoreIndex(chores: chores, delay: const Duration(seconds: 2));
+
+        await clickRefreshButton(tester);
+        await tester.pump(const Duration(seconds: 1));
+
+        expect(find.byType(Spinner), findsOneWidget);
+        expect(find.byTooltip(Strings.refreshingChores), findsOneWidget);
+        await tester.pumpAndSettle();
+        expect(find.byType(Spinner), findsNothing);
+        expect(find.byTooltip(Strings.refreshChores), findsOneWidget);
+      });
     });
 
     group('tap complete on a chore', () {

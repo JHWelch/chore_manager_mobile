@@ -1,5 +1,6 @@
 import 'package:chore_manager_mobile/components/cm_scaffold.dart';
 import 'package:chore_manager_mobile/components/spinner.dart';
+import 'package:chore_manager_mobile/constants/strings.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/modules/chores/chores_controller.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +68,9 @@ class _RefreshButton extends StatelessWidget {
     return Obx(
       () => IconButton(
         onPressed: controller.refreshChores,
+        tooltip: controller.isLoading()
+            ? Strings.refreshingChores
+            : Strings.refreshChores,
         icon: controller.isLoading()
             ? const Spinner(icon: Icons.refresh)
             : const Icon(Icons.refresh),
