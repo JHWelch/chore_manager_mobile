@@ -9,13 +9,23 @@ void mockGet({
   required String path,
   required http.Response response,
   Map<String, String>? headers,
+  Duration? delay,
 }) {
   when(
     () => Globals.client.get(
       expectedPath(path),
       headers: headers ?? expectedHeaders(),
     ),
-  ).thenAnswer((_) async => response);
+  ).thenAnswer(delayedOrNot(response, delay));
+}
+
+Future<http.Response> Function(Invocation) delayedOrNot(
+  http.Response response,
+  Duration? delay,
+) {
+  return delay == null
+      ? (_) async => response
+      : (_) => Future.delayed(delay, () => response);
 }
 
 void mockPost({

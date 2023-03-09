@@ -5,10 +5,14 @@ import 'package:http/http.dart' as http;
 
 import '../http_mocks.dart';
 
-void mockChoreIndex({List<Chore>? chores}) {
+void mockChoreIndex({List<Chore>? chores, Duration? delay}) {
   final Map<String, dynamic> json = {'data': chores ?? []};
 
-  mockGet(path: 'chores', response: http.Response(jsonEncode(json), 200));
+  mockGet(
+    path: 'chores',
+    response: http.Response(jsonEncode(json), 200),
+    delay: delay,
+  );
 }
 
 void mockChoreComplete({required Chore chore}) {
