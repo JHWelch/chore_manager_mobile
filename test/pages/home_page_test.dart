@@ -132,7 +132,7 @@ void main() {
         expect(dismissible, findsNothing);
       });
 
-      testWidgets('chore is marked complete', (tester) async {
+      testWidgets('chore is marked completed', (tester) async {
         await tester.pumpWidget(WidgetWrapper(HomePage()));
         mockChoreComplete(chore: chore);
         mockChoreIndex(chores: [ChoreFactory().build()]);
@@ -146,6 +146,19 @@ void main() {
               headers: expectedHeaders(),
               body: jsonEncode({'completed': true}),
             ));
+      });
+
+      testWidgets('chore list is refreshed with new chores', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(HomePage()));
+        mockChoreComplete(chore: chore);
+        final newChore = ChoreFactory().build();
+        mockChoreIndex(chores: [newChore]);
+        final dismissible = find.byType(Dismissible);
+
+        await tester.drag(dismissible, const Offset(500, 0));
+        await tester.pumpAndSettle();
+
+        expect(find.text(newChore.title), findsOneWidget);
       });
     });
   });
