@@ -9,17 +9,15 @@ flutter pub get
 
 ## Linter
 ```sh
-dart analyze .
+flutter analyze
 ```
 
 ## Tests
-Generate mocks if needed.
 ```sh
 flutter test
 ```
 
 ## Coverage (Mac)
-Generate mocks if needed.
 ```sh
 brew install lcov
 flutter test --coverage
