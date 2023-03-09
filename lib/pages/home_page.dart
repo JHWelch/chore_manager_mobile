@@ -26,11 +26,32 @@ class HomePage extends StatelessWidget {
 
   Widget _listItem(BuildContext context, int index) {
     final Chore chore = controller.homePageChores()[index];
-    return ListTile(
-      title: Text(chore.title),
-      trailing: Text(chore.friendlyDueDate),
+
+    return Dismissible(
+      key: UniqueKey(),
+      background: _dismissibleBackground,
+      secondaryBackground: _dismissibleSecondaryBackground,
+      onDismissed: (_) => controller.completeChore(index),
+      child: ListTile(
+        title: Text(chore.title),
+        trailing: Text(chore.friendlyDueDate),
+      ),
     );
   }
+
+  Widget get _dismissibleBackground => Container(
+        padding: const EdgeInsets.only(left: 10),
+        alignment: Alignment.centerLeft,
+        color: Colors.purple,
+        child: const Icon(Icons.check_circle_outline),
+      );
+
+  Widget get _dismissibleSecondaryBackground => Container(
+        padding: const EdgeInsets.only(right: 10),
+        alignment: Alignment.centerRight,
+        color: Colors.purple,
+        child: const Icon(Icons.check_circle_outline),
+      );
 }
 
 class _RefreshButton extends StatelessWidget {

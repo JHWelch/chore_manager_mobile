@@ -32,29 +32,52 @@ class NetworkAdapter {
       headers: headers ?? defaultHeaders,
     );
 
+    return await parseErrors(response) ?? processSuccess(response);
+  }
+
+  Future<ApiResponse> post({
+    required String uri,
+    required ApiResponse Function(http.Response) processSuccess,
+    Map<String, String>? headers,
+    Map<String, dynamic>? body,
+  }) async {
+    final response = await Globals.client.post(
+      url(uri),
+      headers: headers ?? defaultHeaders,
+      body: jsonEncode(body),
+    );
+
+    return await parseErrors(response) ?? processSuccess(response);
+  }
+
+  Future<ApiResponse> patch({
+    required String uri,
+    required ApiResponse Function(http.Response) processSuccess,
+    Map<String, String>? headers,
+    Map<String, dynamic>? body,
+  }) async {
+    final response = await Globals.client.patch(
+      url(uri),
+      headers: headers ?? defaultHeaders,
+      body: jsonEncode(body),
+    );
+
+    return await parseErrors(response) ?? processSuccess(response);
+  }
+
+  Future<ApiErrors?> parseErrors(http.Response response) async {
     if (response.statusCode != HttpStatus.ok) {
       final errors = ApiErrors.fromHttpResponse(response);
 
       if (errors.isAuthError()) {
-        await Get.offAllNamed(Routes.login);
+        if (Get.currentRoute.isNotEmpty) {
+          await Get.offAllNamed(Routes.login);
+        }
       }
 
       return errors;
     }
-
-    return processSuccess(response);
   }
-
-  Future<http.Response> post({
-    required String uri,
-    Map<String, String>? headers,
-    Map<String, dynamic>? body,
-  }) =>
-      Globals.client.post(
-        url(uri),
-        headers: headers ?? defaultHeaders,
-        body: jsonEncode(body),
-      );
 
   Uri url(String uri) => Uri.parse('$apiUrl$uri');
 

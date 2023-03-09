@@ -20,6 +20,16 @@ class ChoresController extends GetxController {
   List<Chore> withDueDate() =>
       chores().where((chore) => chore.nextDueDate != null).toList();
 
+  Future<void> completeChore(int index) async {
+    final Chore chore = homePageChores[index];
+
+    await adapter.complete(chore);
+
+    homePageChores.removeAt(index);
+
+    return refreshChores();
+  }
+
   Future<void> refreshChores() async {
     isLoading(true);
 

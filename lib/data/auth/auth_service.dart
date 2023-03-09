@@ -15,7 +15,11 @@ class AuthService extends GetxService {
   Future<AuthService> init() async {
     authToken(await retrieveAuthToken() ?? '');
 
-    if (authToken.isNotEmpty) await fetchAuthUser();
+    try {
+      if (authToken.isNotEmpty) await fetchAuthUser();
+    } on Exception {
+      authToken('');
+    }
 
     return this;
   }

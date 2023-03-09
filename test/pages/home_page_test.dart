@@ -1,12 +1,18 @@
+import 'dart:convert';
+
+import 'package:chore_manager_mobile/config/globals.dart';
+import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../factories/chore_factory.dart';
-import '../helpers/widget_wrapper.dart';
+import '../helpers/helpers.dart';
 import '../mocks/data_mocks/chore_mocks.dart';
+import '../mocks/http_mocks.dart';
 import '../mocks/mocks.dart';
 
 void main() {
@@ -104,6 +110,58 @@ void main() {
       for (final chore in chores) {
         expect(find.text(chore.title), findsOneWidget);
       }
+    });
+
+    group('tap complete on a chore', () {
+      late Chore chore;
+
+      setUp(() {
+        chore = ChoreFactory().build();
+        mockChoreIndex(chores: [chore]);
+      });
+
+      testWidgets('chore line is dismissed', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(HomePage()));
+        mockChoreComplete(chore: chore);
+        mockChoreIndex(chores: [ChoreFactory().build()]);
+        final dismissible = find.widgetWithText(Dismissible, chore.title);
+
+        expect(dismissible, findsOneWidget);
+
+        await tester.dismiss(dismissible);
+        await tester.pumpAndSettle();
+
+        expect(dismissible, findsNothing);
+      });
+
+      testWidgets('chore is marked completed', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(HomePage()));
+        mockChoreComplete(chore: chore);
+        mockChoreIndex(chores: [ChoreFactory().build()]);
+        final dismissible = find.byType(Dismissible);
+
+        await tester.dismiss(dismissible);
+        await tester.pumpAndSettle();
+
+        verify(() => Globals.client.patch(
+              expectedPath('chores/${chore.id}'),
+              headers: expectedHeaders(),
+              body: jsonEncode({'completed': true}),
+            ));
+      });
+
+      testWidgets('chore list is refreshed with new chores', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(HomePage()));
+        mockChoreComplete(chore: chore);
+        final newChore = ChoreFactory().build();
+        mockChoreIndex(chores: [newChore]);
+        final dismissible = find.byType(Dismissible);
+
+        await tester.dismiss(dismissible);
+        await tester.pumpAndSettle();
+
+        expect(find.text(newChore.title), findsOneWidget);
+      });
     });
   });
 }
