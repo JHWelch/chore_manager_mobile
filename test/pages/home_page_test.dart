@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../factories/chore_factory.dart';
-import '../helpers/widget_wrapper.dart';
+import '../helpers/helpers.dart';
 import '../mocks/data_mocks/chore_mocks.dart';
 import '../mocks/http_mocks.dart';
 import '../mocks/mocks.dart';
@@ -122,7 +122,9 @@ void main() {
 
       testWidgets('chore line is dismissed', (tester) async {
         await tester.pumpWidget(WidgetWrapper(HomePage()));
-        final dismissible = find.byType(Dismissible);
+        mockChoreComplete(chore: chore);
+        mockChoreIndex(chores: [ChoreFactory().build()]);
+        final dismissible = find.widgetWithText(Dismissible, chore.title);
 
         expect(dismissible, findsOneWidget);
 
