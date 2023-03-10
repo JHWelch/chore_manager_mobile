@@ -12,7 +12,10 @@ class ShowChorePage extends StatelessWidget {
     return CMScaffold(
         title: chore.title,
         body: Column(children: [
-          Text(chore.friendlyDueDate),
+          Text(
+            chore.friendlyDueDate,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           Text(chore.friendlyFrequency),
           Text(chore.description ?? ''),
         ]));

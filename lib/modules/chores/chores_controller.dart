@@ -17,6 +17,8 @@ class ChoresController extends GetxController {
     await refreshChores();
   }
 
+  Chore chore(int id) => chores().firstWhere((chore) => chore.id == id);
+
   List<Chore> withDueDate() =>
       chores().where((chore) => chore.nextDueDate != null).toList();
 

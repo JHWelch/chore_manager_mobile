@@ -5,10 +5,10 @@ import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/constants/strings.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/pages/home_page.dart';
+import 'package:chore_manager_mobile/pages/show_chore_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../factories/chore_factory.dart';
@@ -89,6 +89,25 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.byType(Spinner), findsNothing);
         expect(find.byTooltip(Strings.refreshChores), findsOneWidget);
+      });
+    });
+
+    group('tap on a chore', () {
+      late Chore chore;
+
+      setUp(() {
+        chore = ChoreFactory().build();
+        mockChoreIndex(chores: [chore]);
+      });
+
+      testWidgets('navigate to the show chore page', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(HomePage()));
+
+        await tester.tap(find.text(chore.title));
+        await tester.pumpAndSettle();
+
+        expect(find.byType(ShowChorePage), findsOneWidget);
+        expect(find.text(chore.title), findsOneWidget);
       });
     });
 

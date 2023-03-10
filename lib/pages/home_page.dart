@@ -36,6 +36,7 @@ class HomePage extends StatelessWidget {
       child: ListTile(
         title: Text(chore.title),
         trailing: Text(chore.friendlyDueDate),
+        onTap: () => Get.toNamed('/chores/${chore.id}'),
       ),
     );
   }
