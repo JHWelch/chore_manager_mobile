@@ -19,6 +19,7 @@ class PasswordField extends StatelessWidget with HasValidation {
       enableSuggestions: false,
       autocorrect: false,
       validator: validate,
+      autofillHints: const [AutofillHints.password],
     );
   }
 

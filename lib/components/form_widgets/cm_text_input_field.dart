@@ -7,6 +7,7 @@ class CMTextInputField extends StatelessWidget {
   final bool obscureText;
   final bool enableSuggestions;
   final bool autocorrect;
+  final Iterable<String>? autofillHints;
 
   const CMTextInputField({
     this.onChanged,
@@ -15,6 +16,7 @@ class CMTextInputField extends StatelessWidget {
     this.obscureText = false,
     this.enableSuggestions = true,
     this.autocorrect = true,
+    this.autofillHints,
     Key? key,
   }) : super(key: key);
 
@@ -30,6 +32,7 @@ class CMTextInputField extends StatelessWidget {
       enableSuggestions: enableSuggestions,
       autocorrect: autocorrect,
       validator: validator,
+      autofillHints: autofillHints,
     );
   }
 }

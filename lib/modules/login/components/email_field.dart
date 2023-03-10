@@ -16,6 +16,7 @@ class EmailField extends StatelessWidget with HasValidation {
       onChanged: controller.loginForm.email,
       validator: validate,
       labelText: 'Email',
+      autofillHints: const [AutofillHints.email, AutofillHints.username],
     );
   }
 
