@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/intl.dart';
+
+import '../../../factories/chore_factory.dart';
 
 void main() {
   const String _json = '''
@@ -60,5 +63,43 @@ void main() {
     );
 
     expect(chore.toJsonString(), _json.replaceAll(spacesOutsideQuotes, ''));
+  });
+
+  group('friendlyDueDate', () {
+    test('for today', () {
+      final chore = ChoreFactory().state({
+        'nextDueDate': DateTime.now(),
+      }).build();
+
+      expect('today', chore.friendlyDueDate);
+    });
+
+    test('for tomorrow', () {
+      final chore = ChoreFactory().state({
+        'nextDueDate': DateTime.now().add(const Duration(days: 1)),
+      }).build();
+
+      expect('tomorrow', chore.friendlyDueDate);
+    });
+
+    test('as day name for days between +2 and +6', () {
+      final dayPlus2 = DateTime.now().add(const Duration(days: 2));
+      final dayPlus6 = DateTime.now().add(const Duration(days: 6));
+      final chore1 = ChoreFactory().state({'nextDueDate': dayPlus2}).build();
+      final chore2 = ChoreFactory().state({'nextDueDate': dayPlus6}).build();
+
+      final dayPlus2String = DateFormat(DateFormat.WEEKDAY).format(dayPlus2);
+      final dayPlus6String = DateFormat(DateFormat.WEEKDAY).format(dayPlus6);
+      expect(dayPlus2String, chore1.friendlyDueDate);
+      expect(dayPlus6String, chore2.friendlyDueDate);
+    });
+
+    test('see date formatted for day 7 on', () {
+      final day = DateTime.now().add(const Duration(days: 7));
+      final chore = ChoreFactory().state({'nextDueDate': day}).build();
+
+      final dayString = DateFormat(DateFormat.YEAR_NUM_MONTH_DAY).format(day);
+      expect(dayString, chore.friendlyDueDate);
+    });
   });
 }
