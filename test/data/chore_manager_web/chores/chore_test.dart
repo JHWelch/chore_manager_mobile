@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
+import 'package:chore_manager_mobile/modules/chores/frequency.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 
@@ -35,7 +36,7 @@ void main() {
     expect(chore.title, 'Do the dishes');
     expect(chore.description, 'This is the description.');
     expect(chore.teamId, 1);
-    expect(chore.frequencyId, 2);
+    expect(chore.frequency.id, 2);
     expect(chore.frequencyInterval, 1);
     expect(chore.frequencyDayOf, 3);
     expect(chore.createdAt, DateTime.utc(2022, 01, 12, 03, 37, 05));
@@ -52,7 +53,7 @@ void main() {
       title: 'Do the dishes',
       description: 'This is the description.',
       teamId: 1,
-      frequencyId: 2,
+      frequency: Frequency.fromId(2),
       frequencyInterval: 1,
       frequencyDayOf: 3,
       createdAt: DateTime.utc(2022, 01, 12, 03, 37, 05),

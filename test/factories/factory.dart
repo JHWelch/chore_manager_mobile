@@ -1,6 +1,3 @@
-import 'package:chore_manager_mobile/extensions/date_time_formatting.dart';
-import 'package:faker/faker.dart';
-
 abstract class Factory<T> {
   Map<String, dynamic> properties = {};
 
@@ -27,7 +24,4 @@ abstract class Factory<T> {
       properties.containsKey(propertyName)
           ? properties[propertyName]
           : defaultValue;
-
-  /// Additional Fakers
-  DateTime date() => faker.date.dateTime().toStartOfDay();
 }

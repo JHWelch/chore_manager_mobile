@@ -1,7 +1,8 @@
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
-import 'package:faker/faker.dart';
+import 'package:chore_manager_mobile/modules/chores/frequency.dart';
 
 import 'factory.dart';
+import 'faker.dart';
 
 class ChoreFactory extends Factory<Chore> {
   @override
@@ -13,11 +14,11 @@ class ChoreFactory extends Factory<Chore> {
         createdAt: getProperty('createdAt', faker.date.dateTime()),
         updatedAt: getProperty('updatedAt', faker.date.dateTime()),
         teamId: getProperty('teamId', random.integer(500, min: 1)),
-        frequencyId: getProperty('frequencyId', random.integer(5)),
+        frequency: getProperty('frequency', faker.frequency()),
         frequencyInterval: getProperty('frequencyInterval', random.integer(5)),
         frequencyDayOf: getProperty('frequencyDayOf', 0),
         nextDueUserId: getProperty('nextDueUserId', 1),
-        nextDueDate: getProperty('nextDueDate', date()),
+        nextDueDate: getProperty('nextDueDate', faker.startOfDay()),
         dueDateUpdatedAt:
             getProperty('dueDateUpdatedAt', faker.date.dateTime()),
       );
