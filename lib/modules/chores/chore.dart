@@ -110,5 +110,7 @@ class Chore extends Equatable with Jsonable {
     return DateFormat(DateFormat.YEAR_NUM_MONTH_DAY).format(nextDueDate);
   }
 
+  String get friendlyFrequency => frequency.friendlyName;
+
   bool get hasNoDueDate => nextDueDate != null;
 }

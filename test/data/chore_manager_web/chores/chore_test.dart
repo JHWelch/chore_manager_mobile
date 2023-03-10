@@ -103,4 +103,38 @@ void main() {
       expect(dayString, chore.friendlyDueDate);
     });
   });
+
+  group('friendlyFrequency', () {
+    test('for daily', () {
+      final chore = ChoreFactory().state({
+        'frequency': Frequency.daily,
+      }).build();
+
+      expect('daily', chore.friendlyFrequency);
+    });
+
+    test('for weekly', () {
+      final chore = ChoreFactory().state({
+        'frequency': Frequency.weekly,
+      }).build();
+
+      expect('weekly', chore.friendlyFrequency);
+    });
+
+    test('for monthly', () {
+      final chore = ChoreFactory().state({
+        'frequency': Frequency.monthly,
+      }).build();
+
+      expect('monthly', chore.friendlyFrequency);
+    });
+
+    test('for yearly', () {
+      final chore = ChoreFactory().state({
+        'frequency': Frequency.yearly,
+      }).build();
+
+      expect('yearly', chore.friendlyFrequency);
+    });
+  });
 }
