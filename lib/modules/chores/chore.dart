@@ -94,8 +94,7 @@ class Chore extends Equatable with Jsonable {
     if (this.nextDueDate == null) return '-';
     final DateTime nextDueDate = this.nextDueDate!.toStartOfDay();
 
-    final timeDiffInDays =
-        nextDueDate.difference(DateTime.now().toStartOfDay()).inDays;
+    final timeDiffInDays = diffDaysRoundAwayFromZero(nextDueDate);
 
     if (timeDiffInDays == 0) {
       return 'today';
@@ -103,7 +102,7 @@ class Chore extends Equatable with Jsonable {
       return 'tomorrow';
     } else if (timeDiffInDays == -1) {
       return 'yesterday';
-    } else if (timeDiffInDays < 6) {
+    } else if (timeDiffInDays < 7) {
       return DateFormat(DateFormat.WEEKDAY).format(nextDueDate);
     }
 
@@ -113,4 +112,10 @@ class Chore extends Equatable with Jsonable {
   String get friendlyFrequency => frequency.friendlyName;
 
   bool get hasNoDueDate => nextDueDate != null;
+
+  int diffDaysRoundAwayFromZero(DateTime date) {
+    final diff = date.difference(DateTime.now().toStartOfDay()).inHours / 24;
+
+    return diff > 0 ? diff.ceil() : diff.floor();
+  }
 }

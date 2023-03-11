@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:chore_manager_mobile/extensions/date_time_formatting.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/modules/chores/frequency.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -91,8 +92,8 @@ void main() {
 
       final dayPlus2String = DateFormat(DateFormat.WEEKDAY).format(dayPlus2);
       final dayPlus6String = DateFormat(DateFormat.WEEKDAY).format(dayPlus6);
-      expect(dayPlus2String, chore1.friendlyDueDate);
-      expect(dayPlus6String, chore2.friendlyDueDate);
+      expect(chore1.friendlyDueDate, dayPlus2String);
+      expect(chore2.friendlyDueDate, dayPlus6String);
     });
 
     test('see date formatted for day 7 on', () {
