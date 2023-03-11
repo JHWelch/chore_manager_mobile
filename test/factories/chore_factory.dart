@@ -1,5 +1,4 @@
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
-import 'package:chore_manager_mobile/modules/chores/frequency.dart';
 
 import 'factory.dart';
 import 'faker.dart';
