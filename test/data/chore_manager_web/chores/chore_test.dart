@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:chore_manager_mobile/extensions/date_time_formatting.dart';
+import 'package:chore_manager_mobile/constants/strings.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/modules/chores/frequency.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -73,7 +73,7 @@ void main() {
         'nextDueDate': DateTime.now(),
       }).build();
 
-      expect('today', chore.friendlyDueDate);
+      expect(Strings.today, chore.friendlyDueDate);
     });
 
     test('for tomorrow', () {
@@ -81,7 +81,7 @@ void main() {
         'nextDueDate': DateTime.now().add(const Duration(days: 1)),
       }).build();
 
-      expect('tomorrow', chore.friendlyDueDate);
+      expect(Strings.tomorrow, chore.friendlyDueDate);
     });
 
     test('as day name for days between +2 and +6', () {

@@ -1,3 +1,4 @@
+import 'package:chore_manager_mobile/constants/strings.dart';
 import 'package:chore_manager_mobile/data/concerns/jsonable.dart';
 import 'package:chore_manager_mobile/extensions/date_time_formatting.dart';
 import 'package:chore_manager_mobile/modules/chores/frequency.dart';
@@ -97,11 +98,11 @@ class Chore extends Equatable with Jsonable {
     final timeDiffInDays = diffDaysRoundAwayFromZero(nextDueDate);
 
     if (timeDiffInDays == 0) {
-      return 'today';
+      return Strings.today;
     } else if (timeDiffInDays == 1) {
-      return 'tomorrow';
+      return Strings.tomorrow;
     } else if (timeDiffInDays == -1) {
-      return 'yesterday';
+      return Strings.yesterday;
     } else if (timeDiffInDays < 7) {
       return DateFormat(DateFormat.WEEKDAY).format(nextDueDate);
     }
