@@ -1,4 +1,5 @@
 import 'package:chore_manager_mobile/config/routes.dart';
+import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/modules/chores/chores_controller.dart';
 import 'package:chore_manager_mobile/pages/home_page.dart';
 import 'package:chore_manager_mobile/pages/login_page.dart';
@@ -23,11 +24,19 @@ class Pages {
     GetPage(
         name: Routes.choreShow,
         page: () {
-          final choreId = int.parse(Get.parameters['id'] ?? '0');
+          final Chore? chore = Get.arguments?['chore'];
+          if (chore != null) {
+            return ShowChorePage.new(chore);
+          }
 
-          final ChoresController choreController = Get.find();
+          final String? choreId = Get.parameters['id'];
+          if (choreId != null) {
+            final ChoresController choreController = Get.find();
 
-          return ShowChorePage.new(choreController.chore(choreId));
+            return ShowChorePage.new(choreController.chore(int.parse(choreId)));
+          }
+
+          throw Exception('No chore found');
         })
   ];
 }
