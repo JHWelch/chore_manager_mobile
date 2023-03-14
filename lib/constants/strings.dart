@@ -1,6 +1,9 @@
 class Strings {
   Strings._();
 
+  // Actions
+  static const String complete = 'Complete';
+
   // Pages
   static const String home = 'Home';
   static const String refreshChores = 'Refresh Chores';

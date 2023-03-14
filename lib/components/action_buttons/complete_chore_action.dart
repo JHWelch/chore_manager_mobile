@@ -1,3 +1,4 @@
+import 'package:chore_manager_mobile/constants/strings.dart';
 import 'package:chore_manager_mobile/modules/chores/chores_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,7 @@ class CompleteChoreAction extends StatelessWidget {
     return IconButton(
       icon: const Icon(Icons.check_circle_outline),
       onPressed: () => controller.completeChore(choreId),
+      tooltip: Strings.complete,
     );
   }
 }

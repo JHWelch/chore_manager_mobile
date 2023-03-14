@@ -1,4 +1,5 @@
 import 'package:chore_manager_mobile/components/action_buttons/complete_chore_action.dart';
+import 'package:chore_manager_mobile/constants/strings.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/modules/chores/chores_controller.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +21,10 @@ void main() {
     Get.put(ChoresController());
   });
 
-  testWidgets('shows icon', (tester) async {
+  testWidgets('has proper widget structure', (tester) async {
     await tester.pumpWidget(WidgetWrapper(CompleteChoreAction(choreId: 1)));
 
     expect(find.byIcon(Icons.check_circle_outline), findsOneWidget);
+    expect(find.byTooltip(Strings.complete), findsOneWidget);
   });
 }
