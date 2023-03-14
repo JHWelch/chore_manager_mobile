@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:chore_manager_mobile/components/spinner.dart';
-import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/constants/strings.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/pages/home_page.dart';
@@ -9,12 +6,10 @@ import 'package:chore_manager_mobile/pages/show_chore_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:mocktail/mocktail.dart';
 
 import '../factories/chore_factory.dart';
 import '../helpers/helpers.dart';
 import '../mocks/data_mocks/chore_mocks.dart';
-import '../mocks/http_mocks.dart';
 import '../mocks/mocks.dart';
 
 void main() {
@@ -142,11 +137,7 @@ void main() {
         await tester.dismiss(dismissible);
         await tester.pumpAndSettle();
 
-        verify(() => Globals.client.patch(
-              expectedPath('chores/${chore.id}'),
-              headers: expectedHeaders(),
-              body: jsonEncode({'completed': true}),
-            ));
+        verifyChoreComplete(chore);
       });
 
       testWidgets('chore list is refreshed with new chores', (tester) async {
