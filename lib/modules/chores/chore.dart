@@ -7,11 +7,11 @@ import 'package:intl/intl.dart';
 
 class Chore extends Equatable with Jsonable {
   final int id;
-  final int userId;
   final String title;
   final Frequency frequency;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final int? userId;
   final String? description;
   final int? teamId;
   final int? frequencyInterval;
