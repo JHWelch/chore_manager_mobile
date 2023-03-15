@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
       key: UniqueKey(),
       background: _dismissibleBackground,
       secondaryBackground: _dismissibleSecondaryBackground,
-      onDismissed: (_) => controller.completeChore(index),
+      onDismissed: (_) => controller.completeChore(chore.id),
       child: ListTile(
         title: Text(chore.title),
         trailing: Text(chore.friendlyDueDate),

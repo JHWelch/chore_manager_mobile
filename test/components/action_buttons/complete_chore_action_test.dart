@@ -17,14 +17,29 @@ void main() {
   setUp(() async {
     await givenLoggedIn();
     chore = ChoreFactory().build();
-    mockChoreIndex(chores: [chore]);
-    Get.put(ChoresController());
   });
 
   testWidgets('has proper widget structure', (tester) async {
+    mockChoreIndex(chores: [chore]);
+    Get.put(ChoresController());
     await tester.pumpWidget(WidgetWrapper(CompleteChoreAction(choreId: 1)));
 
     expect(find.byIcon(Icons.check_circle_outline), findsOneWidget);
     expect(find.byTooltip(Strings.complete), findsOneWidget);
+  });
+
+  testWidgets('calls completeChore on controller', (tester) async {
+    mockChoreIndex(chores: [chore]);
+    Get.put(ChoresController());
+    await tester.pumpWidget(WidgetWrapper(CompleteChoreAction(
+      choreId: chore.id,
+    )));
+    mockChoreIndex(chores: [chore]);
+    mockChoreComplete(chore: chore);
+
+    await tester.tap(find.byType(IconButton));
+    await tester.pumpAndSettle();
+
+    verifyChoreComplete(chore);
   });
 }

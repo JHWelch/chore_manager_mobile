@@ -22,12 +22,13 @@ class ChoresController extends GetxController {
   List<Chore> withDueDate() =>
       chores().where((chore) => chore.nextDueDate != null).toList();
 
-  Future<void> completeChore(int index) async {
-    final Chore chore = homePageChores[index];
+  Future<void> completeChore(int choreId) async {
+    final int index = chores.indexWhere((chore) => chore.id == choreId);
+    final Chore chore = chores[index];
 
     await adapter.complete(chore);
 
-    homePageChores.removeAt(index);
+    chores.removeAt(index);
 
     return refreshChores();
   }
