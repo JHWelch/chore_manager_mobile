@@ -5,6 +5,7 @@ import 'package:chore_manager_mobile/modules/chores/chores_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../factories/chore_factory.dart';
 import '../../helpers/helpers.dart';
@@ -40,8 +41,24 @@ void main() {
     mockChoreComplete(chore: chore);
 
     await tester.tap(find.byType(IconButton));
-    await tester.pumpAndSettle();
 
     verifyChoreComplete(chore);
+  });
+
+  testWidgets('calls callback after completion', (tester) async {
+    mockChoreIndex(chores: [chore]);
+    Get.put(ChoresController());
+    final callback = FunctionVerifier();
+
+    await tester.pumpWidget(WidgetWrapper(CompleteChoreAction(
+      choreId: chore.id,
+      postComplete: callback.functionCall,
+    )));
+    mockChoreIndex(chores: [chore]);
+    mockChoreComplete(chore: chore);
+
+    await tester.tap(find.byType(IconButton));
+
+    verify(callback.functionCall).called(1);
   });
 }
