@@ -29,6 +29,7 @@ class ChoresController extends GetxController {
     await adapter.complete(chore);
 
     chores.removeAt(index);
+    _setFilterViews();
 
     return refreshChores();
   }
@@ -37,24 +38,26 @@ class ChoresController extends GetxController {
     isLoading(true);
 
     final List<Chore> newChores = await adapter.index();
-
     newChores.sort(_choresByDueDate);
-
     chores(newChores);
 
-    homePageChores(newChores.where((chore) {
-      return chore.hasNoDueDate && chore.nextDueUserId == auth.user()?.id;
-    }).toList());
+    _setFilterViews();
 
     isLoading(false);
   }
 
+  void _setFilterViews() {
+    homePageChores(chores
+        .where((chore) => chore.hasNoDueDate && _choreBelongsToUser(chore))
+        .toList());
+  }
+
+  bool _choreBelongsToUser(Chore chore) =>
+      chore.nextDueUserId == auth.user()?.id;
+
   int _choresByDueDate(Chore choreA, Chore choreB) {
     if (choreA.nextDueDate == null) {
-      if (choreB.nextDueDate == null) {
-        return 0;
-      }
-      return 1;
+      return choreB.nextDueDate == null ? 0 : 1;
     }
 
     if (choreB.nextDueDate == null) {
