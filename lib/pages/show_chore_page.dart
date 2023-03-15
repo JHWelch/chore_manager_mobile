@@ -17,7 +17,7 @@ class ShowChorePage extends StatelessWidget {
     return CMScaffold(
       actions: [
         CompleteChoreAction(choreId: chore.id, postComplete: Get.back),
-        IconButton(icon: Icon(Icons.access_alarm), onPressed: () {}),
+        IconButton(icon: const Icon(Icons.access_alarm), onPressed: () {}),
       ],
       body: Padding(
           padding: const EdgeInsets.all(16),

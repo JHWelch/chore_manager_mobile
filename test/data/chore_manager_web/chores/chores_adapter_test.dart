@@ -1,13 +1,9 @@
-import 'dart:convert';
 
-import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/chores/chores_adapter.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
 import '../../../factories/chore_factory.dart';
 import '../../../mocks/data_mocks/chore_mocks.dart';
-import '../../../mocks/http_mocks.dart';
 import '../../../mocks/mocks.dart';
 
 void main() {
