@@ -22,9 +22,18 @@ void main() {
 
   tearDown(Get.reset);
 
-  testWidgets('has proper widget structure', (tester) async {
+  void _setupController() {
     mockChoreIndex(chores: [chore]);
     Get.put(ChoresController());
+  }
+
+  void _mockCompleteCalls(Chore chore) {
+    mockChoreIndex(chores: [chore]);
+    mockChoreComplete(chore: chore);
+  }
+
+  testWidgets('has proper widget structure', (tester) async {
+    _setupController();
     await tester.pumpWidget(WidgetWrapper(CompleteChoreAction(choreId: 1)));
 
     expect(find.byIcon(Icons.check_circle_outline), findsOneWidget);
@@ -32,13 +41,11 @@ void main() {
   });
 
   testWidgets('calls completeChore on controller', (tester) async {
-    mockChoreIndex(chores: [chore]);
-    Get.put(ChoresController());
+    _setupController();
     await tester.pumpWidget(WidgetWrapper(CompleteChoreAction(
       choreId: chore.id,
     )));
-    mockChoreIndex(chores: [chore]);
-    mockChoreComplete(chore: chore);
+    _mockCompleteCalls(chore);
 
     await tester.tap(find.byType(IconButton));
 
@@ -46,16 +53,13 @@ void main() {
   });
 
   testWidgets('calls callback after completion', (tester) async {
-    mockChoreIndex(chores: [chore]);
-    Get.put(ChoresController());
+    _setupController();
     final callback = FunctionVerifier();
-
     await tester.pumpWidget(WidgetWrapper(CompleteChoreAction(
       choreId: chore.id,
       postComplete: callback.functionCall,
     )));
-    mockChoreIndex(chores: [chore]);
-    mockChoreComplete(chore: chore);
+    _mockCompleteCalls(chore);
 
     await tester.tap(find.byType(IconButton));
 
