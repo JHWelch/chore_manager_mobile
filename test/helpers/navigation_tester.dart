@@ -21,7 +21,7 @@ class NavigationTester extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.delayed(
       delay,
-      () => Get.offAllNamed(
+      () => Get.toNamed(
         route,
         arguments: arguments,
         parameters: parameters,

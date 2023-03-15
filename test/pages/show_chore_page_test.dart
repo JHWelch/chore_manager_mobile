@@ -1,3 +1,4 @@
+import 'package:chore_manager_mobile/components/action_buttons/complete_chore_action.dart';
 import 'package:chore_manager_mobile/config/routes.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/modules/chores/chores_controller.dart';
@@ -51,5 +52,27 @@ void main() {
     expect(find.text(chore.title), findsOneWidget);
     expect(find.text(chore.description ?? ''), findsOneWidget);
     expect(find.text(chore.friendlyDueDate), findsOneWidget);
+  });
+
+  group('complete chore action', () {
+    late Chore chore;
+
+    setUp(() {
+      chore = ChoreFactory().build();
+      mockChoreIndex(chores: [chore]);
+    });
+
+    testWidgets('can complete chore', (tester) async {
+      Get.put(ChoresController());
+      await tester.pumpWidget(NavigationTester('/chores/${chore.id}'));
+      await tester.pumpAndSettle();
+
+      mockChoreComplete(chore: chore);
+      mockChoreIndex(chores: [chore]);
+      await tester.tap(find.byType(CompleteChoreAction));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(ShowChorePage), findsNothing);
+    });
   });
 }
