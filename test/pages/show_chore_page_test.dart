@@ -11,18 +11,17 @@ import '../mocks/data_mocks/chore_mocks.dart';
 import '../mocks/mocks.dart';
 
 void main() {
+  late Chore chore;
+
   setUp(() async {
     await givenLoggedIn();
+    chore = ChoreFactory().build();
+    mockChoreIndex(chores: [chore]);
   });
 
+  tearDown(Get.reset);
+
   group('show chore route', () {
-    late Chore chore;
-
-    setUp(() {
-      chore = ChoreFactory().build();
-      mockChoreIndex(chores: [chore]);
-    });
-
     testWidgets('can navigate with chore id parameter', (tester) async {
       Get.put(ChoresController());
       await tester.pumpWidget(NavigationTester('/chores/${chore.id}'));
@@ -46,7 +45,7 @@ void main() {
   });
 
   testWidgets('shows all chore details', (tester) async {
-    final chore = ChoreFactory().build();
+    Get.put(ChoresController());
     await tester.pumpWidget(WidgetWrapper(ShowChorePage(chore)));
 
     expect(find.text(chore.title), findsOneWidget);
@@ -55,13 +54,6 @@ void main() {
   });
 
   group('complete chore action', () {
-    late Chore chore;
-
-    setUp(() {
-      chore = ChoreFactory().build();
-      mockChoreIndex(chores: [chore]);
-    });
-
     testWidgets('can complete chore', (tester) async {
       Get.put(ChoresController());
       await tester.pumpWidget(NavigationTester('/chores/${chore.id}'));
