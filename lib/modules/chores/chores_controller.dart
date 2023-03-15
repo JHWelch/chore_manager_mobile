@@ -20,7 +20,7 @@ class ChoresController extends GetxController {
   Chore chore(int id) => chores().firstWhere((chore) => chore.id == id);
 
   List<Chore> withDueDate() =>
-      chores().where((chore) => chore.nextDueDate != null).toList();
+      chores().where((chore) => chore.hasDueDate).toList();
 
   Future<void> completeChore(int choreId) async {
     final int index = chores.indexWhere((chore) => chore.id == choreId);
@@ -48,7 +48,7 @@ class ChoresController extends GetxController {
 
   void _setFilterViews() {
     homePageChores(chores
-        .where((chore) => chore.hasNoDueDate && _choreBelongsToUser(chore))
+        .where((chore) => chore.hasDueDate && _choreBelongsToUser(chore))
         .toList());
   }
 
@@ -56,11 +56,11 @@ class ChoresController extends GetxController {
       chore.nextDueUserId == auth.user()?.id;
 
   int _choresByDueDate(Chore choreA, Chore choreB) {
-    if (choreA.nextDueDate == null) {
-      return choreB.nextDueDate == null ? 0 : 1;
+    if (choreA.hasNoDueDate) {
+      return choreB.hasNoDueDate ? 0 : 1;
     }
 
-    if (choreB.nextDueDate == null) {
+    if (choreB.hasNoDueDate) {
       return -1;
     }
 

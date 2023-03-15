@@ -112,7 +112,8 @@ class Chore extends Equatable with Jsonable {
 
   String get friendlyFrequency => frequency.friendlyName;
 
-  bool get hasNoDueDate => nextDueDate != null;
+  bool get hasDueDate => nextDueDate != null;
+  bool get hasNoDueDate => !hasDueDate;
 
   int diffDaysRoundAwayFromZero(DateTime date) {
     final diff = date.difference(DateTime.now().toStartOfDay()).inHours / 24;
