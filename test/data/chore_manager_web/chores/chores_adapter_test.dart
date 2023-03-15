@@ -32,11 +32,7 @@ void main() {
 
       await adapter.complete(chore);
 
-      verify(() => Globals.client.patch(
-            expectedPath('chores/${chore.id}'),
-            headers: expectedHeaders(),
-            body: jsonEncode({'completed': true}),
-          ));
+      verifyChoreComplete(chore);
     });
   });
 }
