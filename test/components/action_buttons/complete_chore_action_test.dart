@@ -19,6 +19,8 @@ void main() {
     chore = ChoreFactory().build();
   });
 
+  tearDown(Get.reset);
+
   testWidgets('has proper widget structure', (tester) async {
     mockChoreIndex(chores: [chore]);
     Get.put(ChoresController());
