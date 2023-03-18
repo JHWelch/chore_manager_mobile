@@ -25,8 +25,9 @@ class SnoozeChoreAction extends StatelessWidget {
           onTap: _snoozeUntilTomorrow,
           child: const Text('Tomorrow'),
         ),
-        const PopupMenuItem(
-          child: Text('Weekend'),
+        PopupMenuItem(
+          onTap: _snoozeUntilWeekend,
+          child: const Text('Weekend'),
         ),
       ],
     );
@@ -37,10 +38,8 @@ class SnoozeChoreAction extends StatelessWidget {
     postAction?.call();
   }
 
-  void _snoozeUntilWeekend() {}
-
-  void _snoozeChore(DateTime date) {
-    controller.snoozeChore(choreId, date);
+  void _snoozeUntilWeekend() {
+    controller.snoozeUntilWeekend(choreId);
     postAction?.call();
   }
 }
