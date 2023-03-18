@@ -1,4 +1,4 @@
-import 'package:chore_manager_mobile/extensions/date_time_formatting.dart';
+import 'package:chore_manager_mobile/extensions/date_time_extension.dart';
 import 'package:chore_manager_mobile/modules/chores/frequency.dart';
 import 'package:faker/faker.dart';
 export 'package:faker/faker.dart';

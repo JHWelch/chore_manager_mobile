@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:chore_manager_mobile/config/globals.dart';
-import 'package:chore_manager_mobile/extensions/date_time_formatting.dart';
+import 'package:chore_manager_mobile/extensions/date_time_extension.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';

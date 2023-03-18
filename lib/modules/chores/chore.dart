@@ -1,6 +1,6 @@
 import 'package:chore_manager_mobile/constants/strings.dart';
 import 'package:chore_manager_mobile/data/concerns/jsonable.dart';
-import 'package:chore_manager_mobile/extensions/date_time_formatting.dart';
+import 'package:chore_manager_mobile/extensions/date_time_extension.dart';
 import 'package:chore_manager_mobile/modules/chores/frequency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';

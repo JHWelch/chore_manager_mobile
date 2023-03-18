@@ -1,4 +1,4 @@
-extension DateTimeFormatting on DateTime {
+extension DateTimeExtension on DateTime {
   DateTime toStartOfDay() => DateTime(year, month, day);
 
   String toDateString() {

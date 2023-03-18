@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:chore_manager_mobile/extensions/date_time_formatting.dart';
+import 'package:chore_manager_mobile/extensions/date_time_extension.dart';
 
 mixin Jsonable {
   Map<String, dynamic> toJson();
