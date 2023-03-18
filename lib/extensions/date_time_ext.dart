@@ -9,14 +9,12 @@ extension DateTimeExt on DateTime {
   DateTime toStartOfDay() => DateTime(year, month, day);
 
   DateTime nextWeekend() {
-    final DateTime now = DateTimeExt.now();
-    final int dayOfWeek = now.weekday;
-    int daysUntilSaturday = 6 - dayOfWeek;
+    int daysUntilSaturday = 6 - weekday;
     if (daysUntilSaturday < 1) {
       daysUntilSaturday += 7;
     }
 
-    return now.add(Duration(days: daysUntilSaturday)).toStartOfDay();
+    return add(Duration(days: daysUntilSaturday)).toStartOfDay();
   }
 
   String toDateString() {
