@@ -18,9 +18,12 @@ class HomePage extends StatelessWidget {
       title: 'Home',
       actions: [_RefreshButton(controller: controller)],
       body: Obx(
-        () => ListView.builder(
-          itemBuilder: _listItem,
-          itemCount: controller.homePageChores().length,
+        () => RefreshIndicator(
+          onRefresh: controller.refreshChores,
+          child: ListView.builder(
+            itemBuilder: _listItem,
+            itemCount: controller.homePageChores().length,
+          ),
         ),
       ),
     );
