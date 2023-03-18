@@ -1,7 +1,7 @@
 import 'package:chore_manager_mobile/constants/strings.dart';
 import 'package:chore_manager_mobile/modules/chores/chores_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/instance_manager.dart';
 
 class SnoozeChoreAction extends StatelessWidget {
   final int choreId;
@@ -23,11 +23,11 @@ class SnoozeChoreAction extends StatelessWidget {
       itemBuilder: (context) => [
         PopupMenuItem(
           onTap: _snoozeUntilTomorrow,
-          child: const Text('Tomorrow'),
+          child: const Text(Strings.tomorrowTitle),
         ),
         PopupMenuItem(
           onTap: _snoozeUntilWeekend,
-          child: const Text('Weekend'),
+          child: const Text(Strings.weekendTitle),
         ),
       ],
     );

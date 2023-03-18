@@ -49,8 +49,8 @@ void main() {
     await tester.tap(find.byType(PopupMenuButton));
     await tester.pump();
 
-    expect(find.text('Tomorrow'), findsOneWidget);
-    expect(find.text('Weekend'), findsOneWidget);
+    expect(find.text(Strings.tomorrowTitle), findsOneWidget);
+    expect(find.text(Strings.weekendTitle), findsOneWidget);
   });
 
   group('snooze until tomorrow', () {
@@ -64,7 +64,7 @@ void main() {
 
       await tester.tap(find.byType(PopupMenuButton));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Tomorrow'));
+      await tester.tap(find.text(Strings.tomorrowTitle));
 
       verifyChoreSnooze(chore: chore, date: date);
     });
@@ -82,7 +82,7 @@ void main() {
 
       await tester.tap(find.byType(PopupMenuButton));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Weekend'));
+      await tester.tap(find.text(Strings.weekendTitle));
 
       verifyChoreSnooze(chore: chore, date: date);
     });
@@ -98,7 +98,7 @@ void main() {
 
       await tester.tap(find.byType(PopupMenuButton));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Weekend'));
+      await tester.tap(find.text(Strings.weekendTitle));
 
       verifyChoreSnooze(chore: chore, date: date);
     });

@@ -14,4 +14,8 @@ class Strings {
   static const String today = 'today';
   static const String tomorrow = 'tomorrow';
   static const String yesterday = 'yesterday';
+
+  // Snooze
+  static const String weekendTitle = 'Weekend';
+  static const String tomorrowTitle = 'Tomorrow';
 }
