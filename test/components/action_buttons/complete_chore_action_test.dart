@@ -57,7 +57,7 @@ void main() {
     final callback = FunctionVerifier();
     await tester.pumpWidget(WidgetWrapper(CompleteChoreAction(
       choreId: chore.id,
-      postComplete: callback.functionCall,
+      postAction: callback.functionCall,
     )));
     _mockCompleteCalls(chore);
 
