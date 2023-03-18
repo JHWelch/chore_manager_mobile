@@ -1,17 +1,19 @@
+import 'package:chore_manager_mobile/constants/strings.dart';
 import 'package:chore_manager_mobile/data/concerns/jsonable.dart';
-import 'package:chore_manager_mobile/extensions/date_time_formatting.dart';
+import 'package:chore_manager_mobile/extensions/date_time_ext.dart';
+import 'package:chore_manager_mobile/modules/chores/frequency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 
 class Chore extends Equatable with Jsonable {
   final int id;
-  final int userId;
   final String title;
-  final String? description;
+  final Frequency frequency;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final int? userId;
+  final String? description;
   final int? teamId;
-  final int? frequencyId;
   final int? frequencyInterval;
   final int? frequencyDayOf;
   final int? nextDueUserId;
@@ -24,9 +26,9 @@ class Chore extends Equatable with Jsonable {
     required this.title,
     required this.createdAt,
     required this.updatedAt,
+    required this.frequency,
     this.description,
     this.teamId,
-    this.frequencyId,
     this.frequencyInterval,
     this.frequencyDayOf,
     this.nextDueUserId,
@@ -40,7 +42,7 @@ class Chore extends Equatable with Jsonable {
         title = json['title'],
         description = json['description'],
         teamId = json['team_id'],
-        frequencyId = json['frequency_id'],
+        frequency = Frequency.fromId(json['frequency_id']),
         frequencyInterval = json['frequency_interval'],
         frequencyDayOf = json['frequency_day_of'],
         createdAt = DateTime.parse(json['created_at']),
@@ -59,7 +61,7 @@ class Chore extends Equatable with Jsonable {
         'title': title,
         'description': description,
         'team_id': teamId,
-        'frequency_id': frequencyId,
+        'frequency_id': frequency.id,
         'frequency_interval': frequencyInterval,
         'frequency_day_of': frequencyDayOf,
         'created_at': createdAt.toFullIso8601String(),
@@ -81,7 +83,7 @@ class Chore extends Equatable with Jsonable {
         createdAt,
         updatedAt,
         teamId,
-        frequencyId,
+        frequency,
         frequencyInterval,
         frequencyDayOf,
         nextDueUserId,
@@ -93,21 +95,29 @@ class Chore extends Equatable with Jsonable {
     if (this.nextDueDate == null) return '-';
     final DateTime nextDueDate = this.nextDueDate!.toStartOfDay();
 
-    final timeDiffInDays =
-        nextDueDate.difference(DateTime.now().toStartOfDay()).inDays;
+    final timeDiffInDays = diffDaysRoundAwayFromZero(nextDueDate);
 
     if (timeDiffInDays == 0) {
-      return 'today';
+      return Strings.today;
     } else if (timeDiffInDays == 1) {
-      return 'tomorrow';
+      return Strings.tomorrow;
     } else if (timeDiffInDays == -1) {
-      return 'yeseterday';
-    } else if (timeDiffInDays < 6) {
+      return Strings.yesterday;
+    } else if (timeDiffInDays < 7) {
       return DateFormat(DateFormat.WEEKDAY).format(nextDueDate);
     }
 
     return DateFormat(DateFormat.YEAR_NUM_MONTH_DAY).format(nextDueDate);
   }
 
-  bool get hasNoDueDate => nextDueDate != null;
+  String get friendlyFrequency => frequency.friendlyName;
+
+  bool get hasDueDate => nextDueDate != null;
+  bool get hasNoDueDate => !hasDueDate;
+
+  int diffDaysRoundAwayFromZero(DateTime date) {
+    final diff = date.difference(DateTimeExt.now().toStartOfDay()).inHours / 24;
+
+    return diff > 0 ? diff.ceil() : diff.floor();
+  }
 }

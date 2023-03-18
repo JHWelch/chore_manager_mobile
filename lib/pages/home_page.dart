@@ -1,5 +1,6 @@
 import 'package:chore_manager_mobile/components/cm_scaffold.dart';
 import 'package:chore_manager_mobile/components/spinner.dart';
+import 'package:chore_manager_mobile/config/routes.dart';
 import 'package:chore_manager_mobile/constants/strings.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/modules/chores/chores_controller.dart';
@@ -27,15 +28,19 @@ class HomePage extends StatelessWidget {
 
   Widget _listItem(BuildContext context, int index) {
     final Chore chore = controller.homePageChores()[index];
+    void onTap() => Get.toNamed(Routes.choreShow, arguments: {
+          'chore': chore,
+        });
 
     return Dismissible(
       key: UniqueKey(),
       background: _dismissibleBackground,
       secondaryBackground: _dismissibleSecondaryBackground,
-      onDismissed: (_) => controller.completeChore(index),
+      onDismissed: (_) => controller.completeChore(chore.id),
       child: ListTile(
         title: Text(chore.title),
         trailing: Text(chore.friendlyDueDate),
+        onTap: onTap,
       ),
     );
   }

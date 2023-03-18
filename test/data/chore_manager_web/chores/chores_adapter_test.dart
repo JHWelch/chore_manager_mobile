@@ -1,13 +1,9 @@
-import 'dart:convert';
-
-import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/chores/chores_adapter.dart';
+import 'package:chore_manager_mobile/extensions/date_time_ext.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
 import '../../../factories/chore_factory.dart';
 import '../../../mocks/data_mocks/chore_mocks.dart';
-import '../../../mocks/http_mocks.dart';
 import '../../../mocks/mocks.dart';
 
 void main() {
@@ -32,11 +28,20 @@ void main() {
 
       await adapter.complete(chore);
 
-      verify(() => Globals.client.patch(
-            expectedPath('chores/${chore.id}'),
-            headers: expectedHeaders(),
-            body: jsonEncode({'completed': true}),
-          ));
+      verifyChoreComplete(chore: chore);
+    });
+  });
+
+  group('snooze', () {
+    test('can snooze chore', () async {
+      final chore = ChoreFactory().build();
+      final date = DateTimeExt.now().add(const Duration(days: 1));
+      mockChoreSnooze(chore: chore, date: date);
+      final adapter = ChoresAdapter();
+
+      await adapter.snooze(chore, date);
+
+      verifyChoreSnooze(chore: chore, date: date);
     });
   });
 }
