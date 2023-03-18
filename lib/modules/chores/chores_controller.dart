@@ -22,18 +22,6 @@ class ChoresController extends GetxController {
   List<Chore> withDueDate() =>
       chores().where((chore) => chore.hasDueDate).toList();
 
-  Future<void> completeChore(int choreId) async {
-    final int index = chores.indexWhere((chore) => chore.id == choreId);
-    final Chore chore = chores[index];
-
-    await adapter.complete(chore);
-
-    chores.removeAt(index);
-    _setFilterViews();
-
-    return refreshChores();
-  }
-
   Future<void> refreshChores() async {
     isLoading(true);
 
@@ -45,6 +33,33 @@ class ChoresController extends GetxController {
 
     isLoading(false);
   }
+
+  Future<void> completeChore(int choreId) async {
+    final int index = getIndexByChoreId(choreId);
+    final Chore chore = chores[index];
+
+    await adapter.complete(chore);
+
+    chores.removeAt(index);
+    _setFilterViews();
+
+    return refreshChores();
+  }
+
+  Future<void> snoozeChore(int choreId, DateTime date) async {
+    final int index = getIndexByChoreId(choreId);
+    final Chore chore = chores[index];
+
+    await adapter.snooze(chore, date);
+
+    chores.removeAt(index);
+    _setFilterViews();
+
+    return refreshChores();
+  }
+
+  int getIndexByChoreId(int choreId) =>
+      chores.indexWhere((chore) => chore.id == choreId);
 
   void _setFilterViews() {
     homePageChores(chores
