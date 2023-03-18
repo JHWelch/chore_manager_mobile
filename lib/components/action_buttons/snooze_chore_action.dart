@@ -32,9 +32,10 @@ class SnoozeChoreAction extends StatelessWidget {
     );
   }
 
-  void _snoozeUntilTomorrow() => _snoozeChore(
-        DateTime.now().add(const Duration(days: 1)),
-      );
+  void _snoozeUntilTomorrow() {
+    controller.snoozeUntilTomorrow(choreId);
+    postAction?.call();
+  }
 
   void _snoozeUntilWeekend() {}
 

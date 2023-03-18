@@ -59,6 +59,11 @@ class ChoresController extends GetxController {
     return refreshChores();
   }
 
+  void snoozeUntilTomorrow(int choreId) => snoozeChore(
+        choreId,
+        DateTimeExt.now().add(const Duration(days: 1)),
+      );
+
   int getIndexByChoreId(int choreId) =>
       chores.indexWhere((chore) => chore.id == choreId);
 
