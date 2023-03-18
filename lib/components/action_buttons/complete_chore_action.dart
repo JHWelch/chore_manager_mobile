@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 
 class CompleteChoreAction extends StatelessWidget {
   final int choreId;
-  final Function()? postComplete;
+  final Function()? postAction;
 
   final controller = Get.find<ChoresController>();
 
   CompleteChoreAction({
     required this.choreId,
-    this.postComplete,
+    this.postAction,
     Key? key,
   }) : super(key: key);
 
@@ -26,6 +26,6 @@ class CompleteChoreAction extends StatelessWidget {
 
   void _completeChore() {
     controller.completeChore(choreId);
-    postComplete?.call();
+    postAction?.call();
   }
 }

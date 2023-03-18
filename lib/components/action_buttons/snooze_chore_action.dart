@@ -17,15 +17,29 @@ class SnoozeChoreAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
+    return PopupMenuButton(
       icon: const Icon(Icons.access_time),
-      onPressed: _snoozeChore,
       tooltip: Strings.snooze,
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          onTap: _snoozeUntilTomorrow,
+          child: const Text('Tomorrow'),
+        ),
+        const PopupMenuItem(
+          child: Text('Weekend'),
+        ),
+      ],
     );
   }
 
-  void _snoozeChore() {
-    controller.completeChore(choreId);
+  void _snoozeUntilTomorrow() => _snoozeChore(
+        DateTime.now().add(const Duration(days: 1)),
+      );
+
+  void _snoozeUntilWeekend() {}
+
+  void _snoozeChore(DateTime date) {
+    controller.snoozeChore(choreId, date);
     postAction?.call();
   }
 }

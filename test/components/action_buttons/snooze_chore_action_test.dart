@@ -38,4 +38,34 @@ void main() {
     expect(find.byIcon(Icons.access_time), findsOneWidget);
     expect(find.byTooltip(Strings.snooze), findsOneWidget);
   });
+
+  testWidgets('clicking button shows snooze options', (tester) async {
+    _setupController();
+    await tester.pumpWidget(WidgetWrapper(SnoozeChoreAction(
+      choreId: chore.id,
+    )));
+
+    await tester.tap(find.byType(PopupMenuButton));
+    await tester.pump();
+
+    expect(find.text('Tomorrow'), findsOneWidget);
+    expect(find.text('Weekend'), findsOneWidget);
+  });
+
+  group('snooze until tomorrow', () {
+    testWidgets('snoozes chore to endpoint', (tester) async {
+      _setupController();
+      final date = DateTime.now().add(const Duration(days: 1));
+      await tester.pumpWidget(WidgetWrapper(SnoozeChoreAction(
+        choreId: chore.id,
+      )));
+      _mockSnoozeCalls(chore, date);
+
+      await tester.tap(find.byType(PopupMenuButton));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Tomorrow'));
+
+      verifyChoreSnooze(chore: chore, date: date);
+    });
+  });
 }

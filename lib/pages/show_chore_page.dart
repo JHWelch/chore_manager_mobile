@@ -1,4 +1,5 @@
 import 'package:chore_manager_mobile/components/action_buttons/complete_chore_action.dart';
+import 'package:chore_manager_mobile/components/action_buttons/snooze_chore_action.dart';
 import 'package:chore_manager_mobile/components/cm_scaffold.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/modules/chores/chores_controller.dart';
@@ -16,8 +17,8 @@ class ShowChorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CMScaffold(
       actions: [
-        CompleteChoreAction(choreId: chore.id, postComplete: Get.back),
-        IconButton(icon: const Icon(Icons.access_alarm), onPressed: () {}),
+        CompleteChoreAction(choreId: chore.id, postAction: Get.back),
+        SnoozeChoreAction(choreId: chore.id, postAction: Get.back),
       ],
       body: Padding(
           padding: const EdgeInsets.all(16),
