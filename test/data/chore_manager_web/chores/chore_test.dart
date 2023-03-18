@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:chore_manager_mobile/constants/strings.dart';
+import 'package:chore_manager_mobile/extensions/date_time_ext.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:chore_manager_mobile/modules/chores/frequency.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -70,7 +71,7 @@ void main() {
   group('friendlyDueDate', () {
     test('for today', () {
       final chore = ChoreFactory().state({
-        'nextDueDate': DateTime.now(),
+        'nextDueDate': DateTimeExt.now(),
       }).build();
 
       expect(Strings.today, chore.friendlyDueDate);
@@ -78,15 +79,15 @@ void main() {
 
     test('for tomorrow', () {
       final chore = ChoreFactory().state({
-        'nextDueDate': DateTime.now().add(const Duration(days: 1)),
+        'nextDueDate': DateTimeExt.now().add(const Duration(days: 1)),
       }).build();
 
       expect(Strings.tomorrow, chore.friendlyDueDate);
     });
 
     test('as day name for days between +2 and +6', () {
-      final dayPlus2 = DateTime.now().add(const Duration(days: 2));
-      final dayPlus6 = DateTime.now().add(const Duration(days: 6));
+      final dayPlus2 = DateTimeExt.now().add(const Duration(days: 2));
+      final dayPlus6 = DateTimeExt.now().add(const Duration(days: 6));
       final chore1 = ChoreFactory().state({'nextDueDate': dayPlus2}).build();
       final chore2 = ChoreFactory().state({'nextDueDate': dayPlus6}).build();
 
@@ -97,7 +98,7 @@ void main() {
     });
 
     test('see date formatted for day 7 on', () {
-      final day = DateTime.now().add(const Duration(days: 7));
+      final day = DateTimeExt.now().add(const Duration(days: 7));
       final chore = ChoreFactory().state({'nextDueDate': day}).build();
 
       final dayString = DateFormat(DateFormat.YEAR_NUM_MONTH_DAY).format(day);

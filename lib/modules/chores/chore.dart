@@ -1,6 +1,6 @@
 import 'package:chore_manager_mobile/constants/strings.dart';
 import 'package:chore_manager_mobile/data/concerns/jsonable.dart';
-import 'package:chore_manager_mobile/extensions/date_time_extension.dart';
+import 'package:chore_manager_mobile/extensions/date_time_ext.dart';
 import 'package:chore_manager_mobile/modules/chores/frequency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
@@ -116,7 +116,7 @@ class Chore extends Equatable with Jsonable {
   bool get hasNoDueDate => !hasDueDate;
 
   int diffDaysRoundAwayFromZero(DateTime date) {
-    final diff = date.difference(DateTime.now().toStartOfDay()).inHours / 24;
+    final diff = date.difference(DateTimeExt.now().toStartOfDay()).inHours / 24;
 
     return diff > 0 ? diff.ceil() : diff.floor();
   }

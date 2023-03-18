@@ -2,7 +2,7 @@ import 'package:chore_manager_mobile/data/chore_manager_web/chores/chore_respons
 import 'package:chore_manager_mobile/data/chore_manager_web/chores/chores_response.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/common/api_errors.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/common/network_adapter.dart';
-import 'package:chore_manager_mobile/extensions/date_time_extension.dart';
+import 'package:chore_manager_mobile/extensions/date_time_ext.dart';
 import 'package:chore_manager_mobile/modules/chores/chore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

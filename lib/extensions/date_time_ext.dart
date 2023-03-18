@@ -1,4 +1,10 @@
-extension DateTimeExtension on DateTime {
+extension DateTimeExt on DateTime {
+  static DateTime? _mockedTime;
+
+  static DateTime now() => _mockedTime ?? DateTime.now();
+
+  static set mockTime(DateTime customTime) => _mockedTime = customTime;
+
   DateTime toStartOfDay() => DateTime(year, month, day);
 
   String toDateString() {

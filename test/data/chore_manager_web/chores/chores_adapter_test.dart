@@ -1,4 +1,5 @@
 import 'package:chore_manager_mobile/data/chore_manager_web/chores/chores_adapter.dart';
+import 'package:chore_manager_mobile/extensions/date_time_ext.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../factories/chore_factory.dart';
@@ -34,7 +35,7 @@ void main() {
   group('snooze', () {
     test('can snooze chore', () async {
       final chore = ChoreFactory().build();
-      final date = DateTime.now().add(const Duration(days: 1));
+      final date = DateTimeExt.now().add(const Duration(days: 1));
       mockChoreSnooze(chore: chore, date: date);
       final adapter = ChoresAdapter();
 
