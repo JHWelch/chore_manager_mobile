@@ -86,5 +86,21 @@ void main() {
 
       verifyChoreSnooze(chore: chore, date: date);
     });
+
+    testWidgets('on weekend, snoozes until next weekend', (tester) async {
+      _setupController();
+      DateTimeExt.mockTime = DateTime(2023, 3, 18); // Known Saturday
+      final date = DateTime(2023, 3, 25); // Next Saturday
+      await tester.pumpWidget(WidgetWrapper(SnoozeChoreAction(
+        choreId: chore.id,
+      )));
+      _mockSnoozeCalls(chore, date);
+
+      await tester.tap(find.byType(PopupMenuButton));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Weekend'));
+
+      verifyChoreSnooze(chore: chore, date: date);
+    });
   });
 }
