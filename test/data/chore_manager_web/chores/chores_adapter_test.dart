@@ -1,4 +1,3 @@
-
 import 'package:chore_manager_mobile/data/chore_manager_web/chores/chores_adapter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -28,7 +27,20 @@ void main() {
 
       await adapter.complete(chore);
 
-      verifyChoreComplete(chore);
+      verifyChoreComplete(chore: chore);
+    });
+  });
+
+  group('snooze', () {
+    test('can snooze chore', () async {
+      final chore = ChoreFactory().build();
+      final date = DateTime.now().add(const Duration(days: 1));
+      mockChoreSnooze(chore: chore, date: date);
+      final adapter = ChoresAdapter();
+
+      await adapter.snooze(chore, date);
+
+      verifyChoreSnooze(chore: chore, date: date);
     });
   });
 }

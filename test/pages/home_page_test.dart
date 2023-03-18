@@ -137,7 +137,7 @@ void main() {
         await tester.dismiss(dismissible);
         await tester.pumpAndSettle();
 
-        verifyChoreComplete(chore);
+        verifyChoreComplete(chore: chore);
       });
 
       testWidgets('chore list is refreshed with new chores', (tester) async {
