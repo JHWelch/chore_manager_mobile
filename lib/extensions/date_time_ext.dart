@@ -4,8 +4,20 @@ extension DateTimeExt on DateTime {
   static DateTime now() => _mockedTime ?? DateTime.now();
 
   static set mockTime(DateTime customTime) => _mockedTime = customTime;
+  static void resetMockTime() => _mockedTime = null;
 
   DateTime toStartOfDay() => DateTime(year, month, day);
+
+  DateTime nextWeekend() {
+    final DateTime now = DateTimeExt.now();
+    final int dayOfWeek = now.weekday;
+    int daysUntilSaturday = 6 - dayOfWeek;
+    if (daysUntilSaturday < 1) {
+      daysUntilSaturday += 7;
+    }
+
+    return now.add(Duration(days: daysUntilSaturday)).toStartOfDay();
+  }
 
   String toDateString() {
     final String y =
