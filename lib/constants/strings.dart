@@ -3,6 +3,7 @@ class Strings {
 
   // Actions
   static const String complete = 'Complete';
+  static const String snooze = 'Snooze';
 
   // Pages
   static const String home = 'Home';

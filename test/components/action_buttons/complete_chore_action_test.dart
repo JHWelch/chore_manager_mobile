@@ -49,7 +49,7 @@ void main() {
 
     await tester.tap(find.byType(IconButton));
 
-    verifyChoreComplete(chore);
+    verifyChoreComplete(chore: chore);
   });
 
   testWidgets('calls callback after completion', (tester) async {
