@@ -6,7 +6,7 @@ void main() {
     tearDown(DateTimeExt.resetMockTime);
 
     test('when set, DateTimeExt.now() returns mockTime', () {
-      final DateTime mockTime = DateTime(2021, 1, 1);
+      final DateTime mockTime = DateTime(2021, 1, 2);
       DateTimeExt.mockTime = mockTime;
 
       expect(DateTimeExt.now(), mockTime);
