@@ -11,7 +11,7 @@ on:
 
 jobs:
   lint:
-    name: Run Tests
+    name: Run Linter
     runs-on: ubuntu-latest
 
     steps:
