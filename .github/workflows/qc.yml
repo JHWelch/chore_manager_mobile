@@ -10,8 +10,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  lint:
-    name: Run Linter
+  qc-check:
+    name: Run QC Checks
     runs-on: ubuntu-latest
 
     steps:
@@ -29,23 +29,6 @@ jobs:
 
       - name: Run Linter
         run: flutter analyze
-
-  tests:
-    name: Run Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.7.6'
-          channel: stable
-
-      - name: Get Packages
-        run: flutter pub get
 
       - name: Run Tests
         run: flutter test
