@@ -43,7 +43,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.chore_manager_mobile"
+        applicationId "app.jhw.choremanager"
         minSdkVersion 18
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()

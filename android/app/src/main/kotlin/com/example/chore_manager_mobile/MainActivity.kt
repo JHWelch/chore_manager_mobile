@@ -1,4 +1,4 @@
-package com.example.chore_manager_mobile
+package app.jhw.choremanager
 
 import io.flutter.embedding.android.FlutterActivity
 
