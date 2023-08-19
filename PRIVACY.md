@@ -1,4 +1,3 @@
-<!-- toc.levels 1 -->
 <!-- omit in toc -->
 # PRIVACY POLICY
 
