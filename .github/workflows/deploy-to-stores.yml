@@ -24,7 +24,8 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - uses: ruby/setup-ruby@v1
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.1.2'
         bundler-cache: true
@@ -38,10 +39,5 @@ jobs:
     - name: Get Packages
       run: flutter pub get
 
-    - name: Build Flutter for iOS
-      run: flutter build ios --release --no-codesign
-
     - name: Deploy to App Store
-      uses: maierj/fastlane-action@v3.0.0
-      with:
-        lane: ios deploy
+      run: bundle exec fastlane ios deploy

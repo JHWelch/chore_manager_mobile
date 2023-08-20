@@ -14,6 +14,11 @@ end
 platform :ios do
   desc 'Deploy a new build to TestFlight'
   lane :deploy do
+    flutter_version_manager(
+      arguments: '-apply',
+      yml: './version.yml',
+      pubspec: './pubspec.yaml'
+    )
     setup_ci if ENV['CI']
     app_store_connect_api_key
     match(
@@ -21,10 +26,12 @@ platform :ios do
       type: 'appstore',
       git_basic_authorization: basic_authorization_token,
     )
+    sh 'flutter build ipa --release --no-codesign'
     build_app(
       archive_path: './build/ios/archive/Runner.xcarchive',
       project: './ios/Runner.xcodeproj',
       skip_build_archive: true,
+      export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
     )
     upload_to_testflight
   end
