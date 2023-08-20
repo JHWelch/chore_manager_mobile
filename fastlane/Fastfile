@@ -11,7 +11,10 @@ platform :ios do
   lane :deploy do
     setup_ci if ENV['CI']
     app_store_connect_api_key
-    match(type: 'appstore')
+    match(
+      readonly: true,
+      type: 'appstore',
+    )
     build_app(
       archive_path: './build/ios/archive/Runner.xcarchive',
       project: './ios/Runner.xcodeproj',
