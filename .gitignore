@@ -46,3 +46,6 @@ app.*.map.json
 /android/app/release
 
 coverage
+
+play-store-deploy-key.json
+upload-keystore.jks
