@@ -7,7 +7,8 @@ on:
     - main
 
 jobs:
-  deploy:
+  deploy-ios:
+    name: Deploy to App Store
     if: github.event.pull_request.merged == true
     runs-on: macos-13
     environment: production
@@ -41,3 +42,46 @@ jobs:
 
     - name: Deploy to App Store
       run: bundle exec fastlane ios deploy
+
+  deploy-android:
+    name: Deploy to Google Play
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
+      UPLOAD_KEY_PASSWORD: ${{ secrets.UPLOAD_KEY_PASSWORD }}
+      UPLOAD_KEYSTORE: ${{ secrets.UPLOAD_KEYSTORE }}
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.1.2'
+        bundler-cache: true
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.7.6'
+        channel: stable
+
+    - name: Get Packages
+      run: flutter pub get
+
+    - name: Place key.properties
+      run: |
+        echo "storePassword=$UPLOAD_KEY_PASSWORD" >> android/key.properties
+        echo "keyPassword=$UPLOAD_KEY_PASSWORD" >> android/key.properties
+        echo "keyAlias=upload" >> android/key.properties
+        echo "storeFile=upload.jks" >> android/key.properties
+
+    - name: Place upload.jks
+      run: |
+        echo $UPLOAD_KEYSTORE | base64 --decode > android/app/upload.jks
+
+    - name: Deploy to App Store
+      run: bundle exec fastlane android deploy
