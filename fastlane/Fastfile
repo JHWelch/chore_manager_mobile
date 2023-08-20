@@ -9,7 +9,9 @@ end
 platform :ios do
   desc 'Deploy a new build to TestFlight'
   lane :deploy do
+    setup_ci if ENV['CI']
     app_store_connect_api_key
+    match(type: 'appstore')
     build_app(
       archive_path: './build/ios/archive/Runner.xcarchive',
       project: './ios/Runner.xcodeproj',

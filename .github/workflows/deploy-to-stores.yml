@@ -1,0 +1,45 @@
+name: Deploy to Stores
+on:
+  pull_request:
+    types:
+    - closed
+    branches:
+    - main
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
+      APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
+      APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
+      APP_STORE_CONNECT_API_KEY_IS_KEY_CONTENT_BASE64: ${{ vars.APP_STORE_CONNECT_API_KEY_IS_KEY_CONTENT_BASE64 }}
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.1.2'
+        bundler-cache: true
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.7.6'
+        channel: stable
+
+    - name: Get Packages
+      run: flutter pub get
+
+    - name: Build Flutter for iOS
+      run: flutter build ios --release --no-codesign
+
+    - name: Deploy to App Store
+      uses: maierj/fastlane-action@v3.0.0
+      with:
+        lane: ios deploy
