@@ -1,0 +1,8 @@
+## Android
+json_key_file('./play-store-deploy-key.json') # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name('app.jhw.choremanager') # e.g. com.krausefx.app
+
+## IOS
+app_identifier('app.jhw.choremanager') # The bundle identifier of your app
+itc_team_id('126581593') # App Store Connect Team ID
+team_id('UXQ795P4H9') # Developer Portal Team ID
