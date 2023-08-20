@@ -53,3 +53,5 @@ upload-keystore.jks
 .env
 
 **/fastlane/report.xml
+Runner.ipa
+Runner.app.dSYM.zip

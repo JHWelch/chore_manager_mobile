@@ -5,3 +5,27 @@ lane :apply_new_version do
     pubspec: './pubspec.yaml'
   )
 end
+
+platform :ios do
+  desc 'Deploy a new build to TestFlight'
+  lane :deploy do
+    app_store_connect_api_key
+    build_app(
+      archive_path: './build/ios/archive/Runner.xcarchive',
+      project: './ios/Runner.xcodeproj',
+      skip_build_archive: true,
+    )
+    upload_to_testflight
+  end
+end
+
+platform :android do
+  desc 'Deploy a new build to the Google Play Internal Track'
+  lane :deploy do
+    upload_to_play_store(
+      aab: './build/app/outputs/bundle/release/app-release.aab',
+      release_status: 'draft',
+      track: 'internal',
+    )
+  end
+end

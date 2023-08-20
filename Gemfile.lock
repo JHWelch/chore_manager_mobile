@@ -217,6 +217,7 @@ PLATFORMS
   x86_64-darwin-22
 
 DEPENDENCIES
+  dotenv (~> 2.8)
   fastlane (~> 2.214)
   fastlane-plugin-flutter_version_manager
   git (~> 1.18)
