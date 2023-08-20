@@ -1,3 +1,8 @@
+username = ENV['USERNAME']
+personal_github_access_token = ENV['FASTLANE_GITHUB_PAT']
+authorization_token_str = "#{username}:#{personal_github_access_token}"
+basic_authorization_token = Base64.strict_encode64(authorization_token_str)
+
 lane :apply_new_version do
   flutter_version_manager(
     arguments: '-apply',
@@ -9,11 +14,24 @@ end
 platform :ios do
   desc 'Deploy a new build to TestFlight'
   lane :deploy do
+    flutter_version_manager(
+      arguments: '-apply',
+      yml: './version.yml',
+      pubspec: './pubspec.yaml'
+    )
+    setup_ci if ENV['CI']
     app_store_connect_api_key
+    match(
+      readonly: true,
+      type: 'appstore',
+      git_basic_authorization: basic_authorization_token,
+    )
+    sh 'flutter build ipa --release --no-codesign'
     build_app(
       archive_path: './build/ios/archive/Runner.xcarchive',
       project: './ios/Runner.xcodeproj',
       skip_build_archive: true,
+      export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
     )
     upload_to_testflight
   end
@@ -22,6 +40,12 @@ end
 platform :android do
   desc 'Deploy a new build to the Google Play Internal Track'
   lane :deploy do
+    flutter_version_manager(
+      arguments: '-apply',
+      yml: './version.yml',
+      pubspec: './pubspec.yaml'
+    )
+    sh 'flutter build appbundle --release'
     upload_to_play_store(
       aab: './build/app/outputs/bundle/release/app-release.aab',
       release_status: 'draft',

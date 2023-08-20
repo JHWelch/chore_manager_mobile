@@ -1,4 +1,4 @@
-git_url('git@github.com:JHWelch/chore_manager_mobile_fastlane_match.git')
+git_url('https://github.com/JHWelch/chore_manager_mobile_fastlane_match.git')
 
 storage_mode('git')
 
