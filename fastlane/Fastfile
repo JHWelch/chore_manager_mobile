@@ -1,0 +1,7 @@
+lane :apply_new_version do
+  flutter_version_manager(
+    arguments: '-apply',
+    yml: './version.yml',
+    pubspec: './pubspec.yaml'
+  )
+end
