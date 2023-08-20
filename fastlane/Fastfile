@@ -1,3 +1,8 @@
+username = ENV['USERNAME']
+personal_github_access_token = ENV['FASTLANE_GITHUB_PAT']
+authorization_token_str = "#{username}:#{personal_github_access_token}"
+basic_authorization_token = Base64.strict_encode64(authorization_token_str)
+
 lane :apply_new_version do
   flutter_version_manager(
     arguments: '-apply',
@@ -14,6 +19,7 @@ platform :ios do
     match(
       readonly: true,
       type: 'appstore',
+      git_basic_authorization: basic_authorization_token,
     )
     build_app(
       archive_path: './build/ios/archive/Runner.xcarchive',
