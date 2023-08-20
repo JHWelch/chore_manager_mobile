@@ -49,3 +49,7 @@ coverage
 
 play-store-deploy-key.json
 upload-keystore.jks
+
+.env
+
+**/fastlane/report.xml
