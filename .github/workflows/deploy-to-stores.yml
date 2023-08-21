@@ -11,8 +11,9 @@ jobs:
     name: Deploy to App Store
     if: github.event.pull_request.merged == true
     runs-on: macos-13
-    environment: production
+    environment: 'Production - iOS'
     env:
+      API_URL: ${{ secrets.API_URL }}
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
       APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
@@ -47,8 +48,9 @@ jobs:
     name: Deploy to Google Play
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    environment: production
+    environment: 'Production - Android'
     env:
+      API_URL: ${{ secrets.API_URL }}
       SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
       UPLOAD_KEY_PASSWORD: ${{ secrets.UPLOAD_KEY_PASSWORD }}
       UPLOAD_KEYSTORE: ${{ secrets.UPLOAD_KEYSTORE }}

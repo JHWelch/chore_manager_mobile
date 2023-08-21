@@ -13,17 +13,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
-### apply_new_version
-
-```sh
-[bundle exec] fastlane apply_new_version
-```
-
-
-
-----
-
-
 ## iOS
 
 ### ios deploy
