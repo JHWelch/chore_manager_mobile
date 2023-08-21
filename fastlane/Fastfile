@@ -14,6 +14,10 @@ def apply_version
   )
 end
 
+def dart_defines
+  " --dart-define API_URL=#{ENV['API_URL']}"
+end
+
 platform :ios do
   desc 'Deploy a new build to TestFlight'
   lane :deploy do
@@ -25,7 +29,7 @@ platform :ios do
       type: 'appstore',
       git_basic_authorization: gitub_authorization_token,
     )
-    sh 'flutter build ipa --release --no-codesign'
+    sh 'flutter build ipa --release --no-codesign' + dart_defines
     build_app(
       archive_path: './build/ios/archive/Runner.xcarchive',
       project: './ios/Runner.xcodeproj',
@@ -40,7 +44,7 @@ platform :android do
   desc 'Deploy a new build to the Google Play Internal Track'
   lane :deploy do
     apply_version
-    sh 'flutter build appbundle --release'
+    sh 'flutter build appbundle --release' + dart_defines
     upload_to_play_store(
       aab: './build/app/outputs/bundle/release/app-release.aab',
       release_status: 'draft',

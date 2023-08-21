@@ -13,6 +13,7 @@ jobs:
     runs-on: macos-13
     environment: 'Production - iOS'
     env:
+      API_URL: ${{ secrets.API_URL }}
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
       APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
@@ -49,6 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 'Production - Android'
     env:
+      API_URL: ${{ secrets.API_URL }}
       SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
       UPLOAD_KEY_PASSWORD: ${{ secrets.UPLOAD_KEY_PASSWORD }}
       UPLOAD_KEYSTORE: ${{ secrets.UPLOAD_KEYSTORE }}
