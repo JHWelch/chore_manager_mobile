@@ -1,7 +1,7 @@
 ## Android
-package_name('app.jhw.choremanager') # e.g. com.krausefx.app
+package_name('app.jhw.choremanager')
 
 ## IOS
-app_identifier('app.jhw.choremanager') # The bundle identifier of your app
+app_identifier('app.jhw.choremanager')
 itc_team_id('126581593') # App Store Connect Team ID
 team_id('UXQ795P4H9') # Developer Portal Team ID
