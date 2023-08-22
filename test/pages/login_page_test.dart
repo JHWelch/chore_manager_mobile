@@ -247,11 +247,48 @@ void main() {
         await _tapLogin(tester);
         await tester.pump(const Duration(milliseconds: 100));
 
+        expect(find.text('The password field is required.'), findsOneWidget);
+        expect(find.byType(HomePage), findsNothing);
+      });
+    });
+
+    group('Server throws generic error', () {
+      setUp(() {
+        mockPost(
+          path: 'token',
+          headers: expectedAuthHeaders(),
+          body: _authJson(),
+          response: http.Response(jsonEncode({'message': 'Server Error'}), 500),
+        );
+      });
+
+      testWidgets('user not logged in', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(LoginPage()));
+        await tester.pumpAndSettle();
+
+        await _fillFields(tester);
+        await _tapLogin(tester);
+        await tester.pump(const Duration(seconds: 4));
+
+        final AuthService auth = Get.find();
+        expect(auth.isLoggedIn, false);
+      });
+
+      testWidgets('user shown generic', (tester) async {
+        await tester.pumpWidget(WidgetWrapper(LoginPage()));
+        await tester.pumpAndSettle();
+
+        await _fillFields(tester);
+        await _tapLogin(tester);
+        await tester.pump(const Duration(seconds: 2));
+
+        expect(find.text('Server Error'), findsOneWidget);
         expect(
-          find.text('The password field is required.'),
+          find.text('Something went wrong on our end. Please try again later.'),
           findsOneWidget,
         );
         expect(find.byType(HomePage), findsNothing);
+        await tester.pump(const Duration(seconds: 2));
       });
     });
   });

@@ -65,4 +65,6 @@ class ApiErrors extends ApiResponse with Jsonable {
   }
 
   bool get isAuthError => statusCode == HttpStatus.unauthorized;
+
+  bool get isServerError => statusCode == HttpStatus.internalServerError;
 }
