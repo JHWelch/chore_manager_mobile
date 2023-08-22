@@ -6,10 +6,6 @@ mixin Jsonable {
 
   String toJsonString() => jsonEncode(toJson(), toEncodable: encodeSpecial);
 
-  dynamic encodeSpecial(dynamic item) {
-    if (item is DateTime) {
-      return item.toFullIso8601String();
-    }
-    return item;
-  }
+  dynamic encodeSpecial(dynamic item) =>
+      item is DateTime ? item.toFullIso8601String() : item;
 }
