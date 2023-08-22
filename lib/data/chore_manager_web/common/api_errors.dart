@@ -61,7 +61,7 @@ class ApiErrors extends ApiResponse with Jsonable {
       };
 
   Map<String, dynamic> _errorsToJson() {
-    return {for (ApiError e in errors!) e.field: e.messages};
+    return {for (final ApiError e in errors!) e.field: e.messages};
   }
 
   bool get isAuthError => statusCode == HttpStatus.unauthorized;
