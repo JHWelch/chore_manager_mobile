@@ -27,9 +27,9 @@ class ApiErrors extends ApiResponse with Jsonable {
   }
 
   List<ApiError>? _parseErrors(json) {
-    if (json['errors'] == null) return null;
+    if (json['errors'] is! Map<String, dynamic>) return null;
 
-    return (json['errors'] as Map<String, dynamic>)
+    return json['errors']
         .entries
         .map<ApiError>(
           (e) => ApiError(

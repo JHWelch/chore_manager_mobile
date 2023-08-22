@@ -37,13 +37,9 @@ class AuthService extends GetxService {
     await storeAuthToken(loginResponse.authToken);
   }
 
-  void handleAuthChanged(String newToken) {
-    if (newToken.isNotEmpty) {
-      Get.offAllNamed(Routes.home);
-    } else {
-      Get.offAllNamed(Routes.login);
-    }
-  }
+  void handleAuthChanged(String newToken) => newToken.isNotEmpty
+      ? Get.offAllNamed(Routes.home)
+      : Get.offAllNamed(Routes.login);
 
   Future<void> fetchAuthUser() async =>
       user(await UsersAdapter(token: authToken()).authUser());
