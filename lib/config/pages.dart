@@ -30,17 +30,13 @@ class Pages {
 
   static Widget choreShowNavigate() {
     final Chore? chore = Get.arguments?['chore'];
-    if (chore != null) {
-      return ShowChorePage.new(chore);
-    }
+    if (chore != null) return ShowChorePage.new(chore);
 
     final String? choreId = Get.parameters['id'];
-    if (choreId != null) {
-      final ChoresController choreController = Get.find();
+    if (choreId == null) throw Exception('No chore found');
 
-      return ShowChorePage.new(choreController.chore(int.parse(choreId)));
-    }
+    final ChoresController choreController = Get.find();
 
-    throw Exception('No chore found');
+    return ShowChorePage.new(choreController.chore(int.parse(choreId)));
   }
 }
