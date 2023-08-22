@@ -2,8 +2,8 @@ def gitub_authorization_token
   username = ENV['USERNAME']
   personal_github_access_token = ENV['FASTLANE_GITHUB_PAT']
   return nil if username.nil? || personal_github_access_token.nil?
-  authorization_token_str = "#{username}:#{personal_github_access_token}"
-  Base64.strict_encode64(authorization_token_str)
+
+  Base64.strict_encode64("#{username}:#{personal_github_access_token}")
 end
 
 def apply_version

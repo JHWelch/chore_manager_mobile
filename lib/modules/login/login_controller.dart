@@ -16,14 +16,22 @@ class LoginController extends GetxController {
   Future<void> logIn() async {
     loginForm.resetErrors();
 
-    if (_validate()) {
-      final response = await adapter.logIn(loginForm.toRequest);
+    if (!_validate()) return;
 
-      if (response.isSuccess) {
-        await auth.finishLogin(response as LoginResponse);
-      } else {
-        loginForm.errors(response as ApiErrors);
+    final response = await adapter.logIn(loginForm.toRequest);
+
+    if (response.isSuccess && response is LoginResponse) {
+      await auth.finishLogin(response);
+    } else if (response is ApiErrors) {
+      if (response.isServerError) {
+        Get.snackbar(
+          'Server Error',
+          'Something went wrong on our end. Please try again later.',
+          snackPosition: SnackPosition.TOP,
+        );
       }
+
+      loginForm.errors(response);
     }
 
     _validate();
