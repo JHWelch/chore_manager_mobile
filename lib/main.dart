@@ -4,9 +4,8 @@ import 'package:chore_manager_mobile/config/services.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
-  Globals.initHttp();
-  Globals.initSecureStorage();
   WidgetsFlutterBinding.ensureInitialized();
+  await Globals.init();
   await initServices();
 
   runApp(ChoreManager());
