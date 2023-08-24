@@ -55,6 +55,7 @@ upload-keystore.jks
 Runner.ipa
 Runner.app.dSYM.zip
 
-firebase_app_id_file.json
-GoogleService-Info.plist
-firebase_options.dart
+ios/firebase_app_id_file.json
+ios/Runner/GoogleService-Info.plist
+lib/firebase_options.dart
+android/app/google-services.json

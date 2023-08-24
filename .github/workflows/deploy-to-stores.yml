@@ -14,12 +14,15 @@ jobs:
     environment: 'Production - iOS'
     env:
       API_URL: ${{ secrets.API_URL }}
-      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-      APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
-      APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
-      APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
       APP_STORE_CONNECT_API_KEY_IS_KEY_CONTENT_BASE64: ${{ vars.APP_STORE_CONNECT_API_KEY_IS_KEY_CONTENT_BASE64 }}
+      APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
+      APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
+      APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
+      FIREBASE_DART_OPTIONS: ${{ secrets.FIREBASE_DART_OPTIONS }}
+      FIREBASE_IOS_APP_ID: ${{ secrets.FIREBASE_IOS_APP_ID }}
+      FIREBASE_IOS_GOOGLE_SERVICE_PLIST: ${{ secrets.FIREBASE_IOS_GOOGLE_SERVICE_PLIST }}
       FASTLANE_GITHUB_PAT: ${{ secrets.FASTLANE_GITHUB_PAT }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       USERNAME: ${{ secrets.USERNAME }}
 
     steps:
@@ -41,6 +44,12 @@ jobs:
     - name: Get Packages
       run: flutter pub get
 
+    - name: Place Firebase config files
+      run: |
+        echo $FIREBASE_DART_OPTIONS | base64 --decode > lib/firebase_options.dart
+        echo $FIREBASE_IOS_GOOGLE_SERVICE_PLIST | base64 --decode > ios/Runner/GoogleService-Info.plist
+        echo $FIREBASE_IOS_APP_ID | base64 --decode > ios/firebase_app_id_file.json
+
     - name: Deploy to App Store
       run: bundle exec fastlane ios deploy
 
@@ -51,6 +60,8 @@ jobs:
     environment: 'Production - Android'
     env:
       API_URL: ${{ secrets.API_URL }}
+      FIREBASE_ANDROID_OPTIONS: ${{ secrets.FIREBASE_ANDROID_OPTIONS }}
+      FIREBASE_DART_OPTIONS: ${{ secrets.FIREBASE_DART_OPTIONS }}
       SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
       UPLOAD_KEY_PASSWORD: ${{ secrets.UPLOAD_KEY_PASSWORD }}
       UPLOAD_KEYSTORE: ${{ secrets.UPLOAD_KEYSTORE }}
@@ -73,6 +84,11 @@ jobs:
 
     - name: Get Packages
       run: flutter pub get
+
+    - name: Place Firebase config files
+      run: |
+        echo $FIREBASE_ANDROID_OPTIONS | base64 --decode > android/app/google-services.json
+        echo $FIREBASE_DART_OPTIONS | base64 --decode > lib/firebase_options.dart
 
     - name: Place key.properties
       run: |
