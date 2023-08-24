@@ -19,10 +19,10 @@ class Globals {
   }
 
   static Future<void> initFirebase() async {
-    firebase = FirebaseMessaging.instance;
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    firebase = FirebaseMessaging.instance;
   }
 
   static Future<void> init() async {
