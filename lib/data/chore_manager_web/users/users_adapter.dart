@@ -6,7 +6,7 @@ class UsersAdapter {
   late final NetworkAdapter adapter;
 
   UsersAdapter({String? token}) {
-    adapter = NetworkAdapter(token: token);
+    adapter = NetworkAdapter(authToken: token);
   }
 
   Future<AuthUser> authUser() async {

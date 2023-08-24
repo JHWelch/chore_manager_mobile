@@ -1,11 +1,17 @@
 import 'package:chore_manager_mobile/data/chore_manager_web/users/users_adapter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../mocks/http_mocks.dart';
 import '../../../mocks/mocks.dart';
+import 'user_adapter_mocks.dart';
 
 void main() {
   group('show self', () {
-    setUp(givenLoggedIn);
+    setUp(() {
+      givenLoggedIn();
+      mockUserToken(mockTokenString);
+      mockAuthUserGet();
+    });
 
     test('user can get their own data', () async {
       final adapter = UsersAdapter();

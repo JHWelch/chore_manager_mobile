@@ -1,4 +1,6 @@
+import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/config/routes.dart';
+import 'package:chore_manager_mobile/data/chore_manager_web/device_tokens/device_tokens_adapter.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/login/login_response.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/users/users_adapter.dart';
 import 'package:chore_manager_mobile/data/secure_storage/secure_storage.dart';
@@ -15,12 +17,6 @@ class AuthService extends GetxService {
   Future<AuthService> init() async {
     authToken(await retrieveAuthToken() ?? '');
 
-    try {
-      if (authToken.isNotEmpty) await fetchAuthUser();
-    } on Exception {
-      authToken('');
-    }
-
     return this;
   }
 
@@ -29,18 +25,41 @@ class AuthService extends GetxService {
     super.onInit();
 
     ever<String>(authToken, handleAuthChanged);
+
+    if (authToken.isEmpty || !await fetchAuthUser()) return;
+
+    await postLogin();
   }
 
   Future<void> finishLogin(LoginResponse loginResponse) async {
     authToken(loginResponse.authToken);
     user(loginResponse.user);
     await storeAuthToken(loginResponse.authToken);
+    await postLogin();
+  }
+
+  Future<void> postLogin() async {
+    await syncFirebaseToken();
+  }
+
+  Future<void> syncFirebaseToken() async {
+    final fcmToken = await Globals.firebase.getToken();
+    if (fcmToken != null) {
+      await DeviceTokensAdapter().store(token: fcmToken);
+    }
   }
 
   void handleAuthChanged(String newToken) => newToken.isNotEmpty
       ? Get.offAllNamed(Routes.home)
       : Get.offAllNamed(Routes.login);
 
-  Future<void> fetchAuthUser() async =>
+  Future<bool> fetchAuthUser() async {
+    try {
       user(await UsersAdapter(token: authToken()).authUser());
+      return true;
+    } on Exception {
+      authToken('');
+      return false;
+    }
+  }
 }

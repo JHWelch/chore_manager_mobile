@@ -32,9 +32,8 @@ class LoginController extends GetxController {
       }
 
       loginForm.errors(response);
+      _validate();
     }
-
-    _validate();
   }
 
   bool _validate() => formKey.currentState!.validate();

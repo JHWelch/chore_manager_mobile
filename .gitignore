@@ -54,3 +54,8 @@ upload-keystore.jks
 **/fastlane/report.xml
 Runner.ipa
 Runner.app.dSYM.zip
+
+ios/firebase_app_id_file.json
+ios/Runner/GoogleService-Info.plist
+lib/firebase_options.dart
+android/app/google-services.json

@@ -11,6 +11,7 @@
             "toolArgs": [
                 "--dart-define",
                 "API_URL=http://choremanager.test/api/",
+                // "API_URL=http://choremanager.jordanwelch.com/api/",
             ]
         },
         {

@@ -22,6 +22,9 @@ jobs:
       - name: Get Packages
         run: flutter pub get
 
+      - name: Place fake firebase_options.dart
+        run: cp test/fixtures/fake_firebase_options.dart lib/firebase_options.dart
+
       - name: Run Linter
         run: flutter analyze
 
