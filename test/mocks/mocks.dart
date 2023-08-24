@@ -8,31 +8,31 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 
-import '../data/chore_manager_web/users/user_adapter_mocks.dart';
 import 'http_mocks.dart';
 
 Future<void> givenNotLoggedIn() async {
   mockGlobals();
   mockUserToken(null);
-  await mockServices();
+  await mockServices(authed: false);
 }
 
 Future<void> givenLoggedIn() async {
   mockGlobals();
-  mockUserToken(mockTokenString);
-  mockAuthUserGet();
   await mockServices();
 }
 
-Future<void> mockServices({String? initialToken}) async {
-  final auth = await Get.putAsync(AuthService().init);
+Future<void> mockServices({bool authed = true}) async {
+  final auth = Get.put(AuthService());
 
-  auth.user(AuthUser(
-    id: 1,
-    name: 'John Smith',
-    email: 'jsmith@example.com',
-    currentTeamId: 1,
-  ));
+  if (authed) {
+    auth.user(AuthUser(
+      id: 1,
+      name: 'John Smith',
+      email: 'jsmith@example.com',
+      currentTeamId: 1,
+    ));
+    auth.authToken(mockTokenString);
+  }
 }
 
 void mockGlobals() {
