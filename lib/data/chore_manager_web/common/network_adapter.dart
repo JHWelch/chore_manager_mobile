@@ -66,19 +66,17 @@ class NetworkAdapter {
   }
 
   Future<ApiErrors?> parseErrors(http.Response response) async {
-    if (response.statusCode != HttpStatus.ok) {
-      final errors = ApiErrors.fromHttpResponse(response);
-
-      if (errors.isAuthError) {
-        if (Get.currentRoute.isNotEmpty) {
-          await Get.offAllNamed(Routes.login);
-        }
-      }
-
-      return errors;
+    if (HttpStatus(response.statusCode).isOk) {
+      return null;
     }
 
-    return null;
+    final errors = ApiErrors.fromHttpResponse(response);
+
+    if (errors.isAuthError && Get.currentRoute.isNotEmpty) {
+      await Get.offAllNamed(Routes.login);
+    }
+
+    return errors;
   }
 
   Uri url(String uri) => Uri.parse('$apiUrl$uri');

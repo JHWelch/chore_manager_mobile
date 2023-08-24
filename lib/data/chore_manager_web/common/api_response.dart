@@ -8,7 +8,7 @@ class ApiResponse {
   ApiResponse(this.responseType);
 
   ApiResponse.fromHttpResponse(http.Response response) {
-    responseType = response.statusCode == HttpStatus.ok
+    responseType = HttpStatus(response.statusCode).isOk
         ? ResponseType.success
         : ResponseType.failure;
   }
