@@ -2,6 +2,7 @@ import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/constants/keys.dart';
 import 'package:chore_manager_mobile/data/auth/auth_service.dart';
 import 'package:chore_manager_mobile/modules/login/auth_user.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -38,6 +39,7 @@ void mockGlobals() {
   Get.testMode = true;
   Globals.client = MockClient();
   Globals.storage = MockFlutterSecureStorage();
+  Globals.firebase = MockFirebaseMessaging();
 }
 
 void mockUserToken(String? token) {
@@ -54,3 +56,5 @@ void _mockSecureStorageRead(String key, String? value) {
 class MockClient extends Mock implements http.Client {}
 
 class MockFlutterSecureStorage extends Mock implements FlutterSecureStorage {}
+
+class MockFirebaseMessaging extends Mock implements FirebaseMessaging {}
