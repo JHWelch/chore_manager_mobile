@@ -5,7 +5,7 @@ import 'package:mocktail/mocktail.dart';
 
 import '../http_mocks.dart';
 
-void mockDeviceTokenStore({required String token, required int statusCode}) {
+void mockDeviceTokenStore({String token = 'MOCK_TOKEN', int statusCode = 200}) {
   mockPost(
     path: 'device_tokens',
     body: jsonEncode({'token': token}),

@@ -10,6 +10,7 @@ import 'package:mocktail/mocktail.dart';
 import '../../factories/chore_factory.dart';
 import '../../helpers/helpers.dart';
 import '../../mocks/data_mocks/chore_mocks.dart';
+import '../../mocks/firebase_mocks.dart';
 import '../../mocks/mocks.dart';
 
 void main() {
@@ -17,6 +18,7 @@ void main() {
 
   setUp(() async {
     await givenLoggedIn();
+    mockFirebaseGetToken(null);
     chore = ChoreFactory().build();
   });
 

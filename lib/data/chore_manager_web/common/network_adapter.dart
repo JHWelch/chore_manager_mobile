@@ -11,16 +11,18 @@ import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkAdapter {
-  late String token;
+  late final AuthService auth;
+  late final String? _token;
 
-  NetworkAdapter({String? token}) {
-    if (token == null) {
-      final AuthService auth = Get.find();
-      this.token = auth.authToken();
-    } else {
-      this.token = token;
+  NetworkAdapter({String? authToken}) {
+    _token = authToken;
+
+    if (authToken == null) {
+      auth = Get.find();
     }
   }
+
+  String get token => _token ?? auth.authToken();
 
   Future<ApiResponse> get({
     required String uri,

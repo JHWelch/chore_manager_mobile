@@ -15,6 +15,8 @@ import 'package:mocktail/mocktail.dart';
 
 import '../helpers/widget_wrapper.dart';
 import '../mocks/data_mocks/chore_mocks.dart';
+import '../mocks/data_mocks/device_token_mocks.dart';
+import '../mocks/firebase_mocks.dart';
 import '../mocks/http_mocks.dart';
 import '../mocks/mocks.dart';
 import '../mocks/secure_storage_mocks.dart';
@@ -87,22 +89,22 @@ void main() {
       });
 
       testWidgets('makes login request', (tester) async {
+        mockFirebaseGetToken(null);
         await tester.pumpWidget(WidgetWrapper(LoginPage()));
         await tester.pumpAndSettle();
 
         await _fillFields(tester);
         await _tapLogin(tester);
 
-        verify(
-          () => Globals.client.post(
-            expectedPath('token'),
-            headers: expectedAuthHeaders(),
-            body: _authJson(),
-          ),
-        );
+        verify(() => Globals.client.post(
+              expectedPath('token'),
+              headers: expectedAuthHeaders(),
+              body: _authJson(),
+            ));
       });
 
       testWidgets('user is logged in', (tester) async {
+        mockFirebaseGetToken(null);
         await tester.pumpWidget(WidgetWrapper(LoginPage()));
         await tester.pumpAndSettle();
 
@@ -114,6 +116,7 @@ void main() {
       });
 
       testWidgets('user redirected to home screen', (tester) async {
+        mockFirebaseGetToken(null);
         mockChoreIndex();
 
         await tester.pumpWidget(WidgetWrapper(LoginPage()));
@@ -124,6 +127,20 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.byType(HomePage), findsOneWidget);
+      });
+
+      testWidgets('sync device token with backend', (tester) async {
+        mockChoreIndex();
+        mockFirebaseGetToken('firebase_token');
+        mockDeviceTokenStore(token: 'firebase_token');
+        await tester.pumpWidget(WidgetWrapper(LoginPage()));
+        await tester.pumpAndSettle();
+
+        await _fillFields(tester);
+        await _tapLogin(tester);
+        await tester.pumpAndSettle();
+
+        verifyDeviceTokenStore(token: 'firebase_token');
       });
     });
 
@@ -254,6 +271,7 @@ void main() {
 
     group('Server throws generic error', () {
       setUp(() {
+        mockFirebaseGetToken(null);
         mockPost(
           path: 'token',
           headers: expectedAuthHeaders(),
@@ -274,7 +292,7 @@ void main() {
         expect(auth.isLoggedIn, false);
       });
 
-      testWidgets('user shown generic', (tester) async {
+      testWidgets('user shown generic error', (tester) async {
         await tester.pumpWidget(WidgetWrapper(LoginPage()));
         await tester.pumpAndSettle();
 
