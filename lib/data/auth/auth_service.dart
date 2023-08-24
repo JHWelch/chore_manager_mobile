@@ -17,15 +17,6 @@ class AuthService extends GetxService {
   Future<AuthService> init() async {
     authToken(await retrieveAuthToken() ?? '');
 
-    try {
-      if (authToken.isNotEmpty) {
-        await fetchAuthUser();
-        await postLogin();
-      }
-    } on Exception {
-      authToken('');
-    }
-
     return this;
   }
 
@@ -34,6 +25,10 @@ class AuthService extends GetxService {
     super.onInit();
 
     ever<String>(authToken, handleAuthChanged);
+
+    if (authToken.isEmpty || !await fetchAuthUser()) return;
+
+    await postLogin();
   }
 
   Future<void> finishLogin(LoginResponse loginResponse) async {
@@ -58,6 +53,13 @@ class AuthService extends GetxService {
       ? Get.offAllNamed(Routes.home)
       : Get.offAllNamed(Routes.login);
 
-  Future<void> fetchAuthUser() async =>
+  Future<bool> fetchAuthUser() async {
+    try {
       user(await UsersAdapter(token: authToken()).authUser());
+      return true;
+    } on Exception {
+      authToken('');
+      return false;
+    }
+  }
 }
