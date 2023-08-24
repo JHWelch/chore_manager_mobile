@@ -11,22 +11,19 @@ void mockGet({
   Map<String, String>? headers,
   Duration? delay,
 }) {
-  when(
-    () => Globals.client.get(
-      expectedPath(path),
-      headers: headers ?? expectedHeaders(),
-    ),
-  ).thenAnswer(delayedOrNot(response, delay));
+  when(() => Globals.client.get(
+        expectedPath(path),
+        headers: headers ?? expectedHeaders(),
+      )).thenAnswer(delayedOrNot(response, delay));
 }
 
 Future<http.Response> Function(Invocation) delayedOrNot(
   http.Response response,
   Duration? delay,
-) {
-  return delay == null
-      ? (_) async => response
-      : (_) => Future.delayed(delay, () => response);
-}
+) =>
+    delay == null
+        ? (_) async => response
+        : (_) => Future.delayed(delay, () => response);
 
 void mockPost({
   required String path,
@@ -34,13 +31,11 @@ void mockPost({
   required String body,
   Map<String, String>? headers,
 }) {
-  when(
-    () => Globals.client.post(
-      expectedPath(path),
-      headers: headers ?? expectedHeaders(),
-      body: body,
-    ),
-  ).thenAnswer((_) async => response);
+  when(() => Globals.client.post(
+        expectedPath(path),
+        headers: headers ?? expectedHeaders(),
+        body: body,
+      )).thenAnswer((_) async => response);
 }
 
 void mockPatch({
@@ -49,30 +44,22 @@ void mockPatch({
   required String body,
   Map<String, String>? headers,
 }) {
-  when(
-    () => Globals.client.patch(
-      expectedPath(path),
-      headers: headers ?? expectedHeaders(),
-      body: body,
-    ),
-  ).thenAnswer((_) async => response);
+  when(() => Globals.client.patch(
+        expectedPath(path),
+        headers: headers ?? expectedHeaders(),
+        body: body,
+      )).thenAnswer((_) async => response);
 }
 
-Uri expectedPath(String path) {
-  return Uri.parse(apiUrl + path);
-}
+Uri expectedPath(String path) => Uri.parse(apiUrl + path);
 
-Map<String, String> expectedHeaders() {
-  return {
-    'Accept': 'application/json',
-    'Authorization': 'Bearer $mockTokenString',
-    'Content-Type': 'application/json; charset=UTF-8',
-  };
-}
+Map<String, String> expectedHeaders() => {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $mockTokenString',
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
 
-Map<String, String> expectedAuthHeaders() {
-  return {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json; charset=UTF-8',
-  };
-}
+Map<String, String> expectedAuthHeaders() => {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
