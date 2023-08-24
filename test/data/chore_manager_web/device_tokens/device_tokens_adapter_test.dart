@@ -19,7 +19,7 @@ void main() {
 
     test('can update existing device token', () async {
       const token = 'token';
-      mockDeviceTokenStore(token: token, statusCode: 200);
+      mockDeviceTokenStore(token: token);
 
       await DeviceTokensAdapter().store(token: token);
 
