@@ -1,3 +1,4 @@
+import 'package:chore_manager_mobile/components/drawer/cm_drawer.dart';
 import 'package:flutter/material.dart';
 
 class CMScaffold extends StatelessWidget {
@@ -14,10 +15,11 @@ class CMScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(
-        title: title != null ? Text(title!) : null,
-        actions: actions,
-      ),
-      body: body,
-    );
+        appBar: AppBar(
+          title: title != null ? Text(title!) : null,
+          actions: actions,
+        ),
+        body: body,
+        drawer: const CMDrawer(),
+      );
 }

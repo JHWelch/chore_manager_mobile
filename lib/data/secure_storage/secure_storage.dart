@@ -5,3 +5,5 @@ Future<void> storeAuthToken(String? authToken) =>
     Globals.storage.write(key: authTokenKey, value: authToken);
 
 Future<String?> retrieveAuthToken() => Globals.storage.read(key: authTokenKey);
+
+Future<void> deleteAuthToken() => Globals.storage.delete(key: authTokenKey);

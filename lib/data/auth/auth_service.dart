@@ -8,7 +8,6 @@ import 'package:chore_manager_mobile/modules/login/auth_user.dart';
 import 'package:get/get.dart';
 
 class AuthService extends GetxService {
-  static const String tokenKey = 'CM_AUTH_TOKEN';
   final RxString authToken = ''.obs;
   final Rx<AuthUser?> user = Rx<AuthUser?>(null);
 
@@ -24,36 +23,40 @@ class AuthService extends GetxService {
   Future<void> onInit() async {
     super.onInit();
 
-    ever<String>(authToken, handleAuthChanged);
+    ever<String>(authToken, _handleAuthChanged);
 
-    if (authToken.isEmpty || !await fetchAuthUser()) return;
+    if (authToken.isEmpty || !await _fetchAuthUser()) return;
 
-    await postLogin();
+    await _postLogin();
   }
 
   Future<void> finishLogin(LoginResponse loginResponse) async {
     authToken(loginResponse.authToken);
     user(loginResponse.user);
     await storeAuthToken(loginResponse.authToken);
-    await postLogin();
+    await _postLogin();
   }
 
-  Future<void> postLogin() async {
-    await syncFirebaseToken();
+  Future<void> logout() async {
+    authToken('');
+    user.value = null;
+    await deleteAuthToken();
   }
 
-  Future<void> syncFirebaseToken() async {
+  Future<void> _postLogin() => _syncFirebaseToken();
+
+  Future<void> _syncFirebaseToken() async {
     final fcmToken = await Globals.firebase.getToken();
     if (fcmToken != null) {
       await DeviceTokensAdapter().store(token: fcmToken);
     }
   }
 
-  void handleAuthChanged(String newToken) => newToken.isNotEmpty
+  void _handleAuthChanged(String newToken) => newToken.isNotEmpty
       ? Get.offAllNamed(Routes.home)
       : Get.offAllNamed(Routes.login);
 
-  Future<bool> fetchAuthUser() async {
+  Future<bool> _fetchAuthUser() async {
     try {
       user(await UsersAdapter(token: authToken()).authUser());
       return true;
