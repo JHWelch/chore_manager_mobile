@@ -37,9 +37,7 @@ class AuthService extends GetxService {
     await postLogin();
   }
 
-  Future<void> postLogin() async {
-    await syncFirebaseToken();
-  }
+  Future<void> postLogin() => syncFirebaseToken();
 
   Future<void> syncFirebaseToken() async {
     final fcmToken = await Globals.firebase.getToken();
