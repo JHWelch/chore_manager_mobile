@@ -23,34 +23,34 @@ class AuthService extends GetxService {
   Future<void> onInit() async {
     super.onInit();
 
-    ever<String>(authToken, handleAuthChanged);
+    ever<String>(authToken, _handleAuthChanged);
 
-    if (authToken.isEmpty || !await fetchAuthUser()) return;
+    if (authToken.isEmpty || !await _fetchAuthUser()) return;
 
-    await postLogin();
+    await _postLogin();
   }
 
   Future<void> finishLogin(LoginResponse loginResponse) async {
     authToken(loginResponse.authToken);
     user(loginResponse.user);
     await storeAuthToken(loginResponse.authToken);
-    await postLogin();
+    await _postLogin();
   }
 
-  Future<void> postLogin() => syncFirebaseToken();
+  Future<void> _postLogin() => _syncFirebaseToken();
 
-  Future<void> syncFirebaseToken() async {
+  Future<void> _syncFirebaseToken() async {
     final fcmToken = await Globals.firebase.getToken();
     if (fcmToken != null) {
       await DeviceTokensAdapter().store(token: fcmToken);
     }
   }
 
-  void handleAuthChanged(String newToken) => newToken.isNotEmpty
+  void _handleAuthChanged(String newToken) => newToken.isNotEmpty
       ? Get.offAllNamed(Routes.home)
       : Get.offAllNamed(Routes.login);
 
-  Future<bool> fetchAuthUser() async {
+  Future<bool> _fetchAuthUser() async {
     try {
       user(await UsersAdapter(token: authToken()).authUser());
       return true;
