@@ -47,12 +47,10 @@ class ApiErrors extends ApiResponse with Jsonable {
       errors?.firstWhere((error) => error.field == field).messages ?? [];
 
   @override
-  String toString() {
-    return '''
+  String toString() => '''
     Message: $message
     Errors : $errors
     ''';
-  }
 
   @override
   Map<String, dynamic> toJson() => {
@@ -60,9 +58,8 @@ class ApiErrors extends ApiResponse with Jsonable {
         if (errors != null) 'errors': _errorsToJson(),
       };
 
-  Map<String, dynamic> _errorsToJson() {
-    return {for (final ApiError e in errors!) e.field: e.messages};
-  }
+  Map<String, dynamic> _errorsToJson() =>
+      {for (final e in errors!) e.field: e.messages};
 
   bool get isAuthError => statusCode == HttpStatus.unauthorized;
 

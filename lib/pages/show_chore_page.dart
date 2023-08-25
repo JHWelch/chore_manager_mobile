@@ -14,8 +14,7 @@ class ShowChorePage extends StatelessWidget {
   final controller = Get.find<ChoresController>();
 
   @override
-  Widget build(BuildContext context) {
-    return CMScaffold(
+  Widget build(BuildContext context) => CMScaffold(
       actions: [
         CompleteChoreAction(choreId: chore.id, postAction: Get.back),
         SnoozeChoreAction(choreId: chore.id, postAction: Get.back),
@@ -38,5 +37,4 @@ class ShowChorePage extends StatelessWidget {
             ],
           )),
     );
-  }
 }

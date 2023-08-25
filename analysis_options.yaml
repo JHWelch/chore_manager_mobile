@@ -33,18 +33,13 @@ dart_code_metrics:
 linter:
   rules:
     - always_declare_return_types
-    # - always_put_control_body_on_new_line
     - always_put_required_named_parameters_first
     - always_require_non_null_named_parameters
-#    - always_specify_types # impractical - type inference is better for some things
     - always_use_package_imports
     - annotate_overrides
-#    - avoid_annotating_with_dynamic # we want to be explicit with dynamic
-#    - avoid_as # need to figure out a different way to do casting/json?
     - avoid_bool_literals_in_conditional_expressions
     - avoid_catches_without_on_clauses
     - avoid_catching_errors
-#    - avoid_classes_with_only_static_members # find a better way to handle Globals
     - avoid_double_and_int_checks
     - avoid_empty_else
     - avoid_equals_and_hash_code_on_mutable_classes
@@ -65,7 +60,6 @@ linter:
     - avoid_returning_null
     - avoid_returning_null_for_future
     - avoid_returning_null_for_void
-    # - avoid_returning_this
     - avoid_setters_without_getters
     - avoid_shadowing_type_parameters
     - avoid_single_cascade_in_expression_statements
@@ -82,6 +76,7 @@ linter:
     - cancel_subscriptions
     - cascade_invocations
     - close_sinks
+    - collection_methods_unrelated_type
     - comment_references
     - constant_identifier_names
     - control_flow_in_finally
@@ -94,7 +89,6 @@ linter:
     - flutter_style_todos
     - hash_and_equals
     - implementation_imports
-    - collection_methods_unrelated_type
     - join_return_with_assignment
     - leading_newlines_in_multiline_strings
     - library_names
@@ -126,6 +120,7 @@ linter:
     - prefer_const_literals_to_create_immutables
     - prefer_constructors_over_static_methods
     - prefer_contains
+    - prefer_expression_function_bodies
     - prefer_final_fields
     - prefer_final_in_for_each
     - prefer_final_locals
@@ -187,3 +182,4 @@ linter:
     - use_to_and_as_if_applicable
     - valid_regexps
     - void_checks
+    # - avoid_classes_with_only_static_members # TODO: enable

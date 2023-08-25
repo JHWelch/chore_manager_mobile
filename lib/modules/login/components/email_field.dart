@@ -10,15 +10,13 @@ class EmailField extends StatelessWidget with HasValidation {
   EmailField({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return CMTextInputField(
+  Widget build(BuildContext context) => CMTextInputField(
       key: const Key('email_field'),
       onChanged: controller.loginForm.email,
       validator: validate,
       labelText: 'Email',
       autofillHints: const [AutofillHints.email, AutofillHints.username],
     );
-  }
 
   @override
   List<Validator> get validators => [

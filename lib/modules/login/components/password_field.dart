@@ -10,8 +10,7 @@ class PasswordField extends StatelessWidget with HasValidation {
   PasswordField({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return CMTextInputField(
+  Widget build(BuildContext context) => CMTextInputField(
       key: const Key('password_field'),
       onChanged: controller.loginForm.password,
       labelText: 'Password',
@@ -21,7 +20,6 @@ class PasswordField extends StatelessWidget with HasValidation {
       validator: validate,
       autofillHints: const [AutofillHints.password],
     );
-  }
 
   @override
   List<Validator> get validators => [

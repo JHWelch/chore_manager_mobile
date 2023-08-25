@@ -36,10 +36,8 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return RotationTransition(
+  Widget build(BuildContext context) => RotationTransition(
       turns: _controller,
       child: _child,
     );
-  }
 }

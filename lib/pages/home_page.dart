@@ -13,8 +13,7 @@ class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return CMScaffold(
+  Widget build(BuildContext context) => CMScaffold(
       title: 'Home',
       actions: [_RefreshButton(controller: controller)],
       body: Obx(
@@ -27,7 +26,6 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
-  }
 
   Widget _listItem(BuildContext context, int index) {
     final Chore chore = controller.homePageChores()[index];
@@ -72,8 +70,7 @@ class _RefreshButton extends StatelessWidget {
   final ChoresController controller;
 
   @override
-  Widget build(BuildContext context) {
-    return Obx(
+  Widget build(BuildContext context) => Obx(
       () => IconButton(
         onPressed: controller.refreshChores,
         tooltip: controller.isLoading()
@@ -84,5 +81,4 @@ class _RefreshButton extends StatelessWidget {
             : const Icon(Icons.refresh),
       ),
     );
-  }
 }
