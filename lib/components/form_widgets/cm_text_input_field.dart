@@ -21,8 +21,7 @@ class CMTextInputField extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return TextFormField(
+  Widget build(BuildContext context) => TextFormField(
       onChanged: onChanged,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.auto,
@@ -34,5 +33,4 @@ class CMTextInputField extends StatelessWidget {
       validator: validator,
       autofillHints: autofillHints,
     );
-  }
 }

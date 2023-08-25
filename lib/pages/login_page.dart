@@ -10,8 +10,7 @@ class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -30,18 +29,15 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
-  }
 }
 
 class _Title extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Text(
+  Widget build(BuildContext context) => Text(
       'Log in to ChoreManager',
       textAlign: TextAlign.center,
       style: Theme.of(context).textTheme.headlineMedium,
     );
-  }
 }
 
 class _LoginButton extends StatelessWidget {
@@ -50,10 +46,8 @@ class _LoginButton extends StatelessWidget {
   const _LoginButton({required this.logIn, Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
+  Widget build(BuildContext context) => ElevatedButton(
       onPressed: logIn,
       child: const Text('Log In'),
     );
-  }
 }

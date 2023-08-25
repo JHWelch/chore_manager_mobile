@@ -16,13 +16,11 @@ class CompleteChoreAction extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return IconButton(
+  Widget build(BuildContext context) => IconButton(
       icon: const Icon(Icons.check_circle_outline),
       onPressed: _completeChore,
       tooltip: Strings.complete,
     );
-  }
 
   void _completeChore() {
     controller.completeChore(choreId);

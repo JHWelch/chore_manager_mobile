@@ -16,8 +16,7 @@ class SnoozeChoreAction extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton(
+  Widget build(BuildContext context) => PopupMenuButton(
       icon: const Icon(Icons.access_time),
       tooltip: Strings.snooze,
       itemBuilder: (context) => [
@@ -31,7 +30,6 @@ class SnoozeChoreAction extends StatelessWidget {
         ),
       ],
     );
-  }
 
   void _snoozeUntilTomorrow() {
     controller.snoozeUntilTomorrow(choreId);

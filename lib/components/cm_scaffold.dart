@@ -13,13 +13,11 @@ class CMScaffold extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: title != null ? Text(title!) : null,
         actions: actions,
       ),
       body: body,
     );
-  }
 }
