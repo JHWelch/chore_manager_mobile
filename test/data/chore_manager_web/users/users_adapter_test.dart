@@ -3,13 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../../mocks/http_mocks.dart';
 import '../../../mocks/mocks.dart';
+import '../../../mocks/secure_storage_mocks.dart';
 import 'user_adapter_mocks.dart';
 
 void main() {
   group('show self', () {
     setUp(() {
       givenLoggedIn();
-      mockUserToken(mockTokenString);
+      mockAuthTokenStorage(mockTokenString);
       mockAuthUserGet();
     });
 

@@ -1,5 +1,4 @@
 import 'package:chore_manager_mobile/config/globals.dart';
-import 'package:chore_manager_mobile/constants/keys.dart';
 import 'package:chore_manager_mobile/data/auth/auth_service.dart';
 import 'package:chore_manager_mobile/modules/login/auth_user.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -12,7 +11,6 @@ import 'http_mocks.dart';
 
 Future<void> givenNotLoggedIn() async {
   mockGlobals();
-  mockUserToken(null);
   await mockServices(authed: false);
 }
 
@@ -40,16 +38,6 @@ void mockGlobals() {
   Globals.client = MockClient();
   Globals.storage = MockFlutterSecureStorage();
   Globals.firebase = MockFirebaseMessaging();
-}
-
-void mockUserToken(String? token) {
-  _mockSecureStorageRead(authTokenKey, token);
-}
-
-void _mockSecureStorageRead(String key, String? value) {
-  when(
-    () => Globals.storage.read(key: key),
-  ).thenAnswer((_) async => value);
 }
 
 /// Mock Classes
