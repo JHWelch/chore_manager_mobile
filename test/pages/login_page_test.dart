@@ -46,13 +46,12 @@ void main() {
   String _authJson({
     String email = 'jsmith@example.com',
     String password = 'pw123456',
-  }) {
-    return jsonEncode(<String, String>{
-      'email': email,
-      'password': password,
-      'device_name': 'Flutter App'
-    });
-  }
+  }) =>
+      jsonEncode(<String, String>{
+        'email': email,
+        'password': password,
+        'device_name': 'Flutter App'
+      });
 
   Future<void> _tapLogin(WidgetTester tester) async {
     await tester.tap(find.widgetWithText(ElevatedButton, 'Log In'));

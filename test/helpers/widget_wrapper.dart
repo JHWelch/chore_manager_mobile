@@ -8,10 +8,8 @@ class WidgetWrapper extends StatelessWidget {
   const WidgetWrapper(this.widget, {Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      home: Scaffold(body: widget),
-      getPages: Pages.routes,
-    );
-  }
+  Widget build(BuildContext context) => GetMaterialApp(
+        home: Scaffold(body: widget),
+        getPages: Pages.routes,
+      );
 }
