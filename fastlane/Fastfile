@@ -19,6 +19,12 @@ def dart_defines
 end
 
 platform :ios do
+  desc 'Sync Development Provisioning Profile'
+  lane :sync_dev_profile do
+    app_store_connect_api_key
+    match(type: 'development')
+  end
+
   desc 'Deploy a new build to TestFlight'
   lane :deploy do
     apply_version

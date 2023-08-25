@@ -9,7 +9,7 @@ on:
 jobs:
   deploy-ios:
     name: App Store (iOS)
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'skip-deploy')
     runs-on: macos-13
     environment: 'Production - iOS'
     env:
@@ -55,7 +55,7 @@ jobs:
 
   deploy-android:
     name: Google Play (Android)
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'skip-deploy')
     runs-on: ubuntu-latest
     environment: 'Production - Android'
     env:
