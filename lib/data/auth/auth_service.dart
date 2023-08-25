@@ -8,7 +8,6 @@ import 'package:chore_manager_mobile/modules/login/auth_user.dart';
 import 'package:get/get.dart';
 
 class AuthService extends GetxService {
-  static const String tokenKey = 'CM_AUTH_TOKEN';
   final RxString authToken = ''.obs;
   final Rx<AuthUser?> user = Rx<AuthUser?>(null);
 
