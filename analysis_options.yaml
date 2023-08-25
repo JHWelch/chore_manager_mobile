@@ -182,6 +182,4 @@ linter:
     - use_to_and_as_if_applicable
     - valid_regexps
     - void_checks
-#    - avoid_annotating_with_dynamic # we want to be explicit with dynamic
-#    - avoid_as # need to figure out a different way to do casting/json?
-#    - avoid_classes_with_only_static_members # find a better way to handle Globals
+    # - avoid_classes_with_only_static_members # TODO: enable
