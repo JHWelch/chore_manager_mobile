@@ -37,6 +37,12 @@ class AuthService extends GetxService {
     await _postLogin();
   }
 
+  Future<void> logout() async {
+    authToken('');
+    user.value = null;
+    await deleteAuthToken();
+  }
+
   Future<void> _postLogin() => _syncFirebaseToken();
 
   Future<void> _syncFirebaseToken() async {
