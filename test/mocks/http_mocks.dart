@@ -56,10 +56,10 @@ Uri expectedPath(String path) => Uri.parse(apiUrl + path);
 Map<String, String> expectedHeaders() => {
       'Accept': 'application/json',
       'Authorization': 'Bearer $mockTokenString',
-      'Content-Type': 'application/json; charset=UTF-8',
+      'Content-Type': 'application/json',
     };
 
 Map<String, String> expectedAuthHeaders() => {
       'Accept': 'application/json',
-      'Content-Type': 'application/json; charset=UTF-8',
+      'Content-Type': 'application/json',
     };
