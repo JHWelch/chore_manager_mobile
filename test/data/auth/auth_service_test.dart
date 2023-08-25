@@ -35,7 +35,8 @@ void main() {
       });
 
       test('auth token is set', () async {
-        final auth = await Get.putAsync(AuthService().init);
+        final auth = await AuthService().init();
+        await auth.onInit();
 
         expect(auth.authToken(), mockTokenString);
       });
