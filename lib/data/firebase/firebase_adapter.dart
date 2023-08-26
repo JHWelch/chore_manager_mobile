@@ -22,7 +22,7 @@ Future<void> syncFirebaseToken() async {
 }
 
 Future<bool> userAllowsNotifications() async {
-  final settings = await Globals.firebase.requestPermission();
+  final settings = await Globals.firebase.requestPermission(provisional: true);
 
   return _authorizedStatuses.contains(settings.authorizationStatus);
 }

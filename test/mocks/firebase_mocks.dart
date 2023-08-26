@@ -12,7 +12,7 @@ void mockFirebaseOnTokenRefreshNoRun() =>
 void mockFirebaseRequestPermission({
   AuthorizationStatus status = AuthorizationStatus.authorized,
 }) =>
-    when(() => Globals.firebase.requestPermission())
+    when(() => Globals.firebase.requestPermission(provisional: true))
         .thenAnswer((_) async => NotificationSettings(
               authorizationStatus: status,
               alert: _notificationStatus(status),
