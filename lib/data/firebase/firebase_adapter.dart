@@ -21,11 +21,22 @@ Future<void> syncFirebaseToken() async {
   });
 }
 
-Future<bool> userAllowsNotifications() async {
+Future<bool> userAllowsNotifications() async =>
+    switch (await _notificationStatus()) {
+      AuthorizationStatus.authorized => true,
+      AuthorizationStatus.provisional => true,
+      AuthorizationStatus.denied => false,
+      AuthorizationStatus.notDetermined => await requestPermission(),
+    };
+
+Future<bool> requestPermission() async {
   final settings = await Globals.firebase.requestPermission(provisional: true);
 
   return _authorizedStatuses.contains(settings.authorizationStatus);
 }
+
+Future<AuthorizationStatus> _notificationStatus() async =>
+    (await Globals.firebase.getNotificationSettings()).authorizationStatus;
 
 const _authorizedStatuses = [
   AuthorizationStatus.authorized,
