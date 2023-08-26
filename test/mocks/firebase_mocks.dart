@@ -14,7 +14,7 @@ void mockFirebaseRequestPermission({
 }) =>
     when(() => Globals.firebase.requestPermission())
         .thenAnswer((_) async => NotificationSettings(
-              authorizationStatus: AuthorizationStatus.authorized,
+              authorizationStatus: status,
               alert: _notificationStatus(status),
               badge: _notificationStatus(status),
               sound: _notificationStatus(status),
