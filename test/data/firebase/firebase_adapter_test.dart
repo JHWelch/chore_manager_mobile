@@ -10,33 +10,73 @@ void main() {
   group('syncFirebaseToken', () {
     setUp(givenLoggedIn);
 
-    group('user grants permission', () {
-      setUp(() {
-        mockFirebaseGetToken('firebase_token');
-        mockDeviceTokenStore(token: 'firebase_token');
-        mockFirebaseOnTokenRefreshNoRun();
-        mockFirebaseRequestPermission();
+    group('when auth status is not determined', () {
+      group('user grants permission', () {
+        setUp(() {
+          mockFirebaseGetToken('firebase_token');
+          mockDeviceTokenStore(token: 'firebase_token');
+          mockFirebaseOnTokenRefreshNoRun();
+          mockFirebaseRequestPermission();
+        });
+
+        test('stores token', () async {
+          await syncFirebaseToken();
+
+          verifyDeviceTokenStore(token: 'firebase_token');
+        });
       });
 
-      test('stores token', () async {
-        await syncFirebaseToken();
+      group('user does not grant permission', () {
+        setUp(() {
+          mockFirebaseRequestPermission(status: AuthorizationStatus.denied);
+        });
 
-        verifyDeviceTokenStore(token: 'firebase_token');
+        test('does not store token', () async {
+          await syncFirebaseToken();
+
+          verifyNeverDeviceTokenStore(token: 'firebase_token');
+        });
       });
     });
 
-    group('user does not grant permission', () {
+    group('when auth status is denied', () {
       setUp(() {
-        mockFirebaseGetToken('firebase_token');
-        mockDeviceTokenStore(token: 'firebase_token');
-        mockFirebaseOnTokenRefreshNoRun();
-        mockFirebaseRequestPermission(status: AuthorizationStatus.denied);
+        mockFirebaseGetNotificationSettings(status: AuthorizationStatus.denied);
+      });
+
+      test('does not ask for permission', () async {
+        await syncFirebaseToken();
+
+        verifyNeverFirebaseRequestPermission();
       });
 
       test('does not store token', () async {
         await syncFirebaseToken();
 
         verifyNeverDeviceTokenStore(token: 'firebase_token');
+      });
+    });
+
+    group('when auth status is authorized', () {
+      setUp(() {
+        mockFirebaseGetToken('firebase_token');
+        mockDeviceTokenStore(token: 'firebase_token');
+        mockFirebaseOnTokenRefreshNoRun();
+        mockFirebaseGetNotificationSettings(
+          status: AuthorizationStatus.authorized,
+        );
+      });
+
+      test('does not ask for permission', () async {
+        await syncFirebaseToken();
+
+        verifyNeverFirebaseRequestPermission();
+      });
+
+      test('stores token', () async {
+        await syncFirebaseToken();
+
+        verifyDeviceTokenStore(token: 'firebase_token');
       });
     });
   });

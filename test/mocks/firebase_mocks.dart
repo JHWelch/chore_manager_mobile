@@ -10,22 +10,36 @@ void mockFirebaseOnTokenRefreshNoRun() =>
         .thenAnswer((_) => const Stream.empty());
 
 void mockFirebaseRequestPermission({
-  AuthorizationStatus status = AuthorizationStatus.authorized,
+  AuthorizationStatus status = AuthorizationStatus.provisional,
+}) {
+  mockFirebaseGetNotificationSettings();
+  when(() => Globals.firebase.requestPermission(provisional: true))
+      .thenAnswer((_) async => _notificationSettingsMock(status));
+}
+
+void mockFirebaseGetNotificationSettings({
+  AuthorizationStatus status = AuthorizationStatus.notDetermined,
 }) =>
-    when(() => Globals.firebase.requestPermission(provisional: true))
-        .thenAnswer((_) async => NotificationSettings(
-              authorizationStatus: status,
-              alert: _notificationStatus(status),
-              badge: _notificationStatus(status),
-              sound: _notificationStatus(status),
-              lockScreen: _notificationStatus(status),
-              notificationCenter: _notificationStatus(status),
-              showPreviews: AppleShowPreviewSetting.always,
-              announcement: AppleNotificationSetting.disabled,
-              carPlay: AppleNotificationSetting.disabled,
-              criticalAlert: AppleNotificationSetting.disabled,
-              timeSensitive: _notificationStatus(status),
-            ));
+    when(() => Globals.firebase.getNotificationSettings())
+        .thenAnswer((_) async => _notificationSettingsMock(status));
+
+void verifyNeverFirebaseRequestPermission() =>
+    verifyNever(() => Globals.firebase.requestPermission(provisional: true));
+
+NotificationSettings _notificationSettingsMock(AuthorizationStatus status) =>
+    NotificationSettings(
+      authorizationStatus: status,
+      alert: _notificationStatus(status),
+      badge: _notificationStatus(status),
+      sound: _notificationStatus(status),
+      lockScreen: _notificationStatus(status),
+      notificationCenter: _notificationStatus(status),
+      showPreviews: AppleShowPreviewSetting.always,
+      announcement: AppleNotificationSetting.notSupported,
+      carPlay: AppleNotificationSetting.disabled,
+      criticalAlert: AppleNotificationSetting.disabled,
+      timeSensitive: _notificationStatus(status),
+    );
 
 AppleNotificationSetting _notificationStatus(AuthorizationStatus status) => [
       AuthorizationStatus.authorized,
