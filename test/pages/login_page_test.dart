@@ -86,6 +86,7 @@ void main() {
           headers: expectedAuthHeaders(),
         );
         mockFirebaseOnTokenRefreshNoRun();
+        mockFirebaseRequestPermission();
       });
 
       testWidgets('makes login request', (tester) async {
@@ -129,7 +130,7 @@ void main() {
         expect(find.byType(HomePage), findsOneWidget);
       });
 
-      testWidgets('sync device token with backend', (tester) async {
+      testWidgets('sync firebase device token with backend', (tester) async {
         mockChoreIndex();
         mockFirebaseGetToken('firebase_token');
         mockDeviceTokenStore(token: 'firebase_token');

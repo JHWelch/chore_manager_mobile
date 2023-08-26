@@ -1,10 +1,7 @@
-import 'dart:developer';
-
-import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/config/routes.dart';
-import 'package:chore_manager_mobile/data/chore_manager_web/device_tokens/device_tokens_adapter.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/login/login_response.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/users/users_adapter.dart';
+import 'package:chore_manager_mobile/data/firebase/firebase_adapter.dart';
 import 'package:chore_manager_mobile/data/secure_storage/secure_storage.dart';
 import 'package:chore_manager_mobile/modules/login/auth_user.dart';
 import 'package:get/get.dart';
@@ -45,20 +42,7 @@ class AuthService extends GetxService {
     await deleteAuthToken();
   }
 
-  Future<void> _postLogin() => _syncFirebaseToken();
-
-  Future<void> _syncFirebaseToken() async {
-    final fcmToken = await Globals.firebase.getToken();
-    if (fcmToken != null) {
-      await DeviceTokensAdapter().store(token: fcmToken);
-    }
-
-    Globals.firebase.onTokenRefresh.listen((fcmToken) {
-      DeviceTokensAdapter().store(token: fcmToken);
-    }).onError((err) {
-      log(err.toString());
-    });
-  }
+  Future<void> _postLogin() => syncFirebaseToken();
 
   void _handleAuthChanged(String newToken) => newToken.isNotEmpty
       ? Get.offAllNamed(Routes.home)

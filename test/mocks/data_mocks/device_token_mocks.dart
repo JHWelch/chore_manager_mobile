@@ -19,3 +19,10 @@ void verifyDeviceTokenStore({required String token}) =>
           headers: expectedHeaders(),
           body: jsonEncode({'token': token}),
         ));
+
+void verifyNeverDeviceTokenStore({required String token}) =>
+    verifyNever(() => Globals.client.post(
+          expectedPath('device_tokens'),
+          headers: expectedHeaders(),
+          body: jsonEncode({'token': token}),
+        ));
