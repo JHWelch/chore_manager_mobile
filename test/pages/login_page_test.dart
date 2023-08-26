@@ -85,6 +85,7 @@ void main() {
           response: http.Response(json, 200),
           headers: expectedAuthHeaders(),
         );
+        mockFirebaseOnTokenRefreshNoRun();
       });
 
       testWidgets('makes login request', (tester) async {

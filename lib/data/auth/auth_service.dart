@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/config/routes.dart';
 import 'package:chore_manager_mobile/data/chore_manager_web/device_tokens/device_tokens_adapter.dart';
@@ -50,6 +52,12 @@ class AuthService extends GetxService {
     if (fcmToken != null) {
       await DeviceTokensAdapter().store(token: fcmToken);
     }
+
+    Globals.firebase.onTokenRefresh.listen((fcmToken) {
+      DeviceTokensAdapter().store(token: fcmToken);
+    }).onError((err) {
+      log(err.toString());
+    });
   }
 
   void _handleAuthChanged(String newToken) => newToken.isNotEmpty

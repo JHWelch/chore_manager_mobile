@@ -32,6 +32,7 @@ void main() {
         mockAuthTokenStorage(mockTokenString);
         mockAuthUserGet();
         mockFirebaseGetToken(null);
+        mockFirebaseOnTokenRefreshNoRun();
       });
 
       test('auth token is set', () async {
