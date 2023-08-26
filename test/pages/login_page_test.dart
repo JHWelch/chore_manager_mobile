@@ -86,6 +86,7 @@ void main() {
           headers: expectedAuthHeaders(),
         );
         mockFirebaseOnTokenRefreshNoRun();
+        mockFirebaseRequestPermission();
       });
 
       testWidgets('makes login request', (tester) async {

@@ -1,6 +1,7 @@
 import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:chore_manager_mobile/constants/keys.dart';
 import 'package:chore_manager_mobile/data/auth/auth_service.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
@@ -32,6 +33,7 @@ void main() {
         mockAuthTokenStorage(mockTokenString);
         mockAuthUserGet();
         mockFirebaseGetToken(null);
+        mockFirebaseRequestPermission(status: AuthorizationStatus.denied);
         mockFirebaseOnTokenRefreshNoRun();
       });
 
