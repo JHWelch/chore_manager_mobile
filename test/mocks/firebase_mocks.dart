@@ -3,28 +3,27 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mocktail/mocktail.dart';
 
 void mockFirebaseGetToken(String? token) =>
-    when(() => Globals.firebase.getToken()).thenAnswer((_) async => token);
+    when(() => firebase.getToken()).thenAnswer((_) async => token);
 
 void mockFirebaseOnTokenRefreshNoRun() =>
-    when(() => Globals.firebase.onTokenRefresh)
-        .thenAnswer((_) => const Stream.empty());
+    when(() => firebase.onTokenRefresh).thenAnswer((_) => const Stream.empty());
 
 void mockFirebaseRequestPermission({
   AuthorizationStatus status = AuthorizationStatus.provisional,
 }) {
   mockFirebaseGetNotificationSettings();
-  when(() => Globals.firebase.requestPermission(provisional: true))
+  when(() => firebase.requestPermission(provisional: true))
       .thenAnswer((_) async => _notificationSettingsMock(status));
 }
 
 void mockFirebaseGetNotificationSettings({
   AuthorizationStatus status = AuthorizationStatus.notDetermined,
 }) =>
-    when(() => Globals.firebase.getNotificationSettings())
+    when(() => firebase.getNotificationSettings())
         .thenAnswer((_) async => _notificationSettingsMock(status));
 
 void verifyNeverFirebaseRequestPermission() =>
-    verifyNever(() => Globals.firebase.requestPermission(provisional: true));
+    verifyNever(() => firebase.requestPermission(provisional: true));
 
 NotificationSettings _notificationSettingsMock(AuthorizationStatus status) =>
     NotificationSettings(

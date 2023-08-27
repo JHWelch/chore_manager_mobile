@@ -10,6 +10,6 @@ class WidgetWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) => GetMaterialApp(
         home: Scaffold(body: widget),
-        getPages: Pages.routes,
+        getPages: routes,
       );
 }

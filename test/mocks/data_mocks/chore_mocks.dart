@@ -28,12 +28,11 @@ void mockChoreComplete({required Chore chore}) {
   );
 }
 
-void verifyChoreComplete({required Chore chore}) =>
-    verify(() => Globals.client.patch(
-          expectedPath('chores/${chore.id}'),
-          headers: expectedHeaders(),
-          body: jsonEncode({'completed': true}),
-        ));
+void verifyChoreComplete({required Chore chore}) => verify(() => client.patch(
+      expectedPath('chores/${chore.id}'),
+      headers: expectedHeaders(),
+      body: jsonEncode({'completed': true}),
+    ));
 
 void mockChoreSnooze({required Chore chore, required DateTime date}) {
   mockPatch(
@@ -44,7 +43,7 @@ void mockChoreSnooze({required Chore chore, required DateTime date}) {
 }
 
 void verifyChoreSnooze({required Chore chore, required DateTime date}) =>
-    verify(() => Globals.client.patch(
+    verify(() => client.patch(
           expectedPath('chores/${chore.id}'),
           headers: expectedHeaders(),
           body: jsonEncode({'next_due_date': date.toDateString()}),

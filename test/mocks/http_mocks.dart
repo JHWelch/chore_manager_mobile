@@ -11,7 +11,7 @@ void mockGet({
   Map<String, String>? headers,
   Duration? delay,
 }) {
-  when(() => Globals.client.get(
+  when(() => client.get(
         expectedPath(path),
         headers: headers ?? expectedHeaders(),
       )).thenAnswer(delayedOrNot(response, delay));
@@ -31,7 +31,7 @@ void mockPost({
   required String body,
   Map<String, String>? headers,
 }) {
-  when(() => Globals.client.post(
+  when(() => client.post(
         expectedPath(path),
         headers: headers ?? expectedHeaders(),
         body: body,
@@ -44,7 +44,7 @@ void mockPatch({
   required String body,
   Map<String, String>? headers,
 }) {
-  when(() => Globals.client.patch(
+  when(() => client.patch(
         expectedPath(path),
         headers: headers ?? expectedHeaders(),
         body: body,

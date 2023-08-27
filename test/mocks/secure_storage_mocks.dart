@@ -11,14 +11,13 @@ void mockAuthTokenWrite(String token) =>
 void mockAuthTokenDelete() => mockSecureStorageDelete(authTokenKey);
 
 void mockSecureStorageWrite(String key, String value) {
-  when(() => Globals.storage.write(key: key, value: value))
-      .thenAnswer((_) async => {});
+  when(() => storage.write(key: key, value: value)).thenAnswer((_) async => {});
 }
 
 void mockSecureStorageRead(String key, String? value) {
-  when(() => Globals.storage.read(key: key)).thenAnswer((_) async => value);
+  when(() => storage.read(key: key)).thenAnswer((_) async => value);
 }
 
 void mockSecureStorageDelete(String key) {
-  when(() => Globals.storage.delete(key: key)).thenAnswer((_) async => {});
+  when(() => storage.delete(key: key)).thenAnswer((_) async => {});
 }

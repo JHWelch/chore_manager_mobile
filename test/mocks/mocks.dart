@@ -35,9 +35,9 @@ Future<void> mockServices({bool authed = true}) async {
 
 void mockGlobals() {
   Get.testMode = true;
-  Globals.client = MockClient();
-  Globals.storage = MockFlutterSecureStorage();
-  Globals.firebase = MockFirebaseMessaging();
+  client = MockClient();
+  storage = MockFlutterSecureStorage();
+  firebase = MockFirebaseMessaging();
 }
 
 /// Mock Classes
