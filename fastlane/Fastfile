@@ -34,7 +34,6 @@ platform :ios do
       readonly: true,
       type: 'appstore',
       git_basic_authorization: gitub_authorization_token,
-      codesigning_identity: 'match AppStore app.jhw.choremanager',
     )
     sh 'flutter build ipa --release --no-codesign' + dart_defines
     build_app(
@@ -42,6 +41,7 @@ platform :ios do
       project: './ios/Runner.xcodeproj',
       skip_build_archive: true,
       export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
+      codesigning_identity: 'match AppStore app.jhw.choremanager',
     )
     upload_to_testflight
   end
