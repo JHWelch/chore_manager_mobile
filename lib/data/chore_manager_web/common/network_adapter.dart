@@ -29,7 +29,7 @@ class NetworkAdapter {
     required ApiResponse Function(http.Response) processSuccess,
     Map<String, String>? headers,
   }) async {
-    final response = await Globals.client.get(
+    final response = await client.get(
       url(uri),
       headers: headers ?? defaultHeaders,
     );
@@ -43,7 +43,7 @@ class NetworkAdapter {
     Map<String, String>? headers,
     Map<String, dynamic>? body,
   }) async {
-    final response = await Globals.client.post(
+    final response = await client.post(
       url(uri),
       headers: headers ?? defaultHeaders,
       body: jsonEncode(body),
@@ -58,7 +58,7 @@ class NetworkAdapter {
     Map<String, String>? headers,
     Map<String, dynamic>? body,
   }) async {
-    final response = await Globals.client.patch(
+    final response = await client.patch(
       url(uri),
       headers: headers ?? defaultHeaders,
       body: jsonEncode(body),

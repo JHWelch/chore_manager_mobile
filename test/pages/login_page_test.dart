@@ -97,7 +97,7 @@ void main() {
         await _fillFields(tester);
         await _tapLogin(tester);
 
-        verify(() => Globals.client.post(
+        verify(() => client.post(
               expectedPath('token'),
               headers: expectedAuthHeaders(),
               body: _authJson(),
@@ -174,7 +174,7 @@ void main() {
         await _tapLogin(tester);
 
         verify(
-          () => Globals.client.post(
+          () => client.post(
             expectedPath('token'),
             headers: expectedAuthHeaders(),
             body: _authJson(),
@@ -238,7 +238,7 @@ void main() {
         await _tapLogin(tester);
 
         verify(
-          () => Globals.client.post(
+          () => client.post(
             expectedPath('token'),
             headers: expectedAuthHeaders(),
             body: _authJson(password: ''),

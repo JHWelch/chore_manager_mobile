@@ -70,7 +70,7 @@ void main() {
     test('auth token is deleted', () async {
       await auth!.logout();
 
-      verify(() => Globals.storage.delete(key: authTokenKey)).called(1);
+      verify(() => storage.delete(key: authTokenKey)).called(1);
     });
   });
 }

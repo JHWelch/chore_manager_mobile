@@ -14,14 +14,14 @@ void mockDeviceTokenStore({String token = 'MOCK_TOKEN', int statusCode = 200}) {
 }
 
 void verifyDeviceTokenStore({required String token}) =>
-    verify(() => Globals.client.post(
+    verify(() => client.post(
           expectedPath('device_tokens'),
           headers: expectedHeaders(),
           body: jsonEncode({'token': token}),
         ));
 
 void verifyNeverDeviceTokenStore({required String token}) =>
-    verifyNever(() => Globals.client.post(
+    verifyNever(() => client.post(
           expectedPath('device_tokens'),
           headers: expectedHeaders(),
           body: jsonEncode({'token': token}),

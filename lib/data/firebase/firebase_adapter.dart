@@ -9,12 +9,12 @@ Future<void> syncFirebaseToken() async {
 
   final tokenAdapter = DeviceTokensAdapter();
 
-  final fcmToken = await Globals.firebase.getToken();
+  final fcmToken = await firebase.getToken();
   if (fcmToken != null) {
     await tokenAdapter.store(token: fcmToken);
   }
 
-  Globals.firebase.onTokenRefresh.listen((fcmToken) {
+  firebase.onTokenRefresh.listen((fcmToken) {
     tokenAdapter.store(token: fcmToken);
   }).onError((err) {
     log(err.toString());
@@ -30,13 +30,13 @@ Future<bool> userAllowsNotifications() async =>
     };
 
 Future<bool> requestPermission() async {
-  final settings = await Globals.firebase.requestPermission(provisional: true);
+  final settings = await firebase.requestPermission(provisional: true);
 
   return _authorizedStatuses.contains(settings.authorizationStatus);
 }
 
 Future<AuthorizationStatus> _notificationStatus() async =>
-    (await Globals.firebase.getNotificationSettings()).authorizationStatus;
+    (await firebase.getNotificationSettings()).authorizationStatus;
 
 const _authorizedStatuses = [
   AuthorizationStatus.authorized,
