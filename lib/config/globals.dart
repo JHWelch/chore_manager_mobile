@@ -9,23 +9,23 @@ late http.Client client;
 late FirebaseMessaging firebase;
 late FlutterSecureStorage storage;
 
-void initHttp() {
+Future<void> initGlobals() async {
+  _initHttp();
+  _initSecureStorage();
+  await _initFirebase();
+}
+
+void _initHttp() {
   client = IOClient();
 }
 
-void initSecureStorage() {
+void _initSecureStorage() {
   storage = const FlutterSecureStorage();
 }
 
-Future<void> initFirebase() async {
+Future<void> _initFirebase() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   firebase = FirebaseMessaging.instance;
-}
-
-Future<void> initGlobals() async {
-  initHttp();
-  initSecureStorage();
-  await initFirebase();
 }
