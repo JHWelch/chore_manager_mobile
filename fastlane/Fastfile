@@ -34,6 +34,7 @@ platform :ios do
       readonly: true,
       type: 'appstore',
       git_basic_authorization: gitub_authorization_token,
+      codesigning_identity: 'match AppStore app.jhw.choremanager',
     )
     sh 'flutter build ipa --release --no-codesign' + dart_defines
     build_app(
