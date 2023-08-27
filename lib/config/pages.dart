@@ -7,36 +7,34 @@ import 'package:chore_manager_mobile/pages/show_chore_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Pages {
-  static final notFound = GetPage(
-    name: Routes.notFound,
+final notFoundPage = GetPage(
+  name: Routes.notFound,
+  page: LoginPage.new,
+);
+
+final routes = [
+  GetPage(
+    name: Routes.login,
     page: LoginPage.new,
-  );
+  ),
+  GetPage(
+    name: Routes.home,
+    page: HomePage.new,
+  ),
+  GetPage(
+    name: Routes.choreShow,
+    page: choreShowNavigate,
+  )
+];
 
-  static final routes = [
-    GetPage(
-      name: Routes.login,
-      page: LoginPage.new,
-    ),
-    GetPage(
-      name: Routes.home,
-      page: HomePage.new,
-    ),
-    GetPage(
-      name: Routes.choreShow,
-      page: choreShowNavigate,
-    )
-  ];
+Widget choreShowNavigate() {
+  final Chore? chore = Get.arguments?['chore'];
+  if (chore != null) return ShowChorePage.new(chore);
 
-  static Widget choreShowNavigate() {
-    final Chore? chore = Get.arguments?['chore'];
-    if (chore != null) return ShowChorePage.new(chore);
+  final String? choreId = Get.parameters['id'];
+  if (choreId == null) throw Exception('No chore found');
 
-    final String? choreId = Get.parameters['id'];
-    if (choreId == null) throw Exception('No chore found');
+  final ChoresController choreController = Get.find();
 
-    final ChoresController choreController = Get.find();
-
-    return ShowChorePage.new(choreController.chore(int.parse(choreId)));
-  }
+  return ShowChorePage.new(choreController.chore(int.parse(choreId)));
 }

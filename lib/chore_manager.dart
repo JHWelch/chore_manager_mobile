@@ -14,9 +14,9 @@ class ChoreManager extends GetMaterialApp {
   Widget build(BuildContext context) => GetMaterialApp(
         title: 'ChoreManager',
         theme: Themes.primary,
-        getPages: Pages.routes,
+        getPages: routes,
         initialRoute: initialRoute,
-        unknownRoute: Pages.notFound,
+        unknownRoute: notFoundPage,
         debugShowCheckedModeBanner: false,
       );
 
