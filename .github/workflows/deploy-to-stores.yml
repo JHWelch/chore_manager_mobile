@@ -57,7 +57,7 @@ jobs:
     name: Google Play (Android)
     if: github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'skip-deploy')
     runs-on: ubuntu-latest
-    environment: 'Testing - Android'
+    environment: 'Production - Android'
     env:
       API_URL: ${{ secrets.API_URL }}
       FIREBASE_ANDROID_OPTIONS: ${{ secrets.FIREBASE_ANDROID_OPTIONS }}
