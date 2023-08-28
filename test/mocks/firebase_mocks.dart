@@ -1,5 +1,6 @@
 import 'package:chore_manager_mobile/config/globals.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mocktail/mocktail.dart';
 
 void mockFirebaseGetToken(String? token) =>
@@ -7,6 +8,9 @@ void mockFirebaseGetToken(String? token) =>
 
 void mockFirebaseOnTokenRefreshNoRun() =>
     when(() => firebase.onTokenRefresh).thenAnswer((_) => const Stream.empty());
+
+void mockFirebaseGetTokenFails() => when(() => firebase.getToken())
+    .thenThrow(FlutterError('TOO_MANY_REGISTRATIONS'));
 
 void mockFirebaseRequestPermission({
   AuthorizationStatus status = AuthorizationStatus.provisional,

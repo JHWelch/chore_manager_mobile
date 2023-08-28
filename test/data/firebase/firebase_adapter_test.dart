@@ -79,5 +79,26 @@ void main() {
         verifyDeviceTokenStore(token: 'firebase_token');
       });
     });
+
+    group('when auth throws error', () {
+      setUp(() {
+        mockFirebaseGetNotificationSettings();
+        mockFirebaseOnTokenRefreshNoRun();
+        mockFirebaseRequestPermission();
+        mockFirebaseGetTokenFails();
+      });
+
+      test('does not ask for permission', () async {
+        expect(syncFirebaseToken, returnsNormally);
+
+        verifyNeverFirebaseRequestPermission();
+      });
+
+      test('does not store token', () async {
+        expect(syncFirebaseToken, returnsNormally);
+
+        verifyNeverDeviceTokenStore(token: 'firebase_token');
+      });
+    });
   });
 }
