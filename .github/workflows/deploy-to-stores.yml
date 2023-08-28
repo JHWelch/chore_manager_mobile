@@ -53,18 +53,18 @@ jobs:
     - name: Deploy to App Store
       run: bundle exec fastlane ios deploy
 
-  deploy-android:
+  deploy-android-to-firebase:
     name: Google Play (Android)
     if: github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'skip-deploy')
     runs-on: ubuntu-latest
-    environment: 'Production - Android'
+    environment: 'Testing - Android'
     env:
       API_URL: ${{ secrets.API_URL }}
       FIREBASE_ANDROID_OPTIONS: ${{ secrets.FIREBASE_ANDROID_OPTIONS }}
+      FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
       FIREBASE_DART_OPTIONS: ${{ secrets.FIREBASE_DART_OPTIONS }}
-      SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
-      UPLOAD_KEY_PASSWORD: ${{ secrets.UPLOAD_KEY_PASSWORD }}
-      UPLOAD_KEYSTORE: ${{ secrets.UPLOAD_KEYSTORE }}
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+      RELEASE_NOTES: '${{ github.event.pull_request.title }} (#${{ github.event.pull_request.number }})'
 
     steps:
     - name: Checkout Repository
@@ -90,15 +90,58 @@ jobs:
         echo $FIREBASE_ANDROID_OPTIONS | base64 --decode > android/app/google-services.json
         echo $FIREBASE_DART_OPTIONS | base64 --decode > lib/firebase_options.dart
 
-    - name: Place key.properties
-      run: |
-        echo "storePassword=$UPLOAD_KEY_PASSWORD" >> android/key.properties
-        echo "keyPassword=$UPLOAD_KEY_PASSWORD" >> android/key.properties
-        echo "keyAlias=upload" >> android/key.properties
-        echo "storeFile=upload.jks" >> android/key.properties
-
-    - name: Place upload.jks
-      run: echo $UPLOAD_KEYSTORE | base64 --decode > android/app/upload.jks
+    - name: Place Firebase service account
+      run: echo $FIREBASE_SERVICE_ACCOUNT | base64 --decode > firebase-service-account.json
 
     - name: Deploy to Google Play
-      run: bundle exec fastlane android deploy
+      run: bundle exec fastlane android testing
+
+# deploy-android-to-store:
+#     name: Google Play (Android)
+#     if: github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'skip-deploy')
+#     runs-on: ubuntu-latest
+#     environment: 'Production - Android'
+#     env:
+#       API_URL: ${{ secrets.API_URL }}
+#       FIREBASE_ANDROID_OPTIONS: ${{ secrets.FIREBASE_ANDROID_OPTIONS }}
+#       FIREBASE_DART_OPTIONS: ${{ secrets.FIREBASE_DART_OPTIONS }}
+#       SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
+#       UPLOAD_KEY_PASSWORD: ${{ secrets.UPLOAD_KEY_PASSWORD }}
+#       UPLOAD_KEYSTORE: ${{ secrets.UPLOAD_KEYSTORE }}
+
+#     steps:
+#     - name: Checkout Repository
+#       uses: actions/checkout@v3
+
+#     - name: Setup Ruby
+#       uses: ruby/setup-ruby@v1
+#       with:
+#         ruby-version: '3.1.2'
+#         bundler-cache: true
+
+#     - name: Setup Flutter
+#       uses: subosito/flutter-action@v2
+#       with:
+#         flutter-version: '3.13.0'
+#         channel: stable
+
+#     - name: Get Packages
+#       run: flutter pub get
+
+#     - name: Place Firebase config files
+#       run: |
+#         echo $FIREBASE_ANDROID_OPTIONS | base64 --decode > android/app/google-services.json
+#         echo $FIREBASE_DART_OPTIONS | base64 --decode > lib/firebase_options.dart
+
+#     - name: Place key.properties
+#       run: |
+#         echo "storePassword=$UPLOAD_KEY_PASSWORD" >> android/key.properties
+#         echo "keyPassword=$UPLOAD_KEY_PASSWORD" >> android/key.properties
+#         echo "keyAlias=upload" >> android/key.properties
+#         echo "storeFile=upload.jks" >> android/key.properties
+
+#     - name: Place upload.jks
+#       run: echo $UPLOAD_KEYSTORE | base64 --decode > android/app/upload.jks
+
+#     - name: Deploy to Google Play
+#       run: bundle exec fastlane android deploy

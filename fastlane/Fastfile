@@ -60,7 +60,7 @@ platform :android do
   end
 
   desc 'Deploy a new build to Firebase App Distribution'
-  lane :beta do
+  lane :testing do
     apply_version
     sh 'flutter build apk --debug' + dart_defines
     firebase_app_distribution(
