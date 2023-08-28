@@ -9,9 +9,13 @@ Future<void> syncFirebaseToken() async {
 
   final tokenAdapter = DeviceTokensAdapter();
 
-  final fcmToken = await firebase.getToken();
-  if (fcmToken != null) {
-    await tokenAdapter.store(token: fcmToken);
+  try {
+    final fcmToken = await firebase.getToken();
+    if (fcmToken != null) {
+      await tokenAdapter.store(token: fcmToken);
+    }
+  } on Error catch (err) {
+    log(err.toString());
   }
 
   firebase.onTokenRefresh.listen((fcmToken) {
