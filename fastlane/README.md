@@ -44,6 +44,14 @@ Deploy a new build to TestFlight
 
 Deploy a new build to the Google Play Internal Track
 
+### android beta
+
+```sh
+[bundle exec] fastlane android beta
+```
+
+Deploy a new build to Firebase App Distribution
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
