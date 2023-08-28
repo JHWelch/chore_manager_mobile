@@ -44,10 +44,10 @@ Deploy a new build to TestFlight
 
 Deploy a new build to the Google Play Internal Track
 
-### android beta
+### android testing
 
 ```sh
-[bundle exec] fastlane android beta
+[bundle exec] fastlane android testing
 ```
 
 Deploy a new build to Firebase App Distribution
