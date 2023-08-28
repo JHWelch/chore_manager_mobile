@@ -58,4 +58,16 @@ platform :android do
       track: 'internal',
     )
   end
+
+  desc 'Deploy a new build to Firebase App Distribution'
+  lane :testing do
+    apply_version
+    sh 'flutter build apk --debug' + dart_defines
+    firebase_app_distribution(
+      app: ENV['FIREBASE_APP_ID'],
+      groups: 'testers',
+      android_artifact_path: './build/app/outputs/flutter-apk/app-debug.apk',
+      service_credentials_file: './firebase-service-account.json',
+    )
+  end
 end
